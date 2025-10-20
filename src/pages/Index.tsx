@@ -118,7 +118,7 @@ export default function Index() {
 
   const filteredEvents = selectedCategory
     ? events.filter(e => e.category === selectedCategory)
-    : events;
+    : events.filter(e => e.category !== 'weapons');
 
   const handleMapMarkerClick = (eventId: string) => {
     if (!eventId) {
