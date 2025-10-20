@@ -113,20 +113,3 @@
     letter-spacing: 0.02em;
   }
 }
-
-ymaps[class*="ground-pane"] {
-  filter: brightness(0.7) contrast(1.2) saturate(0.8) hue-rotate(200deg);
-}
-
-.ymaps-2-1-79-map {
-  background: hsl(210, 30%, 8%) !important;
-}
-
-.ymaps-2-1-79-controls-pane {
-  filter: brightness(0.9);
-}
-
-.ymaps-2-1-79-copyright,
-.ymaps-2-1-79-logo {
-  filter: brightness(0.7) !important;
-}
