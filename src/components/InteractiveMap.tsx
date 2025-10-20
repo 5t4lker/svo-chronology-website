@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -14,8 +14,8 @@ interface MapMarker {
   id: string;
   eventId: string;
   title: string;
-  category: 'campaign' | 'battle' | 'unit' | 'politics';
-  position: { x: number; y: number };
+  category: 'campaign' | 'battle' | 'unit' | 'politics' | 'weapons';
+  coordinates: [number, number];
   date: string;
 }
 
@@ -25,7 +25,7 @@ const markers: MapMarker[] = [
     eventId: '1',
     title: 'Начало СВО',
     category: 'politics',
-    position: { x: 45, y: 50 },
+    coordinates: [50.4501, 30.5234],
     date: '24 февраля 2022',
   },
   {
@@ -33,7 +33,7 @@ const markers: MapMarker[] = [
     eventId: '2',
     title: 'Киевская операция',
     category: 'campaign',
-    position: { x: 50, y: 30 },
+    coordinates: [50.4501, 30.5234],
     date: 'Март 2022',
   },
   {
@@ -41,7 +41,7 @@ const markers: MapMarker[] = [
     eventId: '3',
     title: 'Битва за Мариуполь',
     category: 'battle',
-    position: { x: 75, y: 65 },
+    coordinates: [47.0971, 37.5432],
     date: 'Май 2022',
   },
   {
@@ -49,7 +49,7 @@ const markers: MapMarker[] = [
     eventId: '4',
     title: 'Референдумы',
     category: 'politics',
-    position: { x: 65, y: 55 },
+    coordinates: [47.8388, 35.1396],
     date: 'Сентябрь 2022',
   },
   {
@@ -57,16 +57,40 @@ const markers: MapMarker[] = [
     eventId: '5',
     title: 'Добровольческие формирования',
     category: 'unit',
-    position: { x: 70, y: 60 },
+    coordinates: [48.5132, 39.2085],
     date: 'Декабрь 2022',
   },
   {
     id: 'm6',
-    eventId: '3',
+    eventId: '6',
     title: 'Взятие Артёмовска',
     category: 'battle',
-    position: { x: 68, y: 48 },
+    coordinates: [48.5924, 37.9991],
     date: 'Май 2023',
+  },
+  {
+    id: 'm7',
+    eventId: '7',
+    title: 'Калибр',
+    category: 'weapons',
+    coordinates: [46.4825, 30.7233],
+    date: 'Март 2022',
+  },
+  {
+    id: 'm8',
+    eventId: '8',
+    title: 'БПЛА',
+    category: 'weapons',
+    coordinates: [48.0159, 37.8028],
+    date: 'Июнь 2022',
+  },
+  {
+    id: 'm9',
+    eventId: '9',
+    title: 'Кинжал',
+    category: 'weapons',
+    coordinates: [49.5883, 34.5514],
+    date: 'Октябрь 2022',
   },
 ];
 
@@ -75,6 +99,7 @@ const categoryColors = {
   battle: 'bg-secondary hover:bg-secondary/80',
   unit: 'bg-accent hover:bg-accent/80',
   politics: 'bg-muted hover:bg-muted/80',
+  weapons: 'bg-destructive hover:bg-destructive/80',
 };
 
 const categoryIcons = {
@@ -82,6 +107,7 @@ const categoryIcons = {
   battle: 'Swords',
   unit: 'Shield',
   politics: 'Landmark',
+  weapons: 'Crosshair',
 };
 
 interface InteractiveMapProps {
@@ -91,71 +117,80 @@ interface InteractiveMapProps {
 
 export default function InteractiveMap({ onMarkerClick, selectedEventId }: InteractiveMapProps) {
   const [hoveredMarker, setHoveredMarker] = useState<string | null>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [ymapsReady, setYmapsReady] = useState(false);
+  const [mapInstance, setMapInstance] = useState<any>(null);
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=';
+    script.async = true;
+    script.onload = () => {
+      (window as any).ymaps.ready(() => {
+        setYmapsReady(true);
+      });
+    };
+    document.head.appendChild(script);
+
+    return () => {
+      if (document.head.contains(script)) {
+        document.head.removeChild(script);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!ymapsReady || !mapRef.current || mapInstance) return;
+
+    const ymaps = (window as any).ymaps;
+    const map = new ymaps.Map(mapRef.current, {
+      center: [48.5, 34.5],
+      zoom: 6,
+      controls: ['zoomControl', 'fullscreenControl'],
+    });
+
+    markers.forEach((marker) => {
+      const placemark = new ymaps.Placemark(
+        marker.coordinates,
+        {
+          hintContent: marker.title,
+          balloonContent: `<strong>${marker.title}</strong><br>${marker.date}`,
+        },
+        {
+          preset: 'islands#icon',
+          iconColor: getCategoryColor(marker.category),
+        }
+      );
+
+      placemark.events.add('click', () => {
+        onMarkerClick?.(marker.eventId);
+      });
+
+      map.geoObjects.add(placemark);
+    });
+
+    setMapInstance(map);
+  }, [ymapsReady, mapRef.current]);
+
+  const getCategoryColor = (category: string) => {
+    const colors: Record<string, string> = {
+      campaign: '#0088ff',
+      battle: '#ff4444',
+      unit: '#44ff44',
+      politics: '#888888',
+      weapons: '#ff8800',
+    };
+    return colors[category] || '#0088ff';
+  };
 
   return (
     <Card className="overflow-hidden">
       <CardContent className="p-0">
         <div className="relative w-full aspect-video bg-muted">
-          <img
-            src="https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/18b77d0b-c9e6-487d-8292-a59b03278183.jpg"
-            alt="Карта театра военных действий"
-            className="w-full h-full object-cover opacity-70"
-          />
-          
-          <div className="absolute inset-0">
-            <TooltipProvider>
-              {markers.map((marker) => (
-                <Tooltip key={marker.id}>
-                  <TooltipTrigger asChild>
-                    <button
-                      className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${
-                        selectedEventId === marker.eventId
-                          ? 'scale-125 z-20'
-                          : hoveredMarker === marker.id
-                          ? 'scale-110 z-10'
-                          : 'scale-100 z-0'
-                      }`}
-                      style={{
-                        left: `${marker.position.x}%`,
-                        top: `${marker.position.y}%`,
-                      }}
-                      onClick={() => onMarkerClick?.(marker.eventId)}
-                      onMouseEnter={() => setHoveredMarker(marker.id)}
-                      onMouseLeave={() => setHoveredMarker(null)}
-                    >
-                      <div
-                        className={`w-10 h-10 rounded-full border-4 border-background shadow-lg flex items-center justify-center ${
-                          categoryColors[marker.category]
-                        } ${
-                          selectedEventId === marker.eventId
-                            ? 'ring-4 ring-primary/50'
-                            : ''
-                        }`}
-                      >
-                        <Icon
-                          name={categoryIcons[marker.category] as any}
-                          size={20}
-                          className="text-white"
-                        />
-                      </div>
-                      {(hoveredMarker === marker.id || selectedEventId === marker.eventId) && (
-                        <div className="absolute top-12 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-                          <Badge className="shadow-lg">{marker.date}</Badge>
-                        </div>
-                      )}
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p className="font-semibold">{marker.title}</p>
-                    <p className="text-xs text-muted-foreground">{marker.date}</p>
-                  </TooltipContent>
-                </Tooltip>
-              ))}
-            </TooltipProvider>
-          </div>
+          <div ref={mapRef} className="w-full h-full" />
 
-          <div className="absolute top-4 left-4 right-4 flex flex-wrap gap-2">
-            <div className="bg-background/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
+          <div className="absolute top-4 left-4 right-4 flex flex-wrap gap-2 pointer-events-none">
+            <div className="bg-background/90 backdrop-blur-sm rounded-lg p-3 shadow-lg pointer-events-auto">
               <h3 className="font-semibold text-sm mb-2 flex items-center gap-2">
                 <Icon name="Map" size={16} />
                 Театр военных действий
@@ -177,15 +212,19 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
                   <div className="w-3 h-3 rounded-full bg-muted" />
                   <span>Политика</span>
                 </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-3 rounded-full bg-destructive" />
+                  <span>Вооружение</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="absolute bottom-4 right-4">
+          <div className="absolute bottom-4 right-4 pointer-events-none">
             <Button
               variant="secondary"
               size="sm"
-              className="backdrop-blur-sm bg-background/90"
+              className="backdrop-blur-sm bg-background/90 pointer-events-auto"
               onClick={() => onMarkerClick?.('')}
             >
               <Icon name="ZoomOut" size={16} className="mr-2" />

@@ -11,7 +11,7 @@ interface TimelineEvent {
   id: string;
   date: string;
   title: string;
-  category: 'campaign' | 'battle' | 'unit' | 'politics';
+  category: 'campaign' | 'battle' | 'unit' | 'politics' | 'weapons';
   description: string;
   details: string;
   images: string[];
@@ -73,6 +73,33 @@ const events: TimelineEvent[] = [
     details: 'Артёмовск был хорошо укреплён и имел важное стратегическое значение. Бои за город продолжались более 10 месяцев. Взятие города стало важным тактическим успехом.',
     images: ['https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/b4330eff-a0d8-4f72-8a8f-228db83d73ce.jpg'],
   },
+  {
+    id: '7',
+    date: 'Март 2022',
+    title: 'Применение ракетных комплексов «Калибр»',
+    category: 'weapons',
+    description: 'Высокоточные удары крылатыми ракетами по военной инфраструктуре противника.',
+    details: 'Крылатые ракеты «Калибр» применялись для поражения командных пунктов, складов вооружения и топлива, систем ПВО и других стратегических объектов на всей территории Украины.',
+    images: ['https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/9760d6cf-6275-4dea-80f8-24ba848153ad.jpg'],
+  },
+  {
+    id: '8',
+    date: 'Июнь 2022',
+    title: 'Использование БПЛА «Орлан» и «Ланцет»',
+    category: 'weapons',
+    description: 'Широкое применение беспилотных летательных аппаратов для разведки и поражения целей.',
+    details: 'БПЛА «Орлан-10» обеспечивали воздушную разведку и корректировку огня артиллерии. «Ланцет» — барражирующие боеприпасы-камикадзе для точечных ударов по бронетехнике и артиллерии противника.',
+    images: ['https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/b4330eff-a0d8-4f72-8a8f-228db83d73ce.jpg'],
+  },
+  {
+    id: '9',
+    date: 'Октябрь 2022',
+    title: 'Применение гиперзвуковых ракет «Кинжал»',
+    category: 'weapons',
+    description: 'Использование гиперзвукового оружия для поражения особо важных объектов.',
+    details: 'Ракетный комплекс «Кинжал» способен поражать цели на дальности до 2000 км со скоростью более 10М. Применялся для уничтожения подземных бункеров и защищённых командных пунктов.',
+    images: ['https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/dcdb17f0-ee1b-4f06-b739-bb80ed52eca4.jpg'],
+  },
 ];
 
 const categoryConfig = {
@@ -80,6 +107,7 @@ const categoryConfig = {
   battle: { label: 'Сражение', icon: 'Swords', color: 'bg-secondary' },
   unit: { label: 'Подразделение', icon: 'Shield', color: 'bg-accent' },
   politics: { label: 'Политика', icon: 'Landmark', color: 'bg-muted' },
+  weapons: { label: 'Вооружение', icon: 'Crosshair', color: 'bg-destructive' },
 };
 
 export default function Index() {
