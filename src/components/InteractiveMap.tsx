@@ -164,14 +164,25 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
           {
             iconLayout: 'default#image',
             iconImageHref: 'data:image/svg+xml;base64,' + btoa(`
-              <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="20" cy="20" r="18" fill="#dc2626" stroke="#7f1d1d" stroke-width="3"/>
-                <path d="M14 20 L20 14 L26 20 L20 26 Z" fill="#fef2f2" stroke="#991b1b" stroke-width="1.5"/>
-                <circle cx="20" cy="20" r="3" fill="#991b1b"/>
+              <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                  @keyframes pulse {
+                    0%, 100% { opacity: 0.3; r: 28; }
+                    50% { opacity: 0; r: 35; }
+                  }
+                  .pulse-ring {
+                    animation: pulse 2s ease-in-out infinite;
+                    transform-origin: center;
+                  }
+                </style>
+                <circle class="pulse-ring" cx="30" cy="30" r="28" fill="none" stroke="#dc2626" stroke-width="2"/>
+                <circle cx="30" cy="30" r="18" fill="#dc2626" stroke="#7f1d1d" stroke-width="3"/>
+                <path d="M24 30 L30 24 L36 30 L30 36 Z" fill="#fef2f2" stroke="#991b1b" stroke-width="1.5"/>
+                <circle cx="30" cy="30" r="3" fill="#991b1b"/>
               </svg>
             `),
-            iconImageSize: [40, 40],
-            iconImageOffset: [-20, -20],
+            iconImageSize: [60, 60],
+            iconImageOffset: [-30, -30],
           }
         );
 
