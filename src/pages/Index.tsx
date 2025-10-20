@@ -12,6 +12,7 @@ interface TimelineEvent {
   date: string;
   title: string;
   category: 'campaign' | 'battle' | 'unit' | 'politics' | 'weapons';
+  subcategory?: string;
   description: string;
   details: string;
   images: string[];
@@ -30,11 +31,51 @@ const events: TimelineEvent[] = [
   },
   {
     id: '2',
-    date: 'Март 2022',
+    date: 'Февраль-Март 2022',
     title: 'Весенняя кампания ВС РФ 2022 года',
     category: 'campaign',
-    description: 'Наступление на Киев с целью окружения украинских войск в районе столицы.',
-    details: 'Российские войска продвигались со стороны Беларуси и северо-востока Украины. Операция проводилась с целью деблокировать Донбасс и вывести Украину из конфликта на ранней стадии.',
+    description: 'Комплексная операция российских войск на нескольких направлениях.',
+    details: 'Весенняя кампания включала наступательные операции на киевском, черниговском, сумском и харьковском направлениях с целью деблокирования Донбасса и вывода Украины из конфликта.',
+    images: ['https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/b4330eff-a0d8-4f72-8a8f-228db83d73ce.jpg'],
+  },
+  {
+    id: '2a',
+    date: 'Февраль-Март 2022',
+    title: 'Киевское направление',
+    category: 'campaign',
+    subcategory: 'Весенняя кампания ВС РФ 2022 года',
+    description: 'Наступление на Киев с северного и северо-восточного направлений.',
+    details: 'Российские войска продвигались со стороны Беларуси через Чернобыль и Гостомель, а также с востока. Целью было окружение киевской группировки ВСУ и вывод Украины из конфликта.',
+    images: ['https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/b4330eff-a0d8-4f72-8a8f-228db83d73ce.jpg'],
+  },
+  {
+    id: '2b',
+    date: 'Февраль-Март 2022',
+    title: 'Черниговско-Сумское направление',
+    category: 'campaign',
+    subcategory: 'Весенняя кампания ВС РФ 2022 года',
+    description: 'Операции в северо-восточных областях Украины.',
+    details: 'Наступление велось с целью блокирования крупных городов и обеспечения флангов главной группировки. Были блокированы Чернигов, Сумы и Конотоп.',
+    images: ['https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/9760d6cf-6275-4dea-80f8-24ba848153ad.jpg'],
+  },
+  {
+    id: '2c',
+    date: 'Февраль-Март 2022',
+    title: 'Харьковское направление',
+    category: 'campaign',
+    subcategory: 'Весенняя кампания ВС РФ 2022 года',
+    description: 'Наступление на второй по величине город Украины.',
+    details: 'Операция проводилась с целью блокирования Харькова и создания угрозы окружения донбасской группировки ВСУ. Велись интенсивные бои в северных пригородах города.',
+    images: ['https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/dcdb17f0-ee1b-4f06-b739-bb80ed52eca4.jpg'],
+  },
+  {
+    id: '2d',
+    date: 'Март 2022',
+    title: 'Перегруппировка войск',
+    category: 'campaign',
+    subcategory: 'Весенняя кампания ВС РФ 2022 года',
+    description: 'Завершение первого этапа операции и вывод войск.',
+    details: 'После достижения ряда целей было принято решение о перегруппировке сил для концентрации усилий на донбасском направлении. Войска были выведены с киевского, черниговского и сумского направлений.',
     images: ['https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/b4330eff-a0d8-4f72-8a8f-228db83d73ce.jpg'],
   },
   {
@@ -195,33 +236,38 @@ export default function Index() {
                   <Icon name={categoryConfig[event.category].icon as any} size={24} className="text-primary" />
                 </div>
 
-                <Card className="md:ml-24 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                <Card className={`md:ml-24 hover:shadow-lg transition-all duration-300 hover:scale-[1.02] ${event.subcategory ? 'md:ml-32 border-l-4 border-l-primary/50' : ''}`}>
                   <CardHeader>
                     <div className="flex items-start justify-between gap-4 flex-wrap">
                       <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Badge variant="outline" className="text-xs">
+                        <div className="flex items-center gap-2 mb-2 flex-wrap">
+                          <Badge variant="outline" className="text-sm">
                             {event.date}
                           </Badge>
                           <Badge className={categoryConfig[event.category].color}>
                             {categoryConfig[event.category].label}
                           </Badge>
+                          {event.subcategory && (
+                            <Badge variant="secondary" className="text-xs">
+                              {event.subcategory}
+                            </Badge>
+                          )}
                         </div>
-                        <CardTitle className="text-2xl mb-2">{event.title}</CardTitle>
-                        <CardDescription className="text-base">{event.description}</CardDescription>
+                        <CardTitle className="text-3xl mb-3">{event.title}</CardTitle>
+                        <CardDescription className="text-lg">{event.description}</CardDescription>
                       </div>
                     </div>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
                       {event.images.length > 0 && (
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                           {event.images.slice(0, 3).map((img, idx) => (
                             <img
                               key={idx}
                               src={img}
                               alt={`${event.title} - изображение ${idx + 1}`}
-                              className="rounded-lg w-full h-32 object-cover cursor-pointer hover:opacity-80 transition-opacity"
+                              className="rounded-lg w-full h-48 object-cover cursor-pointer hover:opacity-80 transition-opacity"
                               onClick={() => setSelectedEvent(event)}
                             />
                           ))}
