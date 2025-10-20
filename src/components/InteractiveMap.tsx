@@ -146,9 +146,142 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
     const map = new ymaps.Map(mapRef.current, {
       center: [48.5, 34.5],
       zoom: 6,
-      controls: ['zoomControl', 'fullscreenControl'],
+      controls: [],
       type: 'yandex#map',
     });
+
+    const darkTheme = [
+      {
+        "tags": "country",
+        "elements": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#1a2332"
+          }
+        ]
+      },
+      {
+        "tags": "country",
+        "elements": "geometry.outline",
+        "stylers": [
+          {
+            "color": "#2a3648",
+            "opacity": 0.15
+          }
+        ]
+      },
+      {
+        "tags": "region",
+        "elements": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#1e2838",
+            "opacity": 0.5
+          }
+        ]
+      },
+      {
+        "tags": "region",
+        "elements": "geometry.outline",
+        "stylers": [
+          {
+            "color": "#2a3648",
+            "opacity": 0.15
+          }
+        ]
+      },
+      {
+        "tags": "water",
+        "elements": "geometry",
+        "stylers": [
+          {
+            "color": "#17263c"
+          }
+        ]
+      },
+      {
+        "tags": "landcover",
+        "elements": "geometry",
+        "stylers": [
+          {
+            "color": "#1e2838"
+          }
+        ]
+      },
+      {
+        "tags": "road",
+        "elements": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#2c3e50"
+          }
+        ]
+      },
+      {
+        "tags": "road",
+        "elements": "geometry.outline",
+        "stylers": [
+          {
+            "color": "#1a252f",
+            "opacity": 0.5
+          }
+        ]
+      },
+      {
+        "tags": {
+          "all": ["transit"]
+        },
+        "elements": "geometry",
+        "stylers": [
+          {
+            "color": "#283d5a"
+          }
+        ]
+      },
+      {
+        "tags": "label",
+        "elements": "label.text.fill",
+        "stylers": [
+          {
+            "color": "#a8b4c4"
+          }
+        ]
+      },
+      {
+        "tags": "label",
+        "elements": "label.text.outline",
+        "stylers": [
+          {
+            "color": "#0f1419",
+            "opacity": 0.8
+          }
+        ]
+      }
+    ];
+
+    map.layers.add(new ymaps.Layer(''));
+    
+    const zoomControl = new ymaps.control.ZoomControl({
+      options: {
+        size: 'small',
+        position: {
+          right: 10,
+          top: 100
+        }
+      }
+    });
+    
+    const fullscreenControl = new ymaps.control.FullscreenControl({
+      options: {
+        position: {
+          right: 10,
+          top: 150
+        }
+      }
+    });
+    
+    map.controls.add(zoomControl);
+    map.controls.add(fullscreenControl);
 
     markers
       .filter((marker) => marker.category === 'battle')
