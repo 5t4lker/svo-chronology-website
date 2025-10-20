@@ -384,7 +384,20 @@ export default function Index() {
                             </div>
                             <div>
                               <h3 className="font-semibold text-lg mb-2">Описание</h3>
-                              <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{event.details}</p>
+                              <div className="text-muted-foreground leading-relaxed space-y-4">
+                                {event.details.split('\n\n').map((paragraph, pIdx) => (
+                                  <div key={pIdx}>
+                                    <p className="whitespace-pre-line">{paragraph}</p>
+                                    {event.images[pIdx] && (
+                                      <img
+                                        src={event.images[pIdx]}
+                                        alt={`${event.title} - изображение ${pIdx + 1}`}
+                                        className="rounded-lg w-full max-w-2xl mx-auto h-auto object-cover mt-4"
+                                      />
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
                             </div>
                             <Tabs defaultValue="images" className="w-full">
                               <TabsList className="w-full">
