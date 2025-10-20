@@ -116,33 +116,151 @@ interface InteractiveMapProps {
 }
 
 export default function InteractiveMap({ onMarkerClick, selectedEventId }: InteractiveMapProps) {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [mapInstance, setMapInstance] = useState<any>(null);
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=&language=ru`;
+    script.async = true;
+    script.onload = initMap;
+    document.head.appendChild(script);
+
+    return () => {
+      if (document.head.contains(script)) {
+        document.head.removeChild(script);
+      }
+    };
+  }, []);
+
+  const initMap = () => {
+    if (!mapRef.current) return;
+
+    const mapStyles = [
+      {
+        "featureType": "all",
+        "elementType": "geometry",
+        "stylers": [{ "color": "#242f3e" }]
+      },
+      {
+        "featureType": "all",
+        "elementType": "labels.text.stroke",
+        "stylers": [{ "lightness": -80 }]
+      },
+      {
+        "featureType": "administrative",
+        "elementType": "labels.text.fill",
+        "stylers": [{ "color": "#746855" }]
+      },
+      {
+        "featureType": "landscape",
+        "elementType": "geometry",
+        "stylers": [{ "color": "#1e2838" }]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [{ "color": "#283d5a" }]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry.fill",
+        "stylers": [{ "color": "#2c3e50" }]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry.stroke",
+        "stylers": [{ "color": "#1a252f" }]
+      },
+      {
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": [{ "color": "#17263c" }]
+      }
+    ];
+
+    const google = (window as any).google;
+    const map = new google.maps.Map(mapRef.current, {
+      center: { lat: 48.5, lng: 34.5 },
+      zoom: 6,
+      styles: mapStyles,
+      disableDefaultUI: false,
+      zoomControl: true,
+      mapTypeControl: false,
+      streetViewControl: false,
+      fullscreenControl: true,
+    });
+
+    markers
+      .filter((marker) => marker.category === 'battle')
+      .forEach((marker) => {
+        const svgMarker = {
+          path: 'M 20,0 C 8.954,0 0,8.954 0,20 c 0,11.046 8.954,20 20,20 11.046,0 20,-8.954 20,-20 C 40,8.954 31.046,0 20,0 Z m 0,6 l 6,6 -6,6 -6,-6 z m 0,8 c 1.657,0 3,1.343 3,3 0,1.657 -1.343,3 -3,3 -1.657,0 -3,-1.343 -3,-3 0,-1.657 1.343,-3 3,-3 z',
+          fillColor: '#dc2626',
+          fillOpacity: 1,
+          strokeColor: '#7f1d1d',
+          strokeWeight: 2,
+          scale: 1,
+          anchor: new google.maps.Point(20, 20),
+        };
+
+        const gMarker = new google.maps.Marker({
+          position: { lat: marker.coordinates[0], lng: marker.coordinates[1] },
+          map: map,
+          icon: svgMarker,
+          title: marker.title,
+          animation: google.maps.Animation.DROP,
+        });
+
+        const infoWindow = new google.maps.InfoWindow({
+          content: `
+            <div style="padding: 10px; min-width: 200px; color: #000;">
+              <strong style="font-size: 14px; color: #dc2626;">${marker.title}</strong>
+              <br><span style="color: #666; font-size: 12px;">${marker.date}</span>
+            </div>
+          `,
+        });
+
+        gMarker.addListener('click', () => {
+          infoWindow.open(map, gMarker);
+          onMarkerClick?.(marker.eventId);
+        });
+      });
+
+    setMapInstance(map);
+  };
+
   return (
     <Card className="overflow-hidden">
       <CardContent className="p-0">
-        <div className="relative w-full" style={{ height: '600px' }}>
-          <iframe
-            src="https://divgen.ru"
-            className="w-full h-full border-0"
-            title="Карта СВО от DIVGEN"
-            allow="geolocation"
-          />
-          
-          <div className="absolute top-4 left-4 right-4 flex flex-wrap gap-2 pointer-events-none">
+        <div className="relative w-full aspect-video bg-muted">
+          <div ref={mapRef} className="w-full h-full" />
+
+          <div className="absolute top-4 left-4 right-4 flex flex-wrap gap-2 pointer-events-none z-10">
             <div className="bg-background/90 backdrop-blur-sm rounded-lg p-3 shadow-lg pointer-events-auto">
               <h3 className="font-semibold text-sm mb-2 flex items-center gap-2">
                 <Icon name="Map" size={16} />
-                Карта СВО от канала DIVGEN
+                Театр военных действий
               </h3>
-              <a 
-                href="https://divgen.ru" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-xs text-primary hover:underline flex items-center gap-1"
-              >
-                Открыть в полном размере
-                <Icon name="ExternalLink" size={12} />
-              </a>
+              <div className="flex flex-wrap gap-2 text-xs">
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-3 rounded-full bg-secondary" />
+                  <span>Сражение</span>
+                </div>
+              </div>
             </div>
+          </div>
+
+          <div className="absolute bottom-4 right-4 pointer-events-none z-10">
+            <Button
+              variant="secondary"
+              size="sm"
+              className="backdrop-blur-sm bg-background/90 pointer-events-auto"
+              onClick={() => onMarkerClick?.('')}
+            >
+              <Icon name="ZoomOut" size={16} className="mr-2" />
+              Сбросить выделение
+            </Button>
           </div>
         </div>
       </CardContent>
