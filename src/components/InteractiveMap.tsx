@@ -118,12 +118,18 @@ interface InteractiveMapProps {
 export default function InteractiveMap({ onMarkerClick, selectedEventId }: InteractiveMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const [mapInstance, setMapInstance] = useState<any>(null);
+  const [ymapsReady, setYmapsReady] = useState(false);
+  const [mapType, setMapType] = useState<'map' | 'satellite'>('map');
 
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=&language=ru`;
+    script.src = 'https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=';
     script.async = true;
-    script.onload = initMap;
+    script.onload = () => {
+      (window as any).ymaps.ready(() => {
+        setYmapsReady(true);
+      });
+    };
     document.head.appendChild(script);
 
     return () => {
@@ -133,102 +139,70 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
     };
   }, []);
 
-  const initMap = () => {
-    if (!mapRef.current) return;
+  useEffect(() => {
+    if (!ymapsReady || !mapRef.current || mapInstance) return;
 
-    const mapStyles = [
-      {
-        "featureType": "all",
-        "elementType": "geometry",
-        "stylers": [{ "color": "#242f3e" }]
-      },
-      {
-        "featureType": "all",
-        "elementType": "labels.text.stroke",
-        "stylers": [{ "lightness": -80 }]
-      },
-      {
-        "featureType": "administrative",
-        "elementType": "labels.text.fill",
-        "stylers": [{ "color": "#746855" }]
-      },
-      {
-        "featureType": "landscape",
-        "elementType": "geometry",
-        "stylers": [{ "color": "#1e2838" }]
-      },
-      {
-        "featureType": "poi",
-        "elementType": "geometry",
-        "stylers": [{ "color": "#283d5a" }]
-      },
-      {
-        "featureType": "road",
-        "elementType": "geometry.fill",
-        "stylers": [{ "color": "#2c3e50" }]
-      },
-      {
-        "featureType": "road",
-        "elementType": "geometry.stroke",
-        "stylers": [{ "color": "#1a252f" }]
-      },
-      {
-        "featureType": "water",
-        "elementType": "geometry",
-        "stylers": [{ "color": "#17263c" }]
-      }
-    ];
-
-    const google = (window as any).google;
-    const map = new google.maps.Map(mapRef.current, {
-      center: { lat: 48.5, lng: 34.5 },
+    const ymaps = (window as any).ymaps;
+    const map = new ymaps.Map(mapRef.current, {
+      center: [48.5, 34.5],
       zoom: 6,
-      styles: mapStyles,
-      disableDefaultUI: false,
-      zoomControl: true,
-      mapTypeControl: false,
-      streetViewControl: false,
-      fullscreenControl: true,
+      controls: ['zoomControl', 'fullscreenControl'],
+      type: 'yandex#map',
     });
 
     markers
       .filter((marker) => marker.category === 'battle')
       .forEach((marker) => {
-        const svgMarker = {
-          path: 'M 20,0 C 8.954,0 0,8.954 0,20 c 0,11.046 8.954,20 20,20 11.046,0 20,-8.954 20,-20 C 40,8.954 31.046,0 20,0 Z m 0,6 l 6,6 -6,6 -6,-6 z m 0,8 c 1.657,0 3,1.343 3,3 0,1.657 -1.343,3 -3,3 -1.657,0 -3,-1.343 -3,-3 0,-1.657 1.343,-3 3,-3 z',
-          fillColor: '#dc2626',
-          fillOpacity: 1,
-          strokeColor: '#7f1d1d',
-          strokeWeight: 2,
-          scale: 1,
-          anchor: new google.maps.Point(20, 20),
-        };
-
-        const gMarker = new google.maps.Marker({
-          position: { lat: marker.coordinates[0], lng: marker.coordinates[1] },
-          map: map,
-          icon: svgMarker,
-          title: marker.title,
-          animation: google.maps.Animation.DROP,
-        });
-
-        const infoWindow = new google.maps.InfoWindow({
-          content: `
-            <div style="padding: 10px; min-width: 200px; color: #000;">
+        const placemark = new ymaps.Placemark(
+          marker.coordinates,
+          {
+            hintContent: marker.title,
+            balloonContent: `<div style="padding: 10px; min-width: 200px;">
               <strong style="font-size: 14px; color: #dc2626;">${marker.title}</strong>
               <br><span style="color: #666; font-size: 12px;">${marker.date}</span>
-            </div>
-          `,
-        });
+            </div>`,
+          },
+          {
+            iconLayout: 'default#image',
+            iconImageHref: 'data:image/svg+xml;base64,' + btoa(`
+              <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                  @keyframes pulse {
+                    0%, 100% { opacity: 0.3; r: 28; }
+                    50% { opacity: 0; r: 35; }
+                  }
+                  .pulse-ring {
+                    animation: pulse 2s ease-in-out infinite;
+                    transform-origin: center;
+                  }
+                </style>
+                <circle class="pulse-ring" cx="30" cy="30" r="28" fill="none" stroke="#dc2626" stroke-width="2"/>
+                <circle cx="30" cy="30" r="18" fill="#dc2626" stroke="#7f1d1d" stroke-width="3"/>
+                <path d="M24 30 L30 24 L36 30 L30 36 Z" fill="#fef2f2" stroke="#991b1b" stroke-width="1.5"/>
+                <circle cx="30" cy="30" r="3" fill="#991b1b"/>
+              </svg>
+            `),
+            iconImageSize: [60, 60],
+            iconImageOffset: [-30, -30],
+          }
+        );
 
-        gMarker.addListener('click', () => {
-          infoWindow.open(map, gMarker);
+        placemark.events.add('click', () => {
           onMarkerClick?.(marker.eventId);
         });
+
+        map.geoObjects.add(placemark);
       });
 
     setMapInstance(map);
-  };
+  }, [ymapsReady, mapRef.current]);
+
+  useEffect(() => {
+    if (!mapInstance) return;
+    
+    const newType = mapType === 'satellite' ? 'yandex#satellite' : 'yandex#map';
+    mapInstance.setType(newType);
+  }, [mapType, mapInstance]);
 
   return (
     <Card className="overflow-hidden">
@@ -247,6 +221,29 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
                   <div className="w-3 h-3 rounded-full bg-secondary" />
                   <span>Сражение</span>
                 </div>
+              </div>
+            </div>
+            
+            <div className="bg-background/90 backdrop-blur-sm rounded-lg p-2 shadow-lg pointer-events-auto">
+              <div className="flex gap-1">
+                <Button
+                  variant={mapType === 'map' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setMapType('map')}
+                  className="h-8 px-3"
+                >
+                  <Icon name="Map" size={14} className="mr-1" />
+                  Карта
+                </Button>
+                <Button
+                  variant={mapType === 'satellite' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setMapType('satellite')}
+                  className="h-8 px-3"
+                >
+                  <Icon name="Satellite" size={14} className="mr-1" />
+                  Спутник
+                </Button>
               </div>
             </div>
           </div>
