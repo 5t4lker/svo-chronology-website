@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
+import InteractiveMap from '@/components/InteractiveMap';
 
 interface TimelineEvent {
   id: string;
@@ -84,10 +85,24 @@ const categoryConfig = {
 export default function Index() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
+  const [highlightedEventId, setHighlightedEventId] = useState<string | null>(null);
+  const eventRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   const filteredEvents = selectedCategory
     ? events.filter(e => e.category === selectedCategory)
     : events;
+
+  const handleMapMarkerClick = (eventId: string) => {
+    if (!eventId) {
+      setHighlightedEventId(null);
+      return;
+    }
+    setHighlightedEventId(eventId);
+    const element = eventRefs.current[eventId];
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -103,6 +118,16 @@ export default function Index() {
       </header>
 
       <div className="container mx-auto px-4 py-8">
+        <div className="mb-12">
+          <h2 className="text-3xl font-bold mb-4 flex items-center gap-2">
+            <Icon name="Map" size={28} />
+            Интерактивная карта событий
+          </h2>
+          <InteractiveMap 
+            onMarkerClick={handleMapMarkerClick}
+            selectedEventId={highlightedEventId}
+          />
+        </div>
         <div className="flex flex-wrap gap-3 mb-8">
           <Button
             variant={selectedCategory === null ? 'default' : 'outline'}
@@ -132,7 +157,10 @@ export default function Index() {
             {filteredEvents.map((event, index) => (
               <div
                 key={event.id}
-                className="relative animate-fade-in"
+                ref={(el) => (eventRefs.current[event.id] = el)}
+                className={`relative animate-fade-in transition-all duration-300 ${
+                  highlightedEventId === event.id ? 'ring-4 ring-primary rounded-lg' : ''
+                }`}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="hidden md:flex absolute left-0 top-8 w-16 h-16 rounded-full bg-card border-4 border-primary items-center justify-center">
