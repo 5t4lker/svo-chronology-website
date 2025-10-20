@@ -184,9 +184,16 @@ const events: TimelineEvent[] = [
 
 После взятия Гостомеля десантники продолжали удерживать позиции на аэродроме. Оттуда выдвигались в Ирпень и Озёра. Занимались разведкой, наблюдали за переправами, выискивали технику противника, выезжали в Бучу, сопровождали колонны. Во время выхода российских войск из Гостомеля в конце марта 2022 года, некоторые группы десантников прикрывали отход.`,
     images: [
+      'https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/283ff941-3e47-4412-a4c4-d0bb15fd8c3a.jpg',
+      'https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/3bdff2d4-80bd-468a-862a-9693094c140a.jpg',
+      'https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/0dc11159-8572-4f15-a00c-33a4cd6d945f.jpg',
       'https://cdn.poehali.dev/files/cc918fdc-54cd-41bd-b96f-a7ec13a4f4f0.jpg',
       'https://cdn.poehali.dev/files/94e7a1c4-5a02-42ae-bed6-c89c058d0207.jpg',
       'https://cdn.poehali.dev/files/d22b3ba7-4870-4a71-bef5-ba8f5ca4ee98.jpg',
+    ],
+    videos: [
+      'https://rutube.ru/video/c52fa16e70f44a8e06f25bb2c64de95d/',
+      'https://rutube.ru/video/a9e4f16ad8a242f0fead7e5a0e42fe2d/',
     ],
   },
   {

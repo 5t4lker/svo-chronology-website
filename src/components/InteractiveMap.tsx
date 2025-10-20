@@ -61,6 +61,14 @@ const markers: MapMarker[] = [
     date: 'Декабрь 2022',
   },
   {
+    id: 'm5a',
+    eventId: '5a',
+    title: 'Высадка гостомельского десанта',
+    category: 'battle',
+    coordinates: [50.6037, 30.1919],
+    date: '24 февраля 2022',
+  },
+  {
     id: 'm6',
     eventId: '6',
     title: 'Взятие Артёмовска',
