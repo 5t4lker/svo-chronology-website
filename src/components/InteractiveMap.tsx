@@ -116,128 +116,33 @@ interface InteractiveMapProps {
 }
 
 export default function InteractiveMap({ onMarkerClick, selectedEventId }: InteractiveMapProps) {
-  const [hoveredMarker, setHoveredMarker] = useState<string | null>(null);
-  const mapRef = useRef<HTMLDivElement>(null);
-  const [ymapsReady, setYmapsReady] = useState(false);
-  const [mapInstance, setMapInstance] = useState<any>(null);
-
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=';
-    script.async = true;
-    script.onload = () => {
-      (window as any).ymaps.ready(() => {
-        setYmapsReady(true);
-      });
-    };
-    document.head.appendChild(script);
-
-    return () => {
-      if (document.head.contains(script)) {
-        document.head.removeChild(script);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!ymapsReady || !mapRef.current || mapInstance) return;
-
-    const ymaps = (window as any).ymaps;
-    const map = new ymaps.Map(mapRef.current, {
-      center: [48.5, 34.5],
-      zoom: 6,
-      controls: ['zoomControl', 'fullscreenControl'],
-    });
-
-    markers
-      .filter((marker) => marker.category === 'battle')
-      .forEach((marker) => {
-        const placemark = new ymaps.Placemark(
-          marker.coordinates,
-          {
-            hintContent: marker.title,
-            balloonContent: `<div style="padding: 10px; min-width: 200px;">
-              <strong style="font-size: 14px; color: #dc2626;">${marker.title}</strong>
-              <br><span style="color: #666; font-size: 12px;">${marker.date}</span>
-            </div>`,
-          },
-          {
-            iconLayout: 'default#image',
-            iconImageHref: 'data:image/svg+xml;base64,' + btoa(`
-              <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-                <style>
-                  @keyframes pulse {
-                    0%, 100% { opacity: 0.3; r: 28; }
-                    50% { opacity: 0; r: 35; }
-                  }
-                  .pulse-ring {
-                    animation: pulse 2s ease-in-out infinite;
-                    transform-origin: center;
-                  }
-                </style>
-                <circle class="pulse-ring" cx="30" cy="30" r="28" fill="none" stroke="#dc2626" stroke-width="2"/>
-                <circle cx="30" cy="30" r="18" fill="#dc2626" stroke="#7f1d1d" stroke-width="3"/>
-                <path d="M24 30 L30 24 L36 30 L30 36 Z" fill="#fef2f2" stroke="#991b1b" stroke-width="1.5"/>
-                <circle cx="30" cy="30" r="3" fill="#991b1b"/>
-              </svg>
-            `),
-            iconImageSize: [60, 60],
-            iconImageOffset: [-30, -30],
-          }
-        );
-
-        placemark.events.add('click', () => {
-          onMarkerClick?.(marker.eventId);
-        });
-
-        map.geoObjects.add(placemark);
-      });
-
-    setMapInstance(map);
-  }, [ymapsReady, mapRef.current]);
-
-  const getCategoryColor = (category: string) => {
-    const colors: Record<string, string> = {
-      campaign: '#0088ff',
-      battle: '#ff4444',
-      unit: '#44ff44',
-      politics: '#888888',
-      weapons: '#ff8800',
-    };
-    return colors[category] || '#0088ff';
-  };
-
   return (
     <Card className="overflow-hidden">
       <CardContent className="p-0">
-        <div className="relative w-full aspect-video bg-muted">
-          <div ref={mapRef} className="w-full h-full" />
-
+        <div className="relative w-full" style={{ height: '600px' }}>
+          <iframe
+            src="https://divgen.ru"
+            className="w-full h-full border-0"
+            title="Карта СВО от DIVGEN"
+            allow="geolocation"
+          />
+          
           <div className="absolute top-4 left-4 right-4 flex flex-wrap gap-2 pointer-events-none">
             <div className="bg-background/90 backdrop-blur-sm rounded-lg p-3 shadow-lg pointer-events-auto">
               <h3 className="font-semibold text-sm mb-2 flex items-center gap-2">
                 <Icon name="Map" size={16} />
-                Театр военных действий
+                Карта СВО от канала DIVGEN
               </h3>
-              <div className="flex flex-wrap gap-2 text-xs">
-                <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 rounded-full bg-secondary" />
-                  <span>Сражение</span>
-                </div>
-              </div>
+              <a 
+                href="https://divgen.ru" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-xs text-primary hover:underline flex items-center gap-1"
+              >
+                Открыть в полном размере
+                <Icon name="ExternalLink" size={12} />
+              </a>
             </div>
-          </div>
-
-          <div className="absolute bottom-4 right-4 pointer-events-none">
-            <Button
-              variant="secondary"
-              size="sm"
-              className="backdrop-blur-sm bg-background/90 pointer-events-auto"
-              onClick={() => onMarkerClick?.('')}
-            >
-              <Icon name="ZoomOut" size={16} className="mr-2" />
-              Сбросить выделение
-            </Button>
           </div>
         </div>
       </CardContent>
