@@ -92,6 +92,10 @@ const events: TimelineEvent[] = [
       'https://cdn.poehali.dev/files/4329aedc-2a5c-4195-b2a2-d28a59695db5.jpg',
       'https://cdn.poehali.dev/files/f5836209-5554-480e-abb6-bce635477ab3.jpg'
     ],
+    videos: [
+      'https://www.youtube.com/embed/Ik75KCZPD_4',
+      'https://www.youtube.com/embed/yRSYhcYF6s8'
+    ],
   },
   {
     id: '2b',
@@ -299,11 +303,11 @@ export default function Index() {
                           )}
                         </div>
                         <CardTitle className="text-3xl mb-3">{event.title}</CardTitle>
-                        <CardDescription className="text-lg">{event.description}</CardDescription>
+                        <CardDescription className="text-lg leading-relaxed">{event.description}</CardDescription>
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="space-y-6">
                     <div className="space-y-4">
                       {event.images.length > 0 && (
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -325,7 +329,7 @@ export default function Index() {
                             Подробнее
                           </Button>
                         </DialogTrigger>
-                        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+                        <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
                           <DialogHeader>
                             <DialogTitle className="text-2xl">{event.title}</DialogTitle>
                             <Badge className={`${categoryConfig[event.category].color} w-fit mt-2`}>
@@ -339,7 +343,7 @@ export default function Index() {
                             </div>
                             <div>
                               <h3 className="font-semibold text-lg mb-2">Описание</h3>
-                              <p className="text-muted-foreground leading-relaxed">{event.details}</p>
+                              <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{event.details}</p>
                             </div>
                             <Tabs defaultValue="images" className="w-full">
                               <TabsList className="w-full">
@@ -365,10 +369,26 @@ export default function Index() {
                                 </div>
                               </TabsContent>
                               <TabsContent value="videos" className="mt-4">
-                                <div className="text-center py-8 text-muted-foreground">
-                                  <Icon name="Video" size={48} className="mx-auto mb-4 opacity-50" />
-                                  <p>Видеоматериалы будут добавлены позже</p>
-                                </div>
+                                {event.videos && event.videos.length > 0 ? (
+                                  <div className="grid grid-cols-1 gap-4">
+                                    {event.videos.map((video, idx) => (
+                                      <div key={idx} className="aspect-video rounded-lg overflow-hidden">
+                                        <iframe
+                                          src={video}
+                                          title={`${event.title} - видео ${idx + 1}`}
+                                          className="w-full h-full"
+                                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                          allowFullScreen
+                                        />
+                                      </div>
+                                    ))}
+                                  </div>
+                                ) : (
+                                  <div className="text-center py-8 text-muted-foreground">
+                                    <Icon name="Video" size={48} className="mx-auto mb-4 opacity-50" />
+                                    <p>Видеоматериалы будут добавлены позже</p>
+                                  </div>
+                                )}
                               </TabsContent>
                             </Tabs>
                           </div>
