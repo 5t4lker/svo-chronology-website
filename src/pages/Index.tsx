@@ -76,7 +76,22 @@ const events: TimelineEvent[] = [
 29 марта замминистра обороны России, член делегации на переговорах в Стамбуле генерал-полковник Александр Фомин заявил, что принято решение «кардинально сократить военную активность на киевском и черниговском направлениях». Он пояснил, что решение принято «в связи с тем, что переговоры с Украиной переходят в практическую плоскость».
 
 В тот же день, 29 марта, министр обороны РФ Сергей Шойгу на селекторном совещании заявил, что отвод осуществляется в связи с выполнением первого этапа спецоперации и необходимости сосредоточить силы на освобождении Донбасса. В конце марта и начале апреля российские войска оставили населённые пункты в Киевской области, в том числе Ирпень, Бучу и Гостомель.`,
-    images: ['https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/b4330eff-a0d8-4f72-8a8f-228db83d73ce.jpg'],
+    images: [
+      'https://cdn.poehali.dev/files/1ecb88fb-8add-4519-bde3-e3eec24fe955.jpg',
+      'https://cdn.poehali.dev/files/71c69d1a-52b5-4905-b679-85a23425de9f.jpg',
+      'https://cdn.poehali.dev/files/f123028a-423a-4066-a311-1b10f4267e02.jpg',
+      'https://cdn.poehali.dev/files/30122cc4-0eca-45f9-b7cf-33b71f88f9d3.jpg',
+      'https://cdn.poehali.dev/files/38ffee8d-b364-4731-9358-b936b4b673d2.png',
+      'https://cdn.poehali.dev/files/ce0753d1-0c55-46e9-9e9b-058a16dd5ea4.png',
+      'https://cdn.poehali.dev/files/3bf460e4-3f84-4626-8768-c10926c5f768.png',
+      'https://cdn.poehali.dev/files/e9cd3204-00b4-4093-9e0c-a4fb6a5348ac.jpg',
+      'https://cdn.poehali.dev/files/0e4f2d49-6d16-4926-85d1-a522d5693aee.jpg',
+      'https://cdn.poehali.dev/files/1ff3dd50-44d1-4c40-aff4-95690b43cc9c.jpg',
+      'https://cdn.poehali.dev/files/63f39fd9-4e8c-4987-b751-84474e3b12cb.jpg',
+      'https://cdn.poehali.dev/files/239e5d55-d3f9-4015-bfcb-97608b041157.jpg',
+      'https://cdn.poehali.dev/files/4329aedc-2a5c-4195-b2a2-d28a59695db5.jpg',
+      'https://cdn.poehali.dev/files/f5836209-5554-480e-abb6-bce635477ab3.jpg'
+    ],
   },
   {
     id: '2b',
