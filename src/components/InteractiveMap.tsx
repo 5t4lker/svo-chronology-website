@@ -156,11 +156,22 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
           marker.coordinates,
           {
             hintContent: marker.title,
-            balloonContent: `<strong>${marker.title}</strong><br>${marker.date}`,
+            balloonContent: `<div style="padding: 10px; min-width: 200px;">
+              <strong style="font-size: 14px; color: #dc2626;">${marker.title}</strong>
+              <br><span style="color: #666; font-size: 12px;">${marker.date}</span>
+            </div>`,
           },
           {
-            preset: 'islands#icon',
-            iconColor: getCategoryColor(marker.category),
+            iconLayout: 'default#image',
+            iconImageHref: 'data:image/svg+xml;base64,' + btoa(`
+              <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="18" fill="#dc2626" stroke="#7f1d1d" stroke-width="3"/>
+                <path d="M14 20 L20 14 L26 20 L20 26 Z" fill="#fef2f2" stroke="#991b1b" stroke-width="1.5"/>
+                <circle cx="20" cy="20" r="3" fill="#991b1b"/>
+              </svg>
+            `),
+            iconImageSize: [40, 40],
+            iconImageOffset: [-20, -20],
           }
         );
 
