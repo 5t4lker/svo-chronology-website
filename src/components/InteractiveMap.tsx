@@ -216,20 +216,20 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
           <div ref={mapRef} className="w-full h-full" />
 
           <div className="absolute top-4 left-4 right-4 flex flex-wrap gap-2 pointer-events-none z-10">
-            <div className="bg-background/90 backdrop-blur-sm rounded-lg p-3 shadow-lg pointer-events-auto">
-              <h3 className="font-semibold text-sm mb-2 flex items-center gap-2">
+            <div className="backdrop-blur-sm rounded-lg p-3 shadow-lg pointer-events-auto bg-[#000000]">
+              <h3 className="font-semibold text-sm mb-2 flex items-center gap-2 text-gray-50">
                 <Icon name="Map" size={16} />
                 Театр военных действий
               </h3>
-              <div className="flex flex-wrap gap-2 text-xs">
+              <div className="flex flex-wrap gap-2 text-xs bg-[#000000]">
                 <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 rounded-full bg-secondary" />
+                  <div className="w-3 h-3 rounded-full bg-red-800" />
                   <span>Сражение</span>
                 </div>
               </div>
             </div>
             
-            <div className="bg-background/90 backdrop-blur-sm rounded-lg p-2 shadow-lg pointer-events-auto">
+            <div className="backdrop-blur-sm p-2 shadow-lg pointer-events-auto mx-0 px-2 rounded-xl bg-[#000000]">
               <div className="flex gap-1">
                 <Button
                   variant={mapType === 'map' ? 'default' : 'ghost'}
