@@ -150,7 +150,7 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
     });
 
     markers
-      .filter((marker) => marker.category !== 'politics' && marker.category !== 'weapons')
+      .filter((marker) => marker.category === 'battle')
       .forEach((marker) => {
         const placemark = new ymaps.Placemark(
           marker.coordinates,
@@ -199,16 +199,8 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
               </h3>
               <div className="flex flex-wrap gap-2 text-xs">
                 <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 rounded-full bg-primary" />
-                  <span>Кампания</span>
-                </div>
-                <div className="flex items-center gap-1">
                   <div className="w-3 h-3 rounded-full bg-secondary" />
                   <span>Сражение</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 rounded-full bg-accent" />
-                  <span>Подразделение</span>
                 </div>
               </div>
             </div>
