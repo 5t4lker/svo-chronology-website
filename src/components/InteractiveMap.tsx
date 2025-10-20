@@ -149,25 +149,27 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
       controls: ['zoomControl', 'fullscreenControl'],
     });
 
-    markers.forEach((marker) => {
-      const placemark = new ymaps.Placemark(
-        marker.coordinates,
-        {
-          hintContent: marker.title,
-          balloonContent: `<strong>${marker.title}</strong><br>${marker.date}`,
-        },
-        {
-          preset: 'islands#icon',
-          iconColor: getCategoryColor(marker.category),
-        }
-      );
+    markers
+      .filter((marker) => marker.category !== 'politics' && marker.category !== 'weapons')
+      .forEach((marker) => {
+        const placemark = new ymaps.Placemark(
+          marker.coordinates,
+          {
+            hintContent: marker.title,
+            balloonContent: `<strong>${marker.title}</strong><br>${marker.date}`,
+          },
+          {
+            preset: 'islands#icon',
+            iconColor: getCategoryColor(marker.category),
+          }
+        );
 
-      placemark.events.add('click', () => {
-        onMarkerClick?.(marker.eventId);
+        placemark.events.add('click', () => {
+          onMarkerClick?.(marker.eventId);
+        });
+
+        map.geoObjects.add(placemark);
       });
-
-      map.geoObjects.add(placemark);
-    });
 
     setMapInstance(map);
   }, [ymapsReady, mapRef.current]);
@@ -207,14 +209,6 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
                 <div className="flex items-center gap-1">
                   <div className="w-3 h-3 rounded-full bg-accent" />
                   <span>Подразделение</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 rounded-full bg-muted" />
-                  <span>Политика</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 rounded-full bg-destructive" />
-                  <span>Вооружение</span>
                 </div>
               </div>
             </div>
