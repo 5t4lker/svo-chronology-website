@@ -119,7 +119,7 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
   const mapRef = useRef<HTMLDivElement>(null);
   const [mapInstance, setMapInstance] = useState<any>(null);
   const [ymapsReady, setYmapsReady] = useState(false);
-  const [mapType, setMapType] = useState<'map' | 'satellite'>('map');
+  const [mapType, setMapType] = useState<'map' | 'satellite' | 'hybrid'>('map');
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -200,7 +200,12 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
   useEffect(() => {
     if (!mapInstance) return;
     
-    const newType = mapType === 'satellite' ? 'yandex#satellite' : 'yandex#map';
+    let newType = 'yandex#map';
+    if (mapType === 'satellite') {
+      newType = 'yandex#satellite';
+    } else if (mapType === 'hybrid') {
+      newType = 'yandex#hybrid';
+    }
     mapInstance.setType(newType);
   }, [mapType, mapInstance]);
 
@@ -243,6 +248,15 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
                 >
                   <Icon name="Satellite" size={14} className="mr-1" />
                   Спутник
+                </Button>
+                <Button
+                  variant={mapType === 'hybrid' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setMapType('hybrid')}
+                  className="h-8 px-3"
+                >
+                  <Icon name="Layers" size={14} className="mr-1" />
+                  Гибрид
                 </Button>
               </div>
             </div>
