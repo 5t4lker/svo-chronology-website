@@ -223,48 +223,49 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
         <div className="relative w-full aspect-video bg-muted">
           <div ref={mapRef} className="w-full h-full" />
 
-          <div className="absolute top-4 left-4 right-4 flex flex-wrap gap-2 pointer-events-none z-10">
-            <div className="backdrop-blur-sm rounded-lg p-3 shadow-lg pointer-events-auto bg-[#000000]">
-              <h3 className="font-semibold text-sm mb-2 flex items-center gap-2 text-gray-50">
-                <Icon name="Map" size={16} />
-                Театр военных действий
+          <div className="absolute top-2 left-2 right-2 md:top-4 md:left-4 md:right-4 flex flex-wrap gap-1 md:gap-2 pointer-events-none z-10">
+            <div className="backdrop-blur-sm rounded-md md:rounded-lg p-1.5 md:p-3 shadow-lg pointer-events-auto bg-[#000000]">
+              <h3 className="font-semibold text-[10px] md:text-sm mb-1 md:mb-2 flex items-center gap-1 md:gap-2 text-gray-50">
+                <Icon name="Map" size={12} className="md:w-4 md:h-4" />
+                <span className="hidden xs:inline">Театр военных действий</span>
+                <span className="xs:hidden">ТВД</span>
               </h3>
-              <div className="flex flex-wrap gap-2 text-xs bg-[#000000]">
-                <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 rounded-full bg-red-800" />
+              <div className="flex flex-wrap gap-1 md:gap-2 text-[9px] md:text-xs bg-[#000000]">
+                <div className="flex items-center gap-0.5 md:gap-1">
+                  <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-red-800" />
                   <span>Сражение</span>
                 </div>
               </div>
             </div>
             
-            <div className="backdrop-blur-sm p-2 shadow-lg pointer-events-auto mx-0 px-2 rounded-xl bg-[#000000]">
-              <div className="flex gap-1">
+            <div className="backdrop-blur-sm p-1 md:p-2 shadow-lg pointer-events-auto rounded-lg md:rounded-xl bg-[#000000]">
+              <div className="flex gap-0.5 md:gap-1">
                 <Button
                   variant={mapType === 'map' ? 'default' : 'ghost'}
                   size="sm"
                   onClick={() => setMapType('map')}
-                  className="h-8 px-3"
+                  className="h-6 px-1.5 md:h-8 md:px-3 text-[10px] md:text-sm"
                 >
-                  <Icon name="Map" size={14} className="mr-1" />
-                  Карта
+                  <Icon name="Map" size={12} className="mr-0.5 md:mr-1 md:w-3.5 md:h-3.5" />
+                  <span className="hidden xs:inline">Карта</span>
                 </Button>
                 <Button
                   variant={mapType === 'satellite' ? 'default' : 'ghost'}
                   size="sm"
                   onClick={() => setMapType('satellite')}
-                  className="h-8 px-3"
+                  className="h-6 px-1.5 md:h-8 md:px-3 text-[10px] md:text-sm"
                 >
-                  <Icon name="Satellite" size={14} className="mr-1" />
-                  Спутник
+                  <Icon name="Satellite" size={12} className="mr-0.5 md:mr-1 md:w-3.5 md:h-3.5" />
+                  <span className="hidden xs:inline">Спутник</span>
                 </Button>
                 <Button
                   variant={mapType === 'hybrid' ? 'default' : 'ghost'}
                   size="sm"
                   onClick={() => setMapType('hybrid')}
-                  className="h-8 px-3"
+                  className="h-6 px-1.5 md:h-8 md:px-3 text-[10px] md:text-sm"
                 >
-                  <Icon name="Layers" size={14} className="mr-1" />
-                  Гибрид
+                  <Icon name="Layers" size={12} className="mr-0.5 md:mr-1 md:w-3.5 md:h-3.5" />
+                  <span className="hidden xs:inline">Гибрид</span>
                 </Button>
               </div>
             </div>
