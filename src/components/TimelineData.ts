@@ -41,7 +41,7 @@ export const events: TimelineEvent[] = [
     id: "2a",
     date: "Февраль-Март 2022",
     title: "Киевское направление (февраль-март)",
-    category: "campaign",
+    category: "campaign", "Весенняя кампания ВС РФ 2022 года"
     subcategory: "Весенняя кампания ВС РФ 2022 года",
     description:
       "Наступление на Киев с северного и северо-восточного направлений.",
