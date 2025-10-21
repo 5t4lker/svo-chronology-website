@@ -21,9 +21,9 @@ export default function CategoryFilter({ selectedCategory, selectedSubcategory, 
   ];
 
   const subcategories = useMemo(() => {
-    if (selectedCategory === 'campaign') {
+    if (selectedCategory === 'campaign' || selectedCategory === 'weapons') {
       const subcats = events
-        .filter(e => e.category === 'campaign' && e.subcategory)
+        .filter(e => e.category === selectedCategory && e.subcategory)
         .map(e => e.subcategory)
         .filter((value, index, self) => value && self.indexOf(value) === index) as string[];
       return subcats;

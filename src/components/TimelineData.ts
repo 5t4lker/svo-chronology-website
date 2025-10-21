@@ -168,6 +168,7 @@ export const events: TimelineEvent[] = [
     date: "Март 2022",
     title: "Применение ракет «Калибр»",
     category: "weapons",
+    subcategory: "Вооружение ВС РФ",
     description:
       "Использование высокоточных крылатых ракет для поражения военной инфраструктуры.",
     details:
@@ -181,6 +182,7 @@ export const events: TimelineEvent[] = [
     date: "Июнь 2022",
     title: "Применение беспилотников",
     category: "weapons",
+    subcategory: "Вооружение ВС РФ",
     description:
       "Широкое применение беспилотных летательных аппаратов для разведки и поражения целей.",
     details:
@@ -194,6 +196,7 @@ export const events: TimelineEvent[] = [
     date: "Октябрь 2022",
     title: "Применение гиперзвуковых ракет «Кинжал»",
     category: "weapons",
+    subcategory: "Вооружение ВС РФ",
     description:
       "Использование гиперзвукового оружия для поражения особо важных объектов.",
     details:
