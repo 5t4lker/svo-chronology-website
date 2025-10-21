@@ -9,6 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { events } from "./TimelineData";
 
 interface MapMarker {
   id: string;
@@ -17,6 +18,7 @@ interface MapMarker {
   category: "campaign" | "battle" | "unit" | "politics" | "weapons";
   coordinates: [number, number];
   date: string;
+  image?: string;
 }
 
 const markers: MapMarker[] = [
@@ -187,16 +189,47 @@ export default function InteractiveMap({
     markers
       .filter((marker) => marker.category === "battle")
       .forEach((marker) => {
-        const placemark = new ymaps.Placemark(
-          marker.coordinates,
-          {
-            hintContent: marker.title,
-            balloonContent: `<div style="padding: 10px; min-width: 200px;">
+        const event = events.find(e => e.id === marker.eventId);
+        const imageUrl = event?.preview || event?.images[0];
+        
+        const balloonContent = imageUrl 
+          ? `<div style="padding: 10px; min-width: 250px; max-width: 300px;">
+              <img src="${imageUrl}" alt="${marker.title}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 8px;" />
+              <strong style="font-size: 14px; color: #dc2626; display: block; margin-bottom: 4px;">${marker.title}</strong>
+              <span style="color: #666; font-size: 12px;">${marker.date}</span>
+            </div>`
+          : `<div style="padding: 10px; min-width: 200px;">
               <strong style="font-size: 14px; color: #dc2626;">${marker.title}</strong>
               <br><span style="color: #666; font-size: 12px;">${marker.date}</span>
-            </div>`,
-          },
-          {
+            </div>`;
+        
+        let placemarkOptions: any;
+        
+        if (imageUrl) {
+          const ImageIconLayout = ymaps.templateLayoutFactory.createClass(
+            `<div style="position: relative; width: 60px; height: 60px;">
+              <div style="position: absolute; top: 0; left: 0; width: 60px; height: 60px; border-radius: 50%; border: 4px solid #dc2626; overflow: hidden; box-shadow: 0 0 15px rgba(220, 38, 38, 0.6), 0 0 30px rgba(220, 38, 38, 0.3); animation: pulse-border 2s ease-in-out infinite;">
+                <img src="${imageUrl}" style="width: 100%; height: 100%; object-fit: cover;" />
+              </div>
+              <style>
+                @keyframes pulse-border {
+                  0%, 100% { box-shadow: 0 0 15px rgba(220, 38, 38, 0.6), 0 0 30px rgba(220, 38, 38, 0.3); }
+                  50% { box-shadow: 0 0 25px rgba(220, 38, 38, 0.8), 0 0 45px rgba(220, 38, 38, 0.5); }
+                }
+              </style>
+            </div>`
+          );
+          
+          placemarkOptions = {
+            iconLayout: ImageIconLayout,
+            iconShape: {
+              type: 'Circle',
+              coordinates: [0, 0],
+              radius: 30
+            }
+          };
+        } else {
+          placemarkOptions = {
             iconLayout: "default#image",
             iconImageHref:
               "data:image/svg+xml;base64," +
@@ -220,7 +253,16 @@ export default function InteractiveMap({
             `),
             iconImageSize: [60, 60],
             iconImageOffset: [-30, -30],
+          };
+        }
+        
+        const placemark = new ymaps.Placemark(
+          marker.coordinates,
+          {
+            hintContent: marker.title,
+            balloonContent: balloonContent,
           },
+          placemarkOptions
         );
 
         placemark.events.add("click", () => {
