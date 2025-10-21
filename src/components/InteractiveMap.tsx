@@ -9,15 +9,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Slider } from "@/components/ui/slider";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { events } from "./TimelineData";
 
 interface MapMarker {
@@ -142,9 +133,6 @@ export default function InteractiveMap({
   const [mapInstance, setMapInstance] = useState<any>(null);
   const [ymapsReady, setYmapsReady] = useState(false);
   const [mapType, setMapType] = useState<"map" | "satellite" | "hybrid">("map");
-  const [markerSize, setMarkerSize] = useState<number>(60);
-  const [markerStyle, setMarkerStyle] = useState<"circle" | "square" | "rounded">("circle");
-  const [balloonImageHeight, setBalloonImageHeight] = useState<number>(150);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -165,26 +153,10 @@ export default function InteractiveMap({
   }, []);
 
   useEffect(() => {
-    if (!ymapsReady || !mapRef.current) return;
-    
-    if (mapInstance) {
-      mapInstance.geoObjects.removeAll();
-    } else {
-      const ymaps = (window as any).ymaps;
-      const map = new ymaps.Map(mapRef.current, {
-        center: [48.5, 34.5],
-        zoom: 6,
-        controls: ["zoomControl", "fullscreenControl"],
-        type: "yandex#hybrid",
-      });
-
-      map.options.set("suppressMapOpenBlock", true);
-      map.behaviors.disable("scrollZoom");
-      setMapInstance(map);
-    }
+    if (!ymapsReady || !mapRef.current || mapInstance) return;
 
     const ymaps = (window as any).ymaps;
-    const map = mapInstance || new ymaps.Map(mapRef.current, {
+    const map = new ymaps.Map(mapRef.current, {
       center: [48.5, 34.5],
       zoom: 6,
       controls: ["zoomControl", "fullscreenControl"],
@@ -214,15 +186,6 @@ export default function InteractiveMap({
       document.head.appendChild(style);
     }
 
-    const getBorderRadius = () => {
-      switch(markerStyle) {
-        case 'circle': return '50%';
-        case 'square': return '0';
-        case 'rounded': return '12px';
-        default: return '50%';
-      }
-    };
-
     markers
       .filter((marker) => marker.category === "battle")
       .forEach((marker) => {
@@ -231,7 +194,7 @@ export default function InteractiveMap({
         
         const balloonContent = imageUrl 
           ? `<div style="padding: 10px; min-width: 250px; max-width: 300px;">
-              <img src="${imageUrl}" alt="${marker.title}" style="width: 100%; height: ${balloonImageHeight}px; object-fit: cover; border-radius: 8px; margin-bottom: 8px;" />
+              <img src="${imageUrl}" alt="${marker.title}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 8px;" />
               <strong style="font-size: 14px; color: #dc2626; display: block; margin-bottom: 4px;">${marker.title}</strong>
               <span style="color: #666; font-size: 12px;">${marker.date}</span>
             </div>`
@@ -243,10 +206,9 @@ export default function InteractiveMap({
         let placemarkOptions: any;
         
         if (imageUrl) {
-          const borderRadius = getBorderRadius();
           const ImageIconLayout = ymaps.templateLayoutFactory.createClass(
-            `<div style="position: relative; width: ${markerSize}px; height: ${markerSize}px;">
-              <div style="position: absolute; top: 0; left: 0; width: ${markerSize}px; height: ${markerSize}px; border-radius: ${borderRadius}; border: 4px solid #dc2626; overflow: hidden; box-shadow: 0 0 15px rgba(220, 38, 38, 0.6), 0 0 30px rgba(220, 38, 38, 0.3); animation: pulse-border 2s ease-in-out infinite;">
+            `<div style="position: relative; width: 60px; height: 60px;">
+              <div style="position: absolute; top: 0; left: 0; width: 60px; height: 60px; border-radius: 50%; border: 4px solid #dc2626; overflow: hidden; box-shadow: 0 0 15px rgba(220, 38, 38, 0.6), 0 0 30px rgba(220, 38, 38, 0.3); animation: pulse-border 2s ease-in-out infinite;">
                 <img src="${imageUrl}" style="width: 100%; height: 100%; object-fit: cover;" />
               </div>
               <style>
@@ -261,9 +223,9 @@ export default function InteractiveMap({
           placemarkOptions = {
             iconLayout: ImageIconLayout,
             iconShape: {
-              type: markerStyle === 'circle' ? 'Circle' : 'Rectangle',
+              type: 'Circle',
               coordinates: [0, 0],
-              radius: markerSize / 2
+              radius: 30
             }
           };
         } else {
@@ -272,7 +234,7 @@ export default function InteractiveMap({
             iconImageHref:
               "data:image/svg+xml;base64," +
               btoa(`
-              <svg width="${markerSize}" height="${markerSize}" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+              <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
                 <style>
                   @keyframes pulse {
                     0%, 100% { opacity: 0.3; r: 28; }
@@ -289,8 +251,8 @@ export default function InteractiveMap({
                 <circle cx="30" cy="30" r="3" fill="#991b1b"/>
               </svg>
             `),
-            iconImageSize: [markerSize, markerSize],
-            iconImageOffset: [-markerSize/2, -markerSize/2],
+            iconImageSize: [60, 60],
+            iconImageOffset: [-30, -30],
           };
         }
         
@@ -310,10 +272,8 @@ export default function InteractiveMap({
         map.geoObjects.add(placemark);
       });
 
-    if (!mapInstance) {
-      setMapInstance(map);
-    }
-  }, [ymapsReady, mapRef.current, markerSize, markerStyle, balloonImageHeight]);
+    setMapInstance(map);
+  }, [ymapsReady, mapRef.current]);
 
   useEffect(() => {
     if (!mapInstance) return;
@@ -349,61 +309,6 @@ export default function InteractiveMap({
                 </div>
               </div>
 
-            </div>
-            
-            <div className="backdrop-blur-sm rounded-md md:rounded-lg p-2 md:p-3 shadow-lg pointer-events-auto bg-[#000000] text-gray-50">
-              <h4 className="font-semibold text-[10px] md:text-xs mb-2 flex items-center gap-1">
-                <Icon name="Settings" size={12} className="md:w-3.5 md:h-3.5" />
-                <span>Настройки</span>
-              </h4>
-              
-              <div className="space-y-3">
-                <div className="space-y-1.5">
-                  <Label htmlFor="marker-size" className="text-[9px] md:text-xs text-gray-300">
-                    Размер меток: {markerSize}px
-                  </Label>
-                  <Slider
-                    id="marker-size"
-                    min={40}
-                    max={100}
-                    step={10}
-                    value={[markerSize]}
-                    onValueChange={(value) => setMarkerSize(value[0])}
-                    className="w-32 md:w-40"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <Label htmlFor="marker-style" className="text-[9px] md:text-xs text-gray-300">
-                    Стиль меток
-                  </Label>
-                  <Select value={markerStyle} onValueChange={(value: any) => setMarkerStyle(value)}>
-                    <SelectTrigger id="marker-style" className="h-7 text-[10px] md:text-xs w-32 md:w-40">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="circle">Круглые</SelectItem>
-                      <SelectItem value="rounded">Скругленные</SelectItem>
-                      <SelectItem value="square">Квадратные</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-1.5">
-                  <Label htmlFor="balloon-height" className="text-[9px] md:text-xs text-gray-300">
-                    Высота превью: {balloonImageHeight}px
-                  </Label>
-                  <Slider
-                    id="balloon-height"
-                    min={100}
-                    max={300}
-                    step={25}
-                    value={[balloonImageHeight]}
-                    onValueChange={(value) => setBalloonImageHeight(value[0])}
-                    className="w-32 md:w-40"
-                  />
-                </div>
-              </div>
             </div>
 
             <div className="backdrop-blur-sm p-1 md:p-2 shadow-lg pointer-events-auto rounded-lg md:rounded-xl bg-[#000000]">
