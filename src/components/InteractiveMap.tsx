@@ -1,121 +1,121 @@
-import { useState, useEffect, useRef } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import Icon from '@/components/ui/icon';
+import { useState, useEffect, useRef } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import Icon from "@/components/ui/icon";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
+} from "@/components/ui/tooltip";
 
 interface MapMarker {
   id: string;
   eventId: string;
   title: string;
-  category: 'campaign' | 'battle' | 'unit' | 'politics' | 'weapons';
+  category: "campaign" | "battle" | "unit" | "politics" | "weapons";
   coordinates: [number, number];
   date: string;
 }
 
 const markers: MapMarker[] = [
   {
-    id: 'm1',
-    eventId: '1',
-    title: 'Начало СВО',
-    category: 'politics',
+    id: "m1",
+    eventId: "1",
+    title: "Начало СВО",
+    category: "politics",
     coordinates: [50.4501, 30.5234],
-    date: '24 февраля 2022',
+    date: "24 февраля 2022",
   },
   {
-    id: 'm2',
-    eventId: '2',
-    title: 'Киевская операция',
-    category: 'campaign',
+    id: "m2",
+    eventId: "2",
+    title: "Киевская операция",
+    category: "campaign",
     coordinates: [50.4501, 30.5234],
-    date: 'Март 2022',
+    date: "Март 2022",
   },
   {
-    id: 'm3',
-    eventId: '3',
-    title: 'Битва за Мариуполь',
-    category: 'battle',
+    id: "m3",
+    eventId: "3",
+    title: "Битва за Мариуполь",
+    category: "battle",
     coordinates: [47.0971, 37.5432],
-    date: 'Май 2022',
+    date: "Май 2022",
   },
   {
-    id: 'm4',
-    eventId: '4',
-    title: 'Референдумы',
-    category: 'politics',
+    id: "m4",
+    eventId: "4",
+    title: "Референдумы",
+    category: "politics",
     coordinates: [47.8388, 35.1396],
-    date: 'Сентябрь 2022',
+    date: "Сентябрь 2022",
   },
   {
-    id: 'm5',
-    eventId: '5',
-    title: 'Добровольческие формирования',
-    category: 'unit',
+    id: "m5",
+    eventId: "5",
+    title: "Добровольческие формирования",
+    category: "unit",
     coordinates: [48.5132, 39.2085],
-    date: 'Декабрь 2022',
+    date: "Декабрь 2022",
   },
   {
-    id: 'm5a',
-    eventId: '5a',
-    title: 'Высадка гостомельского десанта',
-    category: 'battle',
+    id: "m5a",
+    eventId: "5a",
+    title: "Высадка гостомельского десанта",
+    category: "battle",
     coordinates: [50.6037, 30.1919],
-    date: '24 февраля 2022',
+    date: "24 февраля 2022",
   },
   {
-    id: 'm6',
-    eventId: '6',
-    title: 'Взятие Артёмовска',
-    category: 'battle',
+    id: "m6",
+    eventId: "6",
+    title: "Взятие Артёмовска",
+    category: "battle",
     coordinates: [48.5924, 37.9991],
-    date: 'Май 2023',
+    date: "Май 2023",
   },
   {
-    id: 'm7',
-    eventId: '7',
-    title: 'Калибр',
-    category: 'weapons',
+    id: "m7",
+    eventId: "7",
+    title: "Калибр",
+    category: "weapons",
     coordinates: [46.4825, 30.7233],
-    date: 'Март 2022',
+    date: "Март 2022",
   },
   {
-    id: 'm8',
-    eventId: '8',
-    title: 'БПЛА',
-    category: 'weapons',
+    id: "m8",
+    eventId: "8",
+    title: "БПЛА",
+    category: "weapons",
     coordinates: [48.0159, 37.8028],
-    date: 'Июнь 2022',
+    date: "Июнь 2022",
   },
   {
-    id: 'm9',
-    eventId: '9',
-    title: 'Кинжал',
-    category: 'weapons',
+    id: "m9",
+    eventId: "9",
+    title: "Кинжал",
+    category: "weapons",
     coordinates: [49.5883, 34.5514],
-    date: 'Октябрь 2022',
+    date: "Октябрь 2022",
   },
 ];
 
 const categoryColors = {
-  campaign: 'bg-primary hover:bg-primary/80',
-  battle: 'bg-secondary hover:bg-secondary/80',
-  unit: 'bg-accent hover:bg-accent/80',
-  politics: 'bg-muted hover:bg-muted/80',
-  weapons: 'bg-destructive hover:bg-destructive/80',
+  campaign: "bg-primary hover:bg-primary/80",
+  battle: "bg-secondary hover:bg-secondary/80",
+  unit: "bg-accent hover:bg-accent/80",
+  politics: "bg-muted hover:bg-muted/80",
+  weapons: "bg-destructive hover:bg-destructive/80",
 };
 
 const categoryIcons = {
-  campaign: 'Target',
-  battle: 'Swords',
-  unit: 'Shield',
-  politics: 'Landmark',
-  weapons: 'Crosshair',
+  campaign: "Target",
+  battle: "Swords",
+  unit: "Shield",
+  politics: "Landmark",
+  weapons: "Crosshair",
 };
 
 interface InteractiveMapProps {
@@ -123,16 +123,19 @@ interface InteractiveMapProps {
   selectedEventId?: string | null;
 }
 
-export default function InteractiveMap({ onMarkerClick, selectedEventId }: InteractiveMapProps) {
+export default function InteractiveMap({
+  onMarkerClick,
+  selectedEventId,
+}: InteractiveMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const [mapInstance, setMapInstance] = useState<any>(null);
   const [ymapsReady, setYmapsReady] = useState(false);
-  const [mapType, setMapType] = useState<'map' | 'satellite' | 'hybrid'>('map');
+  const [mapType, setMapType] = useState<"map" | "satellite" | "hybrid">("map");
   const [showLostArmour, setShowLostArmour] = useState(false);
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=';
+    const script = document.createElement("script");
+    script.src = "https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=";
     script.async = true;
     script.onload = () => {
       (window as any).ymaps.ready(() => {
@@ -155,16 +158,16 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
     const map = new ymaps.Map(mapRef.current, {
       center: [48.5, 34.5],
       zoom: 6,
-      controls: ['zoomControl', 'fullscreenControl'],
-      type: 'yandex#hybrid',
+      controls: ["zoomControl", "fullscreenControl"],
+      type: "yandex#hybrid",
     });
 
-    map.options.set('suppressMapOpenBlock', true);
-    map.behaviors.disable('scrollZoom');
-    
+    map.options.set("suppressMapOpenBlock", true);
+    map.behaviors.disable("scrollZoom");
+
     const mapContainer = mapRef.current;
     if (mapContainer) {
-      const style = document.createElement('style');
+      const style = document.createElement("style");
       style.textContent = `
         ymaps[class*="ground-pane"] {
           filter: brightness(0.7) saturate(0.8) hue-rotate(-10deg);
@@ -183,7 +186,7 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
     }
 
     markers
-      .filter((marker) => marker.category === 'battle')
+      .filter((marker) => marker.category === "battle")
       .forEach((marker) => {
         const placemark = new ymaps.Placemark(
           marker.coordinates,
@@ -195,8 +198,10 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
             </div>`,
           },
           {
-            iconLayout: 'default#image',
-            iconImageHref: 'data:image/svg+xml;base64,' + btoa(`
+            iconLayout: "default#image",
+            iconImageHref:
+              "data:image/svg+xml;base64," +
+              btoa(`
               <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
                 <style>
                   @keyframes pulse {
@@ -216,10 +221,10 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
             `),
             iconImageSize: [60, 60],
             iconImageOffset: [-30, -30],
-          }
+          },
         );
 
-        placemark.events.add('click', () => {
+        placemark.events.add("click", () => {
           onMarkerClick?.(marker.eventId);
         });
 
@@ -231,12 +236,12 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
 
   useEffect(() => {
     if (!mapInstance) return;
-    
-    let newType = 'yandex#hybrid';
-    if (mapType === 'satellite') {
-      newType = 'yandex#satellite';
-    } else if (mapType === 'map') {
-      newType = 'yandex#map';
+
+    let newType = "yandex#hybrid";
+    if (mapType === "satellite") {
+      newType = "yandex#satellite";
+    } else if (mapType === "map") {
+      newType = "yandex#map";
     }
     mapInstance.setType(newType);
   }, [mapType, mapInstance]);
@@ -244,8 +249,8 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
   useEffect(() => {
     if (!mapInstance || !showLostArmour) return;
 
-    const iframe = document.createElement('iframe');
-    iframe.src = 'https://www.lostarmour.info/map/';
+    const iframe = document.createElement("iframe");
+    iframe.src = "https://www.lostarmour.info/map/";
     iframe.style.cssText = `
       position: absolute;
       top: 0;
@@ -256,7 +261,7 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
       pointer-events: auto;
       z-index: 20;
     `;
-    
+
     const mapContainer = mapRef.current;
     if (mapContainer) {
       mapContainer.appendChild(iframe);
@@ -287,27 +292,56 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
                   <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-red-800" />
                   <span>Сражение</span>
                 </div>
+              </div>
+              <Button
+                variant={showLostArmour ? "default" : "outline"}
+                size="sm"
+                onClick={() => setShowLostArmour(!showLostArmour)}
+                className="mt-2 h-6 px-2 md:h-7 md:px-3 text-[9px] md:text-xs w-full"
+              >
+                Карта LostArmour
+              </Button>
+            </div>
 
+            <div className="backdrop-blur-sm p-1 md:p-2 shadow-lg pointer-events-auto rounded-lg md:rounded-xl bg-[#000000]">
+              <div className="flex gap-0.5 md:gap-1">
+                <Button
+                  variant={mapType === "hybrid" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setMapType("hybrid")}
+                  className="h-6 px-1.5 md:h-8 md:px-3 text-[10px] md:text-sm"
                 >
-                  <Icon name="Layers" size={12} className="mr-0.5 md:mr-1 md:w-3.5 md:h-3.5" />
+                  <Icon
+                    name="Layers"
+                    size={12}
+                    className="mr-0.5 md:mr-1 md:w-3.5 md:h-3.5"
+                  />
                   <span className="hidden xs:inline">Темная</span>
                 </Button>
                 <Button
-                  variant={mapType === 'satellite' ? 'default' : 'ghost'}
+                  variant={mapType === "satellite" ? "default" : "ghost"}
                   size="sm"
-                  onClick={() => setMapType('satellite')}
+                  onClick={() => setMapType("satellite")}
                   className="h-6 px-1.5 md:h-8 md:px-3 text-[10px] md:text-sm"
                 >
-                  <Icon name="Satellite" size={12} className="mr-0.5 md:mr-1 md:w-3.5 md:h-3.5" />
+                  <Icon
+                    name="Satellite"
+                    size={12}
+                    className="mr-0.5 md:mr-1 md:w-3.5 md:h-3.5"
+                  />
                   <span className="hidden xs:inline">Спутник</span>
                 </Button>
                 <Button
-                  variant={mapType === 'map' ? 'default' : 'ghost'}
+                  variant={mapType === "map" ? "default" : "ghost"}
                   size="sm"
-                  onClick={() => setMapType('map')}
+                  onClick={() => setMapType("map")}
                   className="h-6 px-1.5 md:h-8 md:px-3 text-[10px] md:text-sm"
                 >
-                  <Icon name="Map" size={12} className="mr-0.5 md:mr-1 md:w-3.5 md:h-3.5" />
+                  <Icon
+                    name="Map"
+                    size={12}
+                    className="mr-0.5 md:mr-1 md:w-3.5 md:h-3.5"
+                  />
                   <span className="hidden xs:inline">Светлая</span>
                 </Button>
               </div>
@@ -319,7 +353,7 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
               variant="secondary"
               size="sm"
               className="backdrop-blur-sm bg-background/90 pointer-events-auto"
-              onClick={() => onMarkerClick?.('')}
+              onClick={() => onMarkerClick?.("")}
             >
               <Icon name="ZoomOut" size={16} className="mr-2" />
               Сбросить выделение
