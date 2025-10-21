@@ -34,6 +34,19 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
           </div>
         </CardHeader>
         <CardContent>
+          {event.preview && (
+            <div className="mb-4">
+              <img
+                src={event.preview}
+                alt={event.title}
+                className="rounded-lg w-full h-48 object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                onClick={() => {
+                  const previewIndex = event.images.indexOf(event.preview!);
+                  onImageClick(event.preview!, previewIndex >= 0 ? previewIndex : 0, event.images);
+                }}
+              />
+            </div>
+          )}
           <p className="text-muted-foreground mb-4">{event.description}</p>
           <div className="flex gap-2">
             <Dialog>
