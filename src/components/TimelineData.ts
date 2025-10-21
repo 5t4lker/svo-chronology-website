@@ -75,15 +75,7 @@ export const events: TimelineEvent[] = [
 
 В тот же день, 29 марта, министр обороны РФ Сергей Шойгу на селекторном совещании заявил, что отвод осуществляется в связи с выполнением первого этапа спецоперации и необходимости сосредоточить силы на освобождении Донбасса. В конце марта и начале апреля российские войска оставили населённые пункты в Киевской области, в том числе Ирпень, Бучу и Гостомель.`,
     images: [
-      "https://cdn.poehali.dev/files/1ecb88fb-8add-4519-bde3-e3eec24fe955.jpg",
       "https://cdn.poehali.dev/files/71c69d1a-52b5-4905-b679-85a23425de9f.jpg",
-      "https://cdn.poehali.dev/files/f123028a-423a-4066-a311-1b10f4267e02.jpg",
-      "https://cdn.poehali.dev/files/30122cc4-0eca-45f9-b7cf-33b71f88f9d3.jpg",
-      "https://cdn.poehali.dev/files/38ffee8d-b364-4731-9358-b936b4b673d2.png",
-      "https://cdn.poehali.dev/files/ce0753d1-0c55-46e9-9e9b-058a16dd5ea4.png",
-      "https://cdn.poehali.dev/files/3bf460e4-3f84-4626-8768-c10926c5f768.png",
-      "https://cdn.poehali.dev/files/e9cd3204-00b4-4093-9e0c-a4fb6a5348ac.jpg",
-      "https://cdn.poehali.dev/files/0e4f2d49-6d16-4926-85d1-a522d5693aee.jpg",
     ],
   },
   {
