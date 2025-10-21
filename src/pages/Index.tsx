@@ -46,7 +46,7 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-background">
       <div className="relative bg-gradient-to-br from-primary/10 via-background to-secondary/10 rounded-none px-0 py-[31px]">
-        <div className="container text-center py-0 px-[15px] my-0 mx-[9px]">
+        <div className="container text-center py-0 my-0 mx-[9px] px-0">
           <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary text-center py-0">Хроники СВО</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Информационная база ключевых событий специальной военной операции
