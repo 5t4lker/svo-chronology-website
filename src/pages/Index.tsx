@@ -245,6 +245,7 @@ export default function Index() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
   const [highlightedEventId, setHighlightedEventId] = useState<string | null>(null);
+  const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const eventRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   const filteredEvents = selectedCategory
@@ -392,7 +393,8 @@ export default function Index() {
                                       <img
                                         src={event.images[pIdx]}
                                         alt={`${event.title} - изображение ${pIdx + 1}`}
-                                        className="rounded-lg w-full max-w-2xl mx-auto h-auto object-cover mt-4"
+                                        className="rounded-lg w-full max-w-2xl mx-auto h-auto object-cover mt-4 cursor-pointer hover:opacity-80 transition-opacity"
+                                        onClick={() => setFullscreenImage(event.images[pIdx])}
                                       />
                                     )}
                                   </div>
@@ -411,13 +413,14 @@ export default function Index() {
                                 </TabsTrigger>
                               </TabsList>
                               <TabsContent value="images" className="space-y-4 mt-4">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                                   {event.images.map((img, idx) => (
                                     <img
                                       key={idx}
                                       src={img}
                                       alt={`${event.title} - изображение ${idx + 1}`}
-                                      className="rounded-lg w-full h-64 object-cover"
+                                      className="rounded-lg w-full h-32 md:h-40 object-cover cursor-pointer hover:opacity-80 transition-opacity"
+                                      onClick={() => setFullscreenImage(img)}
                                     />
                                   ))}
                                 </div>
@@ -464,6 +467,26 @@ export default function Index() {
           </p>
         </div>
       </footer>
+
+      {fullscreenImage && (
+        <div 
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 cursor-pointer"
+          onClick={() => setFullscreenImage(null)}
+        >
+          <button
+            className="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/70 rounded-full p-2 transition-colors"
+            onClick={() => setFullscreenImage(null)}
+          >
+            <Icon name="X" size={24} />
+          </button>
+          <img
+            src={fullscreenImage}
+            alt="Полноэкранное изображение"
+            className="max-w-full max-h-full object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 }
