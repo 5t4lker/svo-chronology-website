@@ -8,6 +8,7 @@ import { events } from '@/components/TimelineData';
 
 export default function Index() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
   const [highlightedEventId, setHighlightedEventId] = useState<string | null>(null);
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
@@ -16,7 +17,9 @@ export default function Index() {
   const eventRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   const filteredEvents = selectedCategory
-    ? events.filter(e => e.category === selectedCategory)
+    ? selectedSubcategory
+      ? events.filter(e => e.category === selectedCategory && e.subcategory === selectedSubcategory)
+      : events.filter(e => e.category === selectedCategory)
     : events.filter(e => e.category !== 'weapons');
 
   const handleMarkerClick = (eventId: string) => {
@@ -71,7 +74,12 @@ export default function Index() {
 
           <CategoryFilter 
             selectedCategory={selectedCategory}
-            onCategoryChange={setSelectedCategory}
+            selectedSubcategory={selectedSubcategory}
+            onCategoryChange={(category) => {
+              setSelectedCategory(category);
+              setSelectedSubcategory(null);
+            }}
+            onSubcategoryChange={setSelectedSubcategory}
           />
 
           <div className="space-y-6">
