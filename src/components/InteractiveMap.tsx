@@ -131,7 +131,6 @@ export default function InteractiveMap({
   const [mapInstance, setMapInstance] = useState<any>(null);
   const [ymapsReady, setYmapsReady] = useState(false);
   const [mapType, setMapType] = useState<"map" | "satellite" | "hybrid">("map");
-  const [showLostArmour, setShowLostArmour] = useState(false);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -246,33 +245,7 @@ export default function InteractiveMap({
     mapInstance.setType(newType);
   }, [mapType, mapInstance]);
 
-  useEffect(() => {
-    if (!mapInstance || !showLostArmour) return;
 
-    const iframe = document.createElement("iframe");
-    iframe.src = "https://www.lostarmour.info/map/";
-    iframe.style.cssText = `
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-      pointer-events: auto;
-      z-index: 20;
-    `;
-
-    const mapContainer = mapRef.current;
-    if (mapContainer) {
-      mapContainer.appendChild(iframe);
-    }
-
-    return () => {
-      if (mapContainer && mapContainer.contains(iframe)) {
-        mapContainer.removeChild(iframe);
-      }
-    };
-  }, [showLostArmour, mapInstance]);
 
   return (
     <Card className="overflow-hidden">
@@ -293,14 +266,7 @@ export default function InteractiveMap({
                   <span>Сражение</span>
                 </div>
               </div>
-              <Button
-                variant={showLostArmour ? "default" : "outline"}
-                size="sm"
-                onClick={() => setShowLostArmour(!showLostArmour)}
-                className="mt-2 h-6 px-2 md:h-7 md:px-3 text-[9px] md:text-xs w-full"
-              >
-                Карта LostArmour
-              </Button>
+
             </div>
 
             <div className="backdrop-blur-sm p-1 md:p-2 shadow-lg pointer-events-auto rounded-lg md:rounded-xl bg-[#000000]">
