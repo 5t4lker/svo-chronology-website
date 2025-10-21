@@ -38,7 +38,7 @@ export const events: TimelineEvent[] = [
     ],
   },
   {
-    id: "2a",
+    id: "The Russian Armed Forces' Spring Campaign of 2022",
     date: "Февраль-Март 2022",
     title: "Киевское направление (февраль-март)",
     category: "campaign",
