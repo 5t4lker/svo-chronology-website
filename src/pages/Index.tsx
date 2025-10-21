@@ -246,6 +246,8 @@ export default function Index() {
   const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
   const [highlightedEventId, setHighlightedEventId] = useState<string | null>(null);
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const [currentEventImages, setCurrentEventImages] = useState<string[]>([]);
   const eventRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   const filteredEvents = selectedCategory
@@ -394,7 +396,11 @@ export default function Index() {
                                         src={event.images[pIdx]}
                                         alt={`${event.title} - изображение ${pIdx + 1}`}
                                         className="rounded-lg w-full max-w-2xl mx-auto h-auto object-cover mt-4 cursor-pointer hover:opacity-80 transition-opacity"
-                                        onClick={() => setFullscreenImage(event.images[pIdx])}
+                                        onClick={() => {
+                                          setFullscreenImage(event.images[pIdx]);
+                                          setCurrentImageIndex(pIdx);
+                                          setCurrentEventImages(event.images);
+                                        }}
                                       />
                                     )}
                                   </div>
@@ -420,7 +426,11 @@ export default function Index() {
                                       src={img}
                                       alt={`${event.title} - изображение ${idx + 1}`}
                                       className="rounded-lg w-full h-32 md:h-40 object-cover cursor-pointer hover:opacity-80 transition-opacity"
-                                      onClick={() => setFullscreenImage(img)}
+                                      onClick={() => {
+                                        setFullscreenImage(img);
+                                        setCurrentImageIndex(idx);
+                                        setCurrentEventImages(event.images);
+                                      }}
                                     />
                                   ))}
                                 </div>
@@ -470,15 +480,48 @@ export default function Index() {
 
       {fullscreenImage && (
         <div 
-          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 cursor-pointer"
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
           onClick={() => setFullscreenImage(null)}
         >
           <button
-            className="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/70 rounded-full p-2 transition-colors"
+            className="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/70 rounded-full p-3 transition-colors z-10"
             onClick={() => setFullscreenImage(null)}
           >
             <Icon name="X" size={24} />
           </button>
+
+          {currentEventImages.length > 1 && currentImageIndex > 0 && (
+            <button
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-white bg-black/50 hover:bg-black/70 rounded-full p-3 transition-colors z-10"
+              onClick={(e) => {
+                e.stopPropagation();
+                const newIndex = currentImageIndex - 1;
+                setCurrentImageIndex(newIndex);
+                setFullscreenImage(currentEventImages[newIndex]);
+              }}
+            >
+              <Icon name="ChevronLeft" size={32} />
+            </button>
+          )}
+
+          {currentEventImages.length > 1 && currentImageIndex < currentEventImages.length - 1 && (
+            <button
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white bg-black/50 hover:bg-black/70 rounded-full p-3 transition-colors z-10"
+              onClick={(e) => {
+                e.stopPropagation();
+                const newIndex = currentImageIndex + 1;
+                setCurrentImageIndex(newIndex);
+                setFullscreenImage(currentEventImages[newIndex]);
+              }}
+            >
+              <Icon name="ChevronRight" size={32} />
+            </button>
+          )}
+
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white bg-black/50 px-4 py-2 rounded-full text-sm">
+            {currentImageIndex + 1} / {currentEventImages.length}
+          </div>
+
           <img
             src={fullscreenImage}
             alt="Полноэкранное изображение"
