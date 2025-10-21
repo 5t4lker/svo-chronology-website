@@ -287,20 +287,7 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
                   <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-red-800" />
                   <span>Сражение</span>
                 </div>
-              </div>
-              <Button
-                variant={showLostArmour ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setShowLostArmour(!showLostArmour)}
-                className="mt-2 h-6 px-2 md:h-7 md:px-3 text-[9px] md:text-xs w-full"
-            
-            <div className="backdrop-blur-sm p-1 md:p-2 shadow-lg pointer-events-auto rounded-lg md:rounded-xl bg-[#000000]">
-              <div className="flex gap-0.5 md:gap-1">
-                <Button
-                  variant={mapType === 'hybrid' ? 'default' : 'ghost'}
-                  size="sm"
-                  onClick={() => setMapType('hybrid')}
-                  className="h-6 px-1.5 md:h-8 md:px-3 text-[10px] md:text-sm"
+
                 >
                   <Icon name="Layers" size={12} className="mr-0.5 md:mr-1 md:w-3.5 md:h-3.5" />
                   <span className="hidden xs:inline">Темная</span>
