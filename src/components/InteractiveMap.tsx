@@ -293,8 +293,6 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
                 size="sm"
                 onClick={() => setShowLostArmour(!showLostArmour)}
                 className="mt-2 h-6 px-2 md:h-7 md:px-3 text-[9px] md:text-xs w-full"
-              >Карта LostArmour</Button>
-            </div>
             
             <div className="backdrop-blur-sm p-1 md:p-2 shadow-lg pointer-events-auto rounded-lg md:rounded-xl bg-[#000000]">
               <div className="flex gap-0.5 md:gap-1">
