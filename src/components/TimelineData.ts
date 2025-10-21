@@ -84,7 +84,6 @@ export const events: TimelineEvent[] = [
       "https://cdn.poehali.dev/files/3bf460e4-3f84-4626-8768-c10926c5f768.png",
       "https://cdn.poehali.dev/files/e9cd3204-00b4-4093-9e0c-a4fb6a5348ac.jpg",
       "https://cdn.poehali.dev/files/0e4f2d49-6d16-4926-85d1-a522d5693aee.jpg",
-      "https://cdn.poehali.dev/files/1fabc374-b6a0-4a0a-89bb-4f19bd84dc01.jpg",
     ],
   },
   {
