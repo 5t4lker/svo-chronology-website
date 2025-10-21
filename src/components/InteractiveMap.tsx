@@ -231,7 +231,7 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
       height: 100%;
       border: none;
       pointer-events: auto;
-      z-index: 5;
+      z-index: 20;
     `;
     
     const mapContainer = mapRef.current;
@@ -252,7 +252,7 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
         <div className="relative w-full aspect-video bg-muted">
           <div ref={mapRef} className="w-full h-full" />
 
-          <div className="absolute top-2 left-2 right-2 md:top-4 md:left-4 md:right-4 flex flex-wrap gap-1 md:gap-2 pointer-events-none z-10">
+          <div className="absolute top-2 left-2 right-2 md:top-4 md:left-4 md:right-4 flex flex-wrap gap-1 md:gap-2 pointer-events-none z-30">
             <div className="backdrop-blur-sm rounded-md md:rounded-lg p-1.5 md:p-3 shadow-lg pointer-events-auto bg-[#000000]">
               <h3 className="font-semibold text-[10px] md:text-sm mb-1 md:mb-2 flex items-center gap-1 md:gap-2 text-gray-50">
                 <Icon name="Map" size={12} className="md:w-4 md:h-4" />
@@ -271,7 +271,7 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
                 onClick={() => setShowLostArmour(!showLostArmour)}
                 className="mt-2 h-6 px-2 md:h-7 md:px-3 text-[9px] md:text-xs w-full"
               >
-                <Icon name="Tank" size={10} className="mr-1 md:w-3 md:h-3" />
+                <Icon name="Truck" size={10} className="mr-1 md:w-3 md:h-3" />
                 {showLostArmour ? 'Скрыть' : 'Потери'} LostArmour
               </Button>
             </div>
