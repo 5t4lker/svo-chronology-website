@@ -289,7 +289,7 @@ export default function InteractiveMap({
               </h3>
               <div className="flex flex-wrap gap-1 md:gap-2 text-[9px] md:text-xs bg-[#000000]">
                 <div className="flex items-center gap-0.5 md:gap-1">
-                  <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-red-800" />
+                  <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-red-700" />
                   <span>Сражение</span>
                 </div>
               </div>
