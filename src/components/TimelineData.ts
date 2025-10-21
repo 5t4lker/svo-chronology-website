@@ -38,7 +38,7 @@ export const events: TimelineEvent[] = [
     ],
   },
   {
-    id: "The Russian Armed Forces' Spring Campaign of 2022",
+    id: "2a",
     date: "Февраль-Март 2022",
     title: "Киевское направление (февраль-март)",
     category: "campaign",
@@ -206,7 +206,7 @@ export const events: TimelineEvent[] = [
 ];
 
 export const categoryConfig = {
-  campaign: { label: "Кампания", "The Russian Armed Forces' Spring Campaign of 2022" icon: "Target", color: "bg-primary" },
+  campaign: { label: "Кампания", icon: "Target", color: "bg-primary" },
   battle: { label: "Сражение", icon: "Swords", color: "bg-secondary" },
   unit: { label: "Подразделение", icon: "Shield", color: "bg-accent" },
   politics: { label: "Политика", icon: "Landmark", color: "bg-muted" },
