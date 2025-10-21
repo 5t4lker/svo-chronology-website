@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Icon from '@/components/ui/icon';
 
 interface ImageLightboxProps {
@@ -17,9 +18,24 @@ export default function ImageLightbox({
   onPrevious,
   onNext,
 }: ImageLightboxProps) {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+        onPrevious();
+      } else if (e.key === 'ArrowRight' && currentIndex < allImages.length - 1) {
+        onNext();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIndex, allImages.length, onClose, onPrevious, onNext]);
+
   return (
     <div 
-      className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-black/95 z-[9999] flex items-center justify-center p-4"
       onClick={onClose}
     >
       <button

@@ -156,8 +156,31 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
       center: [48.5, 34.5],
       zoom: 6,
       controls: ['zoomControl', 'fullscreenControl'],
-      type: 'yandex#map',
+      type: 'yandex#hybrid',
     });
+
+    map.options.set('suppressMapOpenBlock', true);
+    map.behaviors.disable('scrollZoom');
+    
+    const mapContainer = mapRef.current;
+    if (mapContainer) {
+      const style = document.createElement('style');
+      style.textContent = `
+        ymaps[class*="ground-pane"] {
+          filter: brightness(0.7) saturate(0.8) hue-rotate(-10deg);
+        }
+        ymaps[class*="places-pane"] text {
+          fill: #ff4444 !important;
+          stroke: #330000 !important;
+          stroke-width: 2px;
+          paint-order: stroke;
+        }
+        ymaps[class*="copyrights-pane"] {
+          opacity: 0.5;
+        }
+      `;
+      document.head.appendChild(style);
+    }
 
     markers
       .filter((marker) => marker.category === 'battle')
@@ -209,11 +232,11 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
   useEffect(() => {
     if (!mapInstance) return;
     
-    let newType = 'yandex#map';
+    let newType = 'yandex#hybrid';
     if (mapType === 'satellite') {
       newType = 'yandex#satellite';
-    } else if (mapType === 'hybrid') {
-      newType = 'yandex#hybrid';
+    } else if (mapType === 'map') {
+      newType = 'yandex#map';
     }
     mapInstance.setType(newType);
   }, [mapType, mapInstance]);
@@ -279,13 +302,13 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
             <div className="backdrop-blur-sm p-1 md:p-2 shadow-lg pointer-events-auto rounded-lg md:rounded-xl bg-[#000000]">
               <div className="flex gap-0.5 md:gap-1">
                 <Button
-                  variant={mapType === 'map' ? 'default' : 'ghost'}
+                  variant={mapType === 'hybrid' ? 'default' : 'ghost'}
                   size="sm"
-                  onClick={() => setMapType('map')}
+                  onClick={() => setMapType('hybrid')}
                   className="h-6 px-1.5 md:h-8 md:px-3 text-[10px] md:text-sm"
                 >
-                  <Icon name="Map" size={12} className="mr-0.5 md:mr-1 md:w-3.5 md:h-3.5" />
-                  <span className="hidden xs:inline">Карта</span>
+                  <Icon name="Layers" size={12} className="mr-0.5 md:mr-1 md:w-3.5 md:h-3.5" />
+                  <span className="hidden xs:inline">Темная</span>
                 </Button>
                 <Button
                   variant={mapType === 'satellite' ? 'default' : 'ghost'}
@@ -297,13 +320,13 @@ export default function InteractiveMap({ onMarkerClick, selectedEventId }: Inter
                   <span className="hidden xs:inline">Спутник</span>
                 </Button>
                 <Button
-                  variant={mapType === 'hybrid' ? 'default' : 'ghost'}
+                  variant={mapType === 'map' ? 'default' : 'ghost'}
                   size="sm"
-                  onClick={() => setMapType('hybrid')}
+                  onClick={() => setMapType('map')}
                   className="h-6 px-1.5 md:h-8 md:px-3 text-[10px] md:text-sm"
                 >
-                  <Icon name="Layers" size={12} className="mr-0.5 md:mr-1 md:w-3.5 md:h-3.5" />
-                  <span className="hidden xs:inline">Гибрид</span>
+                  <Icon name="Map" size={12} className="mr-0.5 md:mr-1 md:w-3.5 md:h-3.5" />
+                  <span className="hidden xs:inline">Светлая</span>
                 </Button>
               </div>
             </div>
