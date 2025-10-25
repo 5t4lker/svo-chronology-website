@@ -40,7 +40,7 @@ const markers: MapMarker[] = [
   },
   {
     id: "m3",
-    eventId: "3",
+    eventId: "5a",
     title: "Битва за Мариуполь",
     category: "battle",
     coordinates: [47.0971, 37.5432],
@@ -64,7 +64,7 @@ const markers: MapMarker[] = [
   },
   {
     id: "m5a",
-    eventId: "5a",
+    eventId: "3",
     title: "Высадка гостомельского десанта",
     category: "battle",
     coordinates: [50.6037, 30.1919],
@@ -189,10 +189,10 @@ export default function InteractiveMap({
     markers
       .filter((marker) => marker.category === "battle")
       .forEach((marker) => {
-        const event = events.find(e => e.id === marker.eventId);
+        const event = events.find((e) => e.id === marker.eventId);
         const imageUrl = event?.preview || event?.images[0];
-        
-        const balloonContent = imageUrl 
+
+        const balloonContent = imageUrl
           ? `<div style="padding: 10px; min-width: 250px; max-width: 300px;">
               <img src="${imageUrl}" alt="${marker.title}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 8px;" />
               <strong style="font-size: 14px; color: #dc2626; display: block; margin-bottom: 4px;">${marker.title}</strong>
@@ -202,9 +202,9 @@ export default function InteractiveMap({
               <strong style="font-size: 14px; color: #dc2626;">${marker.title}</strong>
               <br><span style="color: #666; font-size: 12px;">${marker.date}</span>
             </div>`;
-        
+
         let placemarkOptions: any;
-        
+
         if (imageUrl) {
           const ImageIconLayout = ymaps.templateLayoutFactory.createClass(
             `<div style="position: relative; width: 60px; height: 60px;">
@@ -217,16 +217,16 @@ export default function InteractiveMap({
                   50% { box-shadow: 0 0 25px rgba(220, 38, 38, 0.8), 0 0 45px rgba(220, 38, 38, 0.5); }
                 }
               </style>
-            </div>`
+            </div>`,
           );
-          
+
           placemarkOptions = {
             iconLayout: ImageIconLayout,
             iconShape: {
-              type: 'Circle',
+              type: "Circle",
               coordinates: [0, 0],
-              radius: 30
-            }
+              radius: 30,
+            },
           };
         } else {
           placemarkOptions = {
@@ -255,14 +255,14 @@ export default function InteractiveMap({
             iconImageOffset: [-30, -30],
           };
         }
-        
+
         const placemark = new ymaps.Placemark(
           marker.coordinates,
           {
             hintContent: marker.title,
             balloonContent: balloonContent,
           },
-          placemarkOptions
+          placemarkOptions,
         );
 
         placemark.events.add("click", () => {
@@ -287,8 +287,6 @@ export default function InteractiveMap({
     mapInstance.setType(newType);
   }, [mapType, mapInstance]);
 
-
-
   return (
     <Card className="overflow-hidden">
       <CardContent className="p-0">
@@ -308,7 +306,6 @@ export default function InteractiveMap({
                   <span>Сражение</span>
                 </div>
               </div>
-
             </div>
 
             <div className="backdrop-blur-sm p-1 md:p-2 shadow-lg pointer-events-auto rounded-lg md:rounded-xl bg-[#000000]">
