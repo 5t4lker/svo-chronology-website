@@ -82,7 +82,6 @@ export const events: TimelineEvent[] = [
     images: [
       "https://cdn.poehali.dev/files/71c69d1a-52b5-4905-b679-85a23425de9f.jpg",
       "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Выдвижение_танкового_подразделения_в_Киевской_области_в_ходе_вторжения_на_Украину_006.png/960px-Выдвижение_танкового_подразделения_в_Киевской_области_в_ходе_вторжения_на_Украину_006.png",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/2022_Kyiv_Offensive.png/960px-2022_Kyiv_Offensive.png",
     ],
   },
   {
