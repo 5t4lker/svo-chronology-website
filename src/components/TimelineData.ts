@@ -118,6 +118,8 @@ export const events: TimelineEvent[] = [
     images: [
       "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/9760d6cf-6275-4dea-80f8-24ba848153ad.jpg",
     ],
+    prewiew:
+      "https://avatars.mds.yandex.net/i?id=81f4c1c4ae6f3f4278ebfbe18fcca42c_l-8491910-images-thumbs&n=13",
   },
   {
     id: "4",
