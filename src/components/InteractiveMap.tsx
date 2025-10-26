@@ -171,43 +171,16 @@ export default function InteractiveMap({
       const style = document.createElement("style");
       style.textContent = `
         ymaps[class*="ground-pane"] {
-          filter: brightness(0.3) saturate(1.5) hue-rotate(-15deg) contrast(1.2);
-          background: linear-gradient(135deg, #1a0000 0%, #0a0000 50%, #1a0000 100%);
-        }
-        ymaps[class*="places-pane"] {
-          filter: brightness(0.4) sepia(0.8) hue-rotate(-30deg) saturate(2);
+          filter: brightness(0.7) saturate(0.8) hue-rotate(-10deg);
         }
         ymaps[class*="places-pane"] text {
-          fill: #ff3333 !important;
-          stroke: #660000 !important;
-          stroke-width: 3px;
+          fill: #ff4444 !important;
+          stroke: #330000 !important;
+          stroke-width: 2px;
           paint-order: stroke;
-          filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8));
-        }
-        ymaps[class*="islets-pane"] path,
-        ymaps[class*="ground-pane"] path {
-          stroke: #cc0000 !important;
-          stroke-width: 2px !important;
-          filter: drop-shadow(0 0 6px rgba(204, 0, 0, 0.5));
-        }
-        ymaps[class*="events-pane"]:before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: radial-gradient(circle at 30% 40%, rgba(139, 0, 0, 0.15) 0%, transparent 60%),
-                      radial-gradient(circle at 70% 60%, rgba(139, 0, 0, 0.1) 0%, transparent 50%);
-          pointer-events: none;
-          z-index: 1;
         }
         ymaps[class*="copyrights-pane"] {
-          opacity: 0.3;
-          filter: brightness(0.5) sepia(1) hue-rotate(-30deg);
-        }
-        ymaps {
-          background: #0a0000 !important;
+          opacity: 0.5;
         }
       `;
       document.head.appendChild(style);
@@ -220,14 +193,14 @@ export default function InteractiveMap({
         const imageUrl = event?.preview || event?.images[0];
         
         const balloonContent = imageUrl 
-          ? `<div style="padding: 12px; min-width: 250px; max-width: 300px; background: linear-gradient(135deg, #1a0000 0%, #0f0000 100%); border: 2px solid #cc0000; border-radius: 10px; box-shadow: 0 0 20px rgba(204, 0, 0, 0.4), inset 0 0 30px rgba(139, 0, 0, 0.2);">
-              <img src="${imageUrl}" alt="${marker.title}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; border: 1px solid #cc0000; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);" />
-              <strong style="font-size: 15px; color: #ff3333; display: block; margin-bottom: 6px; text-shadow: 0 0 8px rgba(255, 51, 51, 0.8), 0 0 15px rgba(255, 0, 0, 0.5);">${marker.title}</strong>
-              <span style="color: #cc8888; font-size: 12px; text-shadow: 0 0 4px rgba(204, 136, 136, 0.5);">${marker.date}</span>
+          ? `<div style="padding: 10px; min-width: 250px; max-width: 300px;">
+              <img src="${imageUrl}" alt="${marker.title}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 8px;" />
+              <strong style="font-size: 14px; color: #dc2626; display: block; margin-bottom: 4px;">${marker.title}</strong>
+              <span style="color: #666; font-size: 12px;">${marker.date}</span>
             </div>`
-          : `<div style="padding: 12px; min-width: 200px; background: linear-gradient(135deg, #1a0000 0%, #0f0000 100%); border: 2px solid #cc0000; border-radius: 10px; box-shadow: 0 0 20px rgba(204, 0, 0, 0.4), inset 0 0 30px rgba(139, 0, 0, 0.2);">
-              <strong style="font-size: 15px; color: #ff3333; text-shadow: 0 0 8px rgba(255, 51, 51, 0.8), 0 0 15px rgba(255, 0, 0, 0.5);">${marker.title}</strong>
-              <br><span style="color: #cc8888; font-size: 12px; margin-top: 4px; display: inline-block; text-shadow: 0 0 4px rgba(204, 136, 136, 0.5);">${marker.date}</span>
+          : `<div style="padding: 10px; min-width: 200px;">
+              <strong style="font-size: 14px; color: #dc2626;">${marker.title}</strong>
+              <br><span style="color: #666; font-size: 12px;">${marker.date}</span>
             </div>`;
         
         let placemarkOptions: any;
