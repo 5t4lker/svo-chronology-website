@@ -39,7 +39,7 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
               <img
                 src={event.preview}
                 alt={event.title}
-                className="w-full h-70 cursor-pointer hover:opacity-70 transition-opacity rounded-lg px-0 mx-0 my-0 object-cover py-0"
+                className="w-full h-50 cursor-pointer hover:opacity-50 transition-opacity rounded-lg px-0 mx-0 my-0 object-cover py-0"
                 onClick={() => {
                   const previewIndex = event.images.indexOf(event.preview!);
                   onImageClick(event.preview!, previewIndex >= 0 ? previewIndex : 0, event.images);
