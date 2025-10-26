@@ -25,7 +25,7 @@ export const events: TimelineEvent[] = [
       "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/9760d6cf-6275-4dea-80f8-24ba848153ad.jpg",
     ],
     preview:
-      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/9760d6cf-6275-4dea-80f8-24ba848153ad.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/23/Vladimir_Putin_%282022-02-24%29.jpg",
   },
   {
     id: "2",
