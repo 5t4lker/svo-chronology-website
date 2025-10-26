@@ -114,8 +114,9 @@ export const events: TimelineEvent[] = [
 
 После взятия Гостомеля десантники продолжали удерживать позиции на аэродроме. Оттуда выдвигались в Ирпень и Озёра. Занимались разведкой, наблюдали за переправами, выискивали технику противника, выезжали в Бучу, сопровождали колонны. Во время выхода российских войск из Гостомеля в конце марта 2022 года, некоторые группы десантников прикрывали отход.`,
     images: [
-      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/9760d6cf-6275-4dea-80f8-24ba848153ad.jpg",
       "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Gostomel-airport.jpg/960px-Gostomel-airport.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Взятие_под_контроль_аэродрома_на_территории_Украины_011_%283to4%29.png/960px-Взятие_под_контроль_аэродрома_на_территории_Украины_011_%283to4%29.png",
+      "https://avatars.mds.yandex.net/i?id=81f4c1c4ae6f3f4278ebfbe18fcca42c_l-8491910-images-thumbs&n=13",
     ],
     prewiew:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Gostomel-airport.jpg/960px-Gostomel-airport.jpg",
