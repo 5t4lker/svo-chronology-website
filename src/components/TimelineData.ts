@@ -117,6 +117,7 @@ export const events: TimelineEvent[] = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Gostomel-airport.jpg/960px-Gostomel-airport.jpg",
       "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Взятие_под_контроль_аэродрома_на_территории_Украины_011_%283to4%29.png/960px-Взятие_под_контроль_аэродрома_на_территории_Украины_011_%283to4%29.png",
       "https://avatars.mds.yandex.net/i?id=81f4c1c4ae6f3f4278ebfbe18fcca42c_l-8491910-images-thumbs&n=13",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Hostomel_after_the_battle_%28962467%29.jpg/960px-Hostomel_after_the_battle_%28962467%29.jpg",
     ],
     prewiew:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Gostomel-airport.jpg/960px-Gostomel-airport.jpg",
