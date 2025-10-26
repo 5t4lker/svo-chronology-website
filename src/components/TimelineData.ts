@@ -82,6 +82,8 @@ export const events: TimelineEvent[] = [
     images: [
       "https://cdn.poehali.dev/files/71c69d1a-52b5-4905-b679-85a23425de9f.jpg",
     ],
+    preview:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/2022_Kyiv_Offensive.png/960px-2022_Kyiv_Offensive.png",
   },
   {
     id: "3",
