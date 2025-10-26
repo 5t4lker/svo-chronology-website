@@ -156,7 +156,7 @@ export const events: TimelineEvent[] = [
       "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/3d00b23d-2d85-415e-baa0-b27303354bfe.jpg",
     ],
     preview:
-      "https://sozcuo01.sozcucdn.com/wp-content/uploads/2022/04/04/iecrop/mariupol2-reuters_4_3_1649080682.jpg?w=1200&h=630&mode=crop&scale=both",
+      "https://avatars.mds.yandex.net/i?id=5ceadd2b59dd74953a61454b1f46a4f8f652f781-8427413-images-thumbs&n=13",
   },
   {
     id: "6",
