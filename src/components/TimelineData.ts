@@ -78,6 +78,11 @@ export const events: TimelineEvent[] = [
       "https://s3.iimg.su/s/30/gdhMbLDxjLw9jENz40DJ1wXAkGbiIj1bFFuBu0XI.jpg",
       "https://s3.iimg.su/s/30/g22X5sHxOKaaCIp8rOim7sLaydQelezrdyW8rG4r.jpg",
       "https://s3.iimg.su/s/30/gwgFO2kxfihEz0LOYObUI4dfHMC0Ed34bV9hPXPz.jpg",
+      "https://s3.iimg.su/s/30/gRZfpkvxscoWTLHqRgweX8ldvkN05M5z3Usb54MW.jpg",
+      "https://s3.iimg.su/s/30/geniNNsxqLucEqd5oTLr1YhLWnQPFmH0SjMkt8TR.jpg",
+      "https://s3.iimg.su/s/30/g3JylNbxfQBVb8OGaXMaRQOHy0oHDWmHYZWwgnS6.jpg",
+      "https://s3.iimg.su/s/30/gjlfKUkxt5oYfOvj0JYNPgVY5vuIV73iIbt8jWPE.jpg",
+      "https://s3.iimg.su/s/30/gma9sQcxNsWts7j3lSlL0FBO1Sav5Rht8GJuR2QC.jpg",
     ],
     preview:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/2022_Kyiv_Offensive.png/960px-2022_Kyiv_Offensive.png",
