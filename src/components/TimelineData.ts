@@ -40,6 +40,7 @@ export const events: TimelineEvent[] = [
       "https://dnr-news.ru/img/20230407/1b9b35dc95a20e0e672a19cd55d376b3.jpg",
       "https://s3.iimg.su/s/31/gwMKIHNxcOhYodUISKLVzi2afc6orQAFYa30Y4rc.jpg",
       "https://s3.iimg.su/s/31/gQcRFsaxPWR73PWWgH2DWUBws5g1JOFEwBsFqYe7.jpg",
+      "https://s3.iimg.su/s/31/gv9ZrTBxGyQ3b8M1wa6pVF2EGRUuBTfgynQIz4HR.jpg",
     ],
     preview:
       "https://upload.wikimedia.org/wikipedia/commons/2/23/Vladimir_Putin_%282022-02-24%29.jpg",
