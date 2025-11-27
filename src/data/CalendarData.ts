@@ -132,7 +132,7 @@ export const calendarEntries: CalendarEntry[] = [
     images: [],
   },
   {
-    id: "mar-1-kherson",
+    id: "mar-2-kherson",
     date: "2 марта 2022",
     month: 3,
     year: 2022,
@@ -143,7 +143,7 @@ export const calendarEntries: CalendarEntry[] = [
     images: [],
   },
   {
-    id: "mar-1-kherson",
+    id: "mar-3-15-kherson",
     date: "3-15 марта 2022",
     month: 3,
     year: 2022,
