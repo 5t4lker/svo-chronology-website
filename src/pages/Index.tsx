@@ -26,9 +26,18 @@ export default function Index() {
     : events.filter(e => e.category !== 'weapons');
 
   const handleMarkerClick = (eventId: string) => {
-    setHighlightedEventId(eventId);
-    eventRefs.current[eventId]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(() => setHighlightedEventId(null), 3000);
+    const event = events.find(e => e.id === eventId);
+    if (event) {
+      setViewMode('timeline');
+      setSelectedCategory('battle');
+      setSelectedSubcategory(null);
+      
+      setTimeout(() => {
+        setHighlightedEventId(eventId);
+        eventRefs.current[eventId]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => setHighlightedEventId(null), 3000);
+      }, 100);
+    }
   };
 
   const handleImageClick = (image: string, index: number, allImages: string[]) => {
