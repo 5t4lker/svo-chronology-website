@@ -12,21 +12,28 @@ const months = [
 export default function CalendarView() {
   const [selectedYear, setSelectedYear] = useState<number>(2022);
   const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
+  const [selectedDirection, setSelectedDirection] = useState<string | null>(null);
 
   const years = Array.from(new Set(calendarEntries.map(e => e.year))).sort((a, b) => b - a);
   
   const filteredByYear = calendarEntries.filter(e => e.year === selectedYear);
   
+  const filteredByDirection = selectedDirection
+    ? filteredByYear.filter(e => e.direction === selectedDirection)
+    : filteredByYear;
+  
   const entriesByMonth = (selectedMonth 
-    ? filteredByYear.filter(e => e.month === selectedMonth)
-    : filteredByYear).sort((a, b) => {
+    ? filteredByDirection.filter(e => e.month === selectedMonth)
+    : filteredByDirection).sort((a, b) => {
       if (a.month !== b.month) return a.month - b.month;
       const dateA = new Date(a.date.split(' ').reverse().join('-'));
       const dateB = new Date(b.date.split(' ').reverse().join('-'));
       return dateA.getTime() - dateB.getTime();
     });
 
-  const monthsWithEvents = Array.from(new Set(filteredByYear.map(e => e.month))).sort((a, b) => a - b);
+  const monthsWithEvents = Array.from(new Set(filteredByDirection.map(e => e.month))).sort((a, b) => a - b);
+  
+  const directions = Array.from(new Set(filteredByYear.map(e => e.direction).filter(Boolean))).sort();
 
   return (
     <div className="space-y-8">
@@ -43,6 +50,7 @@ export default function CalendarView() {
               onClick={() => {
                 setSelectedYear(year);
                 setSelectedMonth(null);
+                setSelectedDirection(null);
               }}
             >
               {year}
@@ -50,6 +58,42 @@ export default function CalendarView() {
           ))}
         </div>
       </div>
+
+      {directions.length > 0 && (
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <Icon name="MapPin" size={20} className="text-primary" />
+            <span className="font-semibold">Направление:</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            <Button
+              variant={selectedDirection === null ? 'default' : 'outline'}
+              onClick={() => {
+                setSelectedDirection(null);
+                setSelectedMonth(null);
+              }}
+              className="h-auto py-3 justify-start"
+            >
+              <Icon name="Grid3x3" size={16} className="mr-2" />
+              Все направления
+            </Button>
+            {directions.map(direction => (
+              <Button
+                key={direction}
+                variant={selectedDirection === direction ? 'default' : 'outline'}
+                onClick={() => {
+                  setSelectedDirection(direction);
+                  setSelectedMonth(null);
+                }}
+                className="h-auto py-3 justify-start"
+              >
+                <Icon name="MapPin" size={16} className="mr-2" />
+                {direction}
+              </Button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {monthsWithEvents.length > 0 && (
         <div className="space-y-4">
