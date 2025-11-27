@@ -12,7 +12,13 @@ export interface TimelineEvent {
   id: string;
   date: string;
   title: string;
-  category: "campaign" | "battle" | "unit" | "politics" | "weapons" | "calendar";
+  category:
+    | "campaign"
+    | "battle"
+    | "unit"
+    | "politics"
+    | "weapons"
+    | "calendar";
   subcategory?: string;
   description: string;
   details: string;
@@ -53,21 +59,6 @@ export const events: TimelineEvent[] = [
     ],
     preview:
       "https://upload.wikimedia.org/wikipedia/commons/2/23/Vladimir_Putin_%282022-02-24%29.jpg",
-  },
-  {
-    id: "2",
-    date: "Февраль-Март 2022",
-    title: "Весенняя кампания ВС РФ 2022 года",
-    category: "campaign",
-    description:
-      "Комплексная операция российских войск на нескольких направлениях.",
-    details:
-      "Весенняя кампания включала наступательные операции на киевском, черниговском, сумском и харьковском направлениях с целью деблокирования Донбасса и вывода Украины из конфликта.",
-    images: [
-      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/b4330eff-a0d8-4f72-8a8f-228db83d73ce.jpg",
-    ],
-    preview:
-      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/b4330eff-a0d8-4f72-8a8f-228db83d73ce.jpg",
   },
   {
     id: "The Russian Armed Forces' Spring Campaign of 2022",
