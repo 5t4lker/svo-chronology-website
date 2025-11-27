@@ -79,13 +79,21 @@ export default function CalendarView() {
             <Card key={entry.id} className="hover:shadow-lg transition-shadow">
               <CardHeader>
                 <CardTitle className="text-lg">{entry.title}</CardTitle>
-                <CardDescription className="flex items-center gap-2">
-                  <Icon name="CalendarDays" size={16} />
-                  {entry.date}
+                <CardDescription className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <Icon name="CalendarDays" size={16} />
+                    {entry.date}
+                  </div>
+                  {entry.direction && (
+                    <div className="flex items-center gap-2">
+                      <Icon name="MapPin" size={16} />
+                      <span className="text-primary font-medium">{entry.direction}</span>
+                    </div>
+                  )}
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">{entry.description}</p>
+                <p className="text-sm text-muted-foreground whitespace-pre-line">{entry.description}</p>
                 {entry.images && entry.images.length > 0 && (
                   <div className="mt-4 grid grid-cols-2 gap-2">
                     {entry.images.map((img, idx) => (
