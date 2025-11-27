@@ -17,9 +17,14 @@ export default function CalendarView() {
   
   const filteredByYear = calendarEntries.filter(e => e.year === selectedYear);
   
-  const entriesByMonth = selectedMonth 
+  const entriesByMonth = (selectedMonth 
     ? filteredByYear.filter(e => e.month === selectedMonth)
-    : filteredByYear;
+    : filteredByYear).sort((a, b) => {
+      if (a.month !== b.month) return a.month - b.month;
+      const dateA = new Date(a.date.split(' ').reverse().join('-'));
+      const dateB = new Date(b.date.split(' ').reverse().join('-'));
+      return dateA.getTime() - dateB.getTime();
+    });
 
   const monthsWithEvents = Array.from(new Set(filteredByYear.map(e => e.month))).sort((a, b) => a - b);
 
