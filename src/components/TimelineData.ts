@@ -1,8 +1,18 @@
+export interface CalendarEntry {
+  id: string;
+  date: string;
+  month: number;
+  year: number;
+  title: string;
+  description: string;
+  category: "calendar";
+}
+
 export interface TimelineEvent {
   id: string;
   date: string;
   title: string;
-  category: "campaign" | "battle" | "unit" | "politics" | "weapons";
+  category: "campaign" | "battle" | "unit" | "politics" | "weapons" | "calendar";
   subcategory?: string;
   description: string;
   details: string;

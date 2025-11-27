@@ -4,9 +4,12 @@ import InteractiveMap from '@/components/InteractiveMap';
 import EventCard from '@/components/EventCard';
 import ImageLightbox from '@/components/ImageLightbox';
 import CategoryFilter from '@/components/CategoryFilter';
+import CalendarView from '@/components/CalendarView';
 import { events } from '@/components/TimelineData';
+import { Button } from '@/components/ui/button';
 
 export default function Index() {
+  const [viewMode, setViewMode] = useState<'timeline' | 'calendar'>('timeline');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
@@ -67,35 +70,63 @@ export default function Index() {
         </section>
 
         <section>
-          <div className="flex items-center gap-3 mb-6">
-            <Icon name="Calendar" size={32} className="text-primary" />
-            <h2 className="text-3xl font-bold">Хронология событий</h2>
-          </div>
-
-          <CategoryFilter 
-            selectedCategory={selectedCategory}
-            selectedSubcategory={selectedSubcategory}
-            onCategoryChange={(category) => {
-              setSelectedCategory(category);
-              setSelectedSubcategory(null);
-            }}
-            onSubcategoryChange={setSelectedSubcategory}
-          />
-
-          <div className="space-y-6">
-            {filteredEvents.map((event) => (
-              <div
-                key={event.id}
-                ref={(el) => (eventRefs.current[event.id] = el)}
+          <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
+            <div className="flex items-center gap-3">
+              <Icon name={viewMode === 'timeline' ? 'Calendar' : 'CalendarDays'} size={32} className="text-primary" />
+              <h2 className="text-3xl font-bold">
+                {viewMode === 'timeline' ? 'Хронология событий' : 'События по месяцам'}
+              </h2>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant={viewMode === 'timeline' ? 'default' : 'outline'}
+                onClick={() => setViewMode('timeline')}
+                className="gap-2"
               >
-                <EventCard
-                  event={event}
-                  isHighlighted={highlightedEventId === event.id}
-                  onImageClick={handleImageClick}
-                />
-              </div>
-            ))}
+                <Icon name="List" size={18} />
+                Хронология
+              </Button>
+              <Button
+                variant={viewMode === 'calendar' ? 'default' : 'outline'}
+                onClick={() => setViewMode('calendar')}
+                className="gap-2"
+              >
+                <Icon name="CalendarDays" size={18} />
+                Календарь
+              </Button>
+            </div>
           </div>
+
+          {viewMode === 'timeline' ? (
+            <>
+              <CategoryFilter 
+                selectedCategory={selectedCategory}
+                selectedSubcategory={selectedSubcategory}
+                onCategoryChange={(category) => {
+                  setSelectedCategory(category);
+                  setSelectedSubcategory(null);
+                }}
+                onSubcategoryChange={setSelectedSubcategory}
+              />
+
+              <div className="space-y-6">
+                {filteredEvents.map((event) => (
+                  <div
+                    key={event.id}
+                    ref={(el) => (eventRefs.current[event.id] = el)}
+                  >
+                    <EventCard
+                      event={event}
+                      isHighlighted={highlightedEventId === event.id}
+                      onImageClick={handleImageClick}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <CalendarView />
+          )}
         </section>
       </div>
 
