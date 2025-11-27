@@ -207,14 +207,14 @@ export default function InteractiveMap({
 
         if (imageUrl) {
           const ImageIconLayout = ymaps.templateLayoutFactory.createClass(
-            `<div style="position: relative; width: 60px; height: 60px;">
-              <div style="position: absolute; top: 0; left: 0; width: 60px; height: 60px; border-radius: 50%; border: 4px solid #dc2626; overflow: hidden; box-shadow: 0 0 15px rgba(220, 38, 38, 0.6), 0 0 30px rgba(220, 38, 38, 0.3); animation: pulse-border 2s ease-in-out infinite;">
+            `<div style="position: relative; width: 40px; height: 40px;">
+              <div style="position: absolute; top: 0; left: 0; width: 40px; height: 40px; border-radius: 50%; border: 3px solid #dc2626; overflow: hidden; box-shadow: 0 0 10px rgba(220, 38, 38, 0.6), 0 0 20px rgba(220, 38, 38, 0.3); animation: pulse-border 2s ease-in-out infinite;">
                 <img src="${imageUrl}" style="width: 100%; height: 100%; object-fit: cover;" />
               </div>
               <style>
                 @keyframes pulse-border {
-                  0%, 100% { box-shadow: 0 0 15px rgba(220, 38, 38, 0.6), 0 0 30px rgba(220, 38, 38, 0.3); }
-                  50% { box-shadow: 0 0 25px rgba(220, 38, 38, 0.8), 0 0 45px rgba(220, 38, 38, 0.5); }
+                  0%, 100% { box-shadow: 0 0 10px rgba(220, 38, 38, 0.6), 0 0 20px rgba(220, 38, 38, 0.3); }
+                  50% { box-shadow: 0 0 15px rgba(220, 38, 38, 0.8), 0 0 30px rgba(220, 38, 38, 0.5); }
                 }
               </style>
             </div>`,
@@ -225,7 +225,7 @@ export default function InteractiveMap({
             iconShape: {
               type: "Circle",
               coordinates: [0, 0],
-              radius: 30,
+              radius: 20,
             },
           };
         } else {
@@ -234,25 +234,25 @@ export default function InteractiveMap({
             iconImageHref:
               "data:image/svg+xml;base64," +
               btoa(`
-              <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+              <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
                 <style>
                   @keyframes pulse {
-                    0%, 100% { opacity: 0.3; r: 28; }
-                    50% { opacity: 0; r: 35; }
+                    0%, 100% { opacity: 0.3; r: 18; }
+                    50% { opacity: 0; r: 23; }
                   }
                   .pulse-ring {
                     animation: pulse 2s ease-in-out infinite;
                     transform-origin: center;
                   }
                 </style>
-                <circle class="pulse-ring" cx="30" cy="30" r="28" fill="none" stroke="#dc2626" stroke-width="2"/>
-                <circle cx="30" cy="30" r="18" fill="#dc2626" stroke="#7f1d1d" stroke-width="3"/>
-                <path d="M24 30 L30 24 L36 30 L30 36 Z" fill="#fef2f2" stroke="#991b1b" stroke-width="1.5"/>
-                <circle cx="30" cy="30" r="3" fill="#991b1b"/>
+                <circle class="pulse-ring" cx="20" cy="20" r="18" fill="none" stroke="#dc2626" stroke-width="2"/>
+                <circle cx="20" cy="20" r="12" fill="#dc2626" stroke="#7f1d1d" stroke-width="2"/>
+                <path d="M16 20 L20 16 L24 20 L20 24 Z" fill="#fef2f2" stroke="#991b1b" stroke-width="1"/>
+                <circle cx="20" cy="20" r="2" fill="#991b1b"/>
               </svg>
             `),
-            iconImageSize: [60, 60],
-            iconImageOffset: [-30, -30],
+            iconImageSize: [40, 40],
+            iconImageOffset: [-20, -20],
           };
         }
 
