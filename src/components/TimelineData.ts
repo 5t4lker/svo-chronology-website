@@ -106,7 +106,7 @@ export const events: TimelineEvent[] = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/2022_Kyiv_Offensive.png/960px-2022_Kyiv_Offensive.png",
   },
   {
-    id: "The Russian Armed Forces' Spring Campaign of 2022",
+    id: "The Russian Armed Forces' Spring Campaign of 2022/2",
     date: "Февраль-Март 2022",
     title: "Херсонское направление (февраль-март)",
     category: "campaign",
@@ -139,7 +139,7 @@ export const events: TimelineEvent[] = [
 После установления контроля над Херсоном войска начали продвижение в направлении Николаева и к административной границе с Днепропетровской областью. Однако в Николаевской области столь же быстрого наступления, как в Херсонской, не произошло. Боевые действия в основном сводились к нанесению ударов по военной инфраструктуре: складам с вооружением, топливным хранилищам и местам дислокации техники.`,
   },
   {
-    id: "The Russian Armed Forces' Spring Campaign of 2022",
+    id: "The Russian Armed Forces' Spring Campaign of 2022/3",
     date: "Февраль-Март 2022",
     title: "Черниговского-Сумское направление (февраль-март)",
     category: "campaign",
