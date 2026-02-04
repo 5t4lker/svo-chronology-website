@@ -74,7 +74,7 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
                       {event.details.split('\n\n').map((paragraph, pIdx) => (
                         <div key={pIdx}>
                           <p className="whitespace-pre-line">{paragraph}</p>
-                          {event.images[pIdx] && (
+                          {event.images && event.images.length > 0 && event.images[pIdx] && (
                             <img
                               src={event.images[pIdx]}
                               alt={`${event.title} - изображение ${pIdx + 1}`}
@@ -100,19 +100,26 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
                       </TabsTrigger>
                     </TabsList>
                     <TabsContent value="images" className="space-y-4 mt-4">
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                        {event.images.map((img, idx) => (
-                          <img
-                            key={idx}
-                            src={img}
-                            alt={`${event.title} - изображение ${idx + 1}`}
-                            className="rounded-lg w-full h-32 md:h-40 object-cover cursor-pointer hover:opacity-80 transition-opacity"
-                            onClick={() => {
-                              onImageClick(img, idx, event.images);
-                            }}
-                          />
-                        ))}
-                      </div>
+                      {event.images && event.images.length > 0 ? (
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                          {event.images.map((img, idx) => (
+                            <img
+                              key={idx}
+                              src={img}
+                              alt={`${event.title} - изображение ${idx + 1}`}
+                              className="rounded-lg w-full h-32 md:h-40 object-cover cursor-pointer hover:opacity-80 transition-opacity"
+                              onClick={() => {
+                                onImageClick(img, idx, event.images);
+                              }}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="text-center py-8 text-muted-foreground">
+                          <Icon name="Image" size={48} className="mx-auto mb-4 opacity-50" />
+                          <p>Фотографии будут добавлены позже</p>
+                        </div>
+                      )}
                     </TabsContent>
                     <TabsContent value="videos" className="mt-4">
                       {event.videos && event.videos.length > 0 ? (
