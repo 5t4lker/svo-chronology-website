@@ -140,10 +140,22 @@ export default function Index() {
       </div>
 
       <footer className="border-t border-border mt-16 py-8">
-        <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p className="text-sm">
-            Информационный портал о ходе специальной военной операции
-          </p>
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col items-center gap-4">
+            <Button
+              variant="outline"
+              asChild
+              className="gap-2"
+            >
+              <a href="/feedback">
+                <Icon name="MessageCircle" size={18} />
+                Оставить отзыв
+              </a>
+            </Button>
+            <p className="text-sm text-muted-foreground text-center">
+              Информационный портал о ходе специальной военной операции
+            </p>
+          </div>
         </div>
       </footer>
 
