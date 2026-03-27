@@ -28,18 +28,18 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
               )}
             </div>
             <Badge variant="secondary" className={`${categoryConfig[event.category].color} text-white shrink-0`}>
-              <Icon name={categoryConfig[event.category].icon as any} size={14} className="mr-1" />
+              <Icon name={categoryConfig[event.category].icon as string} size={14} className="mr-1" />
               {categoryConfig[event.category].label}
             </Badge>
           </div>
         </CardHeader>
         <CardContent>
           {event.preview && (
-            <div className="mb-4">
+            <div className="mb-4 aspect-video">
               <img
                 src={event.preview}
                 alt={event.title}
-                className="w-full h-50 cursor-pointer hover:opacity-50 transition-opacity rounded-lg px-0 mx-0 my-0 object-cover py-0"
+                className="w-full h-full cursor-pointer hover:opacity-50 transition-opacity rounded-lg object-cover"
                 onClick={() => {
                   const previewIndex = event.images.indexOf(event.preview!);
                   onImageClick(event.preview!, previewIndex >= 0 ? previewIndex : 0, event.images);
@@ -103,15 +103,16 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
                       {event.images && event.images.length > 0 ? (
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                           {event.images.map((img, idx) => (
-                            <img
-                              key={idx}
-                              src={img}
-                              alt={`${event.title} - изображение ${idx + 1}`}
-                              className="rounded-lg w-full h-32 md:h-40 object-cover cursor-pointer hover:opacity-80 transition-opacity"
-                              onClick={() => {
-                                onImageClick(img, idx, event.images);
-                              }}
-                            />
+                            <div key={idx} className="aspect-video">
+                              <img
+                                src={img}
+                                alt={`${event.title} - изображение ${idx + 1}`}
+                                className="rounded-lg w-full h-full object-cover cursor-pointer hover:opacity-80 transition-opacity"
+                                onClick={() => {
+                                  onImageClick(img, idx, event.images);
+                                }}
+                              />
+                            </div>
                           ))}
                         </div>
                       ) : (

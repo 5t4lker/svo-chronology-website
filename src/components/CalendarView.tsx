@@ -146,12 +146,13 @@ export default function CalendarView() {
                 {entry.images && entry.images.length > 0 && (
                   <div className="mt-4 grid grid-cols-2 gap-2">
                     {entry.images.map((img, idx) => (
-                      <img
-                        key={idx}
-                        src={img}
-                        alt={`${entry.title} ${idx + 1}`}
-                        className="rounded-md object-cover w-full h-32 cursor-pointer hover:opacity-90 transition-opacity"
-                      />
+                      <div key={idx} className="aspect-video">
+                        <img
+                          src={img}
+                          alt={`${entry.title} ${idx + 1}`}
+                          className="rounded-md object-cover w-full h-full cursor-pointer hover:opacity-90 transition-opacity"
+                        />
+                      </div>
                     ))}
                   </div>
                 )}
