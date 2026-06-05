@@ -47,7 +47,7 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
               />
             </div>
           )}
-          <p className="text-muted-foreground mb-4 text-sm leading-relaxed">{event.description}</p>
+          <p className="text-muted-foreground mb-4 text-sm leading-relaxed text-justify">{event.description}</p>
           <div className="flex gap-2">
             <Dialog>
               <DialogTrigger asChild>
@@ -78,7 +78,7 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
                           if (img) imgIdx++;
                           return (
                             <div key={pIdx}>
-                              <p className="whitespace-pre-line leading-7">{paragraph}</p>
+                              <p className="whitespace-pre-line leading-7 text-justify">{paragraph}</p>
                               {img && (
                                 <img
                                   src={img}
