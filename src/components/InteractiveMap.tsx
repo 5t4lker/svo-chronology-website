@@ -168,6 +168,30 @@ export default function InteractiveMap({
     map.options.set("suppressMapOpenBlock", true);
     map.behaviors.disable("scrollZoom");
 
+    fetch("https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson")
+      .then((res) => res.json())
+      .then((data) => {
+        const russia = data.features.find(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (f: any) => f.properties.admin === "Russia" || f.properties.NAME === "Russia"
+        );
+        if (!russia) return;
+        const geoObject = ymaps.geoQuery(russia).addToMap(map);
+        geoObject.applyBoundsToMap = false;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        geoObject.each((obj: any) => {
+          obj.options.set({
+            fillColor: "rgba(45, 122, 79, 0.08)",
+            strokeColor: "#2d7a4f",
+            strokeWidth: 2,
+            strokeOpacity: 0.8,
+            fillOpacity: 1,
+            interactivityModel: "default#transparent",
+          });
+        });
+      })
+      .catch(() => {});
+
     const mapContainer = mapRef.current;
     if (mapContainer) {
       const style = document.createElement("style");
