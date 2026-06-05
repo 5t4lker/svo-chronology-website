@@ -35,7 +35,7 @@ def handler(event: dict, context) -> dict:
     smtp_port = int(os.environ.get('SMTP_PORT', '465'))
     smtp_user = os.environ.get('SMTP_USER')
     smtp_password = os.environ.get('SMTP_PASSWORD')
-    to_email = 'ivan/kochnev/2019@list.ru'
+    to_email = 'ivan.kochnev.2019@list.ru'
 
     msg = MIMEMultipart('alternative')
     msg['Subject'] = f'Новый отзыв от {name}'

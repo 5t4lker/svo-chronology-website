@@ -16,7 +16,7 @@ export default function Feedback() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!message.trim()) {
       toast({
         title: "Ошибка",
@@ -28,8 +28,15 @@ export default function Feedback() {
 
     setIsSubmitting(true);
 
-    // Здесь будет логика отправки данных на сервер
-    setTimeout(() => {
+    try {
+      const res = await fetch('https://functions.poehali.dev/821b5812-8839-471c-a8a7-18b27b62538c', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (!res.ok) throw new Error('Ошибка сервера');
+
       toast({
         title: "Спасибо за отзыв!",
         description: "Ваше сообщение успешно отправлено",
@@ -37,8 +44,15 @@ export default function Feedback() {
       setName('');
       setEmail('');
       setMessage('');
+    } catch {
+      toast({
+        title: "Ошибка отправки",
+        description: "Не удалось отправить сообщение. Попробуйте позже.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
