@@ -262,13 +262,13 @@ export default function InteractiveMap({
         const placemark = new ymaps.Placemark(
           marker.coordinates,
           {
-            hintContent: marker.title,
-            balloonContent: balloonContent,
+            hintContent: marker.title + " — нажмите для перехода к статье",
           },
-          placemarkOptions,
+          { ...placemarkOptions, cursor: "pointer" },
         );
 
-        placemark.events.add("click", () => {
+        placemark.events.add("click", (e: unknown) => {
+          (e as { preventDefault: () => void }).preventDefault();
           if (onMarkerClick) {
             onMarkerClick(marker.eventId);
           }

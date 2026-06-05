@@ -36,7 +36,7 @@ export default function Index() {
         setHighlightedEventId(eventId);
         eventRefs.current[eventId]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         setTimeout(() => setHighlightedEventId(null), 3000);
-      }, 100);
+      }, 300);
     }
   };
 
