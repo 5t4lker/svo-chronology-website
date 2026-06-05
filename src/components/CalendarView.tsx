@@ -144,7 +144,7 @@ export default function CalendarView() {
               <CardContent>
                 <p className="text-sm text-muted-foreground whitespace-pre-line">{entry.description}</p>
                 {entry.images && entry.images.length > 0 && (
-                  <div className="mt-4 grid grid-cols-2 gap-2">
+                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {entry.images.map((img, idx) => (
                       <div key={idx} className="aspect-video">
                         <img
