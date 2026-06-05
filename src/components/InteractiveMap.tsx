@@ -278,6 +278,17 @@ export default function InteractiveMap({
       });
 
     setMapInstance(map);
+
+    const handleResize = () => {
+      map.container.fitToViewport();
+    };
+    window.addEventListener("resize", handleResize);
+    document.addEventListener("fullscreenchange", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      document.removeEventListener("fullscreenchange", handleResize);
+    };
   }, [ymapsReady, mapInstance, onMarkerClick]);
 
   useEffect(() => {
