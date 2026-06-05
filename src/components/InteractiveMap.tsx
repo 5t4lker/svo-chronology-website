@@ -279,54 +279,52 @@ export default function InteractiveMap({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let placemarkOptions: any;
 
+        const hoverStyle = `
+          transition: transform 0.2s ease;
+          transform-origin: center;
+          display: block;
+        `;
+
         if (imageUrl) {
           const ImageIconLayout = ymaps.templateLayoutFactory.createClass(
-            `<div style="position: relative; width: 40px; height: 40px;">
-              <div style="position: absolute; top: 0; left: 0; width: 40px; height: 40px; border-radius: 50%; border: 3px solid #2d7a4f; overflow: hidden; box-shadow: 0 0 10px rgba(45, 122, 79, 0.6), 0 0 20px rgba(45, 122, 79, 0.3); animation: pulse-border 2s ease-in-out infinite;">
+            `<div class="marker-wrap" style="position: relative; width: 40px; height: 40px; ${hoverStyle}">
+              <div style="position: absolute; top: 0; left: 0; width: 40px; height: 40px; border-radius: 50%; border: 3px solid #2d7a4f; overflow: hidden; box-shadow: 0 0 10px rgba(45,122,79,0.6), 0 0 20px rgba(45,122,79,0.3); animation: pulse-border 2s ease-in-out infinite;">
                 <img src="${imageUrl}" style="width: 100%; height: 100%; object-fit: cover;" />
               </div>
               <style>
                 @keyframes pulse-border {
-                  0%, 100% { box-shadow: 0 0 10px rgba(45, 122, 79, 0.6), 0 0 20px rgba(45, 122, 79, 0.3); }
-                  50% { box-shadow: 0 0 15px rgba(45, 122, 79, 0.8), 0 0 30px rgba(45, 122, 79, 0.5); }
+                  0%, 100% { box-shadow: 0 0 10px rgba(45,122,79,0.6), 0 0 20px rgba(45,122,79,0.3); }
+                  50% { box-shadow: 0 0 15px rgba(45,122,79,0.8), 0 0 30px rgba(45,122,79,0.5); }
                 }
+                .marker-wrap:hover { transform: scale(1.4); }
               </style>
             </div>`,
           );
 
           placemarkOptions = {
             iconLayout: ImageIconLayout,
-            iconShape: {
-              type: "Circle",
-              coordinates: [0, 0],
-              radius: 20,
-            },
+            iconShape: { type: "Circle", coordinates: [0, 0], radius: 20 },
           };
         } else {
-          placemarkOptions = {
-            iconLayout: "default#image",
-            iconImageHref:
-              "data:image/svg+xml;base64," +
-              btoa(`
+          const SvgIconLayout = ymaps.templateLayoutFactory.createClass(
+            `<div class="marker-svg-wrap" style="${hoverStyle} width: 40px; height: 40px;">
               <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
                 <style>
-                  @keyframes pulse {
-                    0%, 100% { opacity: 0.3; r: 18; }
-                    50% { opacity: 0; r: 23; }
-                  }
-                  .pulse-ring {
-                    animation: pulse 2s ease-in-out infinite;
-                    transform-origin: center;
-                  }
+                  @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0; } }
+                  .pulse-ring { animation: pulse 2s ease-in-out infinite; }
+                  .marker-svg-wrap:hover { transform: scale(1.4); }
                 </style>
                 <circle class="pulse-ring" cx="20" cy="20" r="18" fill="none" stroke="#2d7a4f" stroke-width="2"/>
                 <circle cx="20" cy="20" r="12" fill="#2d7a4f" stroke="#1a4d30" stroke-width="2"/>
                 <path d="M16 20 L20 16 L24 20 L20 24 Z" fill="#e8f5ee" stroke="#1a4d30" stroke-width="1"/>
                 <circle cx="20" cy="20" r="2" fill="#1a4d30"/>
               </svg>
-            `),
-            iconImageSize: [40, 40],
-            iconImageOffset: [-20, -20],
+            </div>`,
+          );
+
+          placemarkOptions = {
+            iconLayout: SvgIconLayout,
+            iconShape: { type: "Circle", coordinates: [0, 0], radius: 20 },
           };
         }
 
