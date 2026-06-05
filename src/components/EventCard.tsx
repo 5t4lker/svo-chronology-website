@@ -14,8 +14,8 @@ interface EventCardProps {
 
 export default function EventCard({ event, isHighlighted, onImageClick }: EventCardProps) {
   return (
-    <div className={`transition-all ${isHighlighted ? 'ring-4 ring-primary rounded-lg' : ''}`}>
-      <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+    <div className={`transition-all duration-300 hover:scale-[1.03] hover:z-10 relative ${isHighlighted ? 'ring-4 ring-primary rounded-lg' : ''}`}>
+      <Card className="overflow-hidden hover:shadow-2xl transition-shadow duration-300">
         <CardHeader className="pb-3 px-4 pt-4">
           <div className="flex flex-col gap-2">
             <div className="flex items-start justify-between gap-2">
