@@ -15,7 +15,7 @@ interface EventCardProps {
 export default function EventCard({ event, isHighlighted, onImageClick }: EventCardProps) {
   return (
     <div className={`transition-all duration-300 hover:scale-[1.03] hover:z-10 relative ${isHighlighted ? 'ring-4 ring-primary rounded-lg' : ''}`}>
-      <Card className="overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+      <Card className="overflow-hidden transition-all duration-300 hover:shadow-2xl hover:ring-2 hover:ring-primary">
         <CardHeader className="pb-3 px-4 pt-4">
           <div className="flex flex-col gap-2">
             <div className="flex items-start justify-between gap-2">
@@ -39,7 +39,7 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
               <img
                 src={event.preview}
                 alt={event.title}
-                className="w-full h-full cursor-pointer hover:opacity-50 transition-opacity rounded-lg object-cover"
+                className="w-full h-full cursor-pointer rounded-lg object-cover"
                 onClick={() => {
                   const previewIndex = event.images.indexOf(event.preview!);
                   onImageClick(event.preview!, previewIndex >= 0 ? previewIndex : 0, event.images);
