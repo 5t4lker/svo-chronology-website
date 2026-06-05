@@ -468,6 +468,8 @@ https://tvzvezda.ru/news/202232102-NcrOB.html
     images: [
       "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/files/3d00b23d-2d85-415e-baa0-b27303354bfe.jpg",
     ],
+    preview:
+      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/55a37b3f-2ea5-4c37-92c9-f77b8a18b51f.jpg",
   },
   {
     id: "7",
