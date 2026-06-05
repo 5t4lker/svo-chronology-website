@@ -209,7 +209,12 @@ https://tvzvezda.ru/news/202232102-NcrOB.html
 15 марта: Минобороны РФ заявило, что в Чернигове нет российских военных (опровержение обстрела) - https://amp.ren.tv/news/v-mire/958765-polsha-khochet-videt-150-tysiach-voennykh-ssha-v-evrope
 21 марта: В Минобороны РФ рассказали о провокации украинских националистов в городе Сумы (утечка аммиака на «Сумыхимпром») - https://www.1tv.ru/news/2022-03-21/424207-v_minoborony_rf_rasskazali_o_provokatsii_ukrainskih_natsionalistov_v_gorode_sumy
 28 марта: Задачи первого этапа спецоперации выполнены — Минобороны РФ (блокировка Чернигова и Сум) - https://obl1.ru/news/zadachi-pervogo-etapa-spetsoperatsii-vypolneny-minoborony-rf`,
-    images: [],
+    images: [
+      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/96226778-571d-4db7-baaf-0dcec71d590e.jpg",
+      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/d265aa02-a628-4809-88f7-f47f1d909a59.jpg",
+      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/777734bd-794a-4411-a999-b9dcf87fe28a.png",
+      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/7c3360a9-5e62-488f-8299-fec4e5c520ae.jpg",
+    ],
     preview:
       "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/3d1551e3-83d0-4186-8579-c29461e7006e.jpg",
   },
