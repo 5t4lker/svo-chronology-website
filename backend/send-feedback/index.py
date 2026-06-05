@@ -1,6 +1,7 @@
 import json
 import os
 import smtplib
+import base64
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -33,8 +34,8 @@ def handler(event: dict, context) -> dict:
 
     smtp_host = os.environ.get('SMTP_HOST', 'smtp.mail.ru')
     smtp_port = int(os.environ.get('SMTP_PORT', '465'))
-    smtp_user = os.environ.get('SMTP_USER')
-    smtp_password = os.environ.get('SMTP_PASSWORD')
+    smtp_user = os.environ.get('SMTP_USER', '')
+    smtp_password = os.environ.get('SMTP_PASSWORD', '')
     to_email = 'ivan.kochnev.2019@list.ru'
 
     msg = MIMEMultipart('alternative')
@@ -54,9 +55,15 @@ def handler(event: dict, context) -> dict:
     """
     msg.attach(MIMEText(html, 'html', 'utf-8'))
 
-    with smtplib.SMTP_SSL(smtp_host, smtp_port) as server:
-        server.login(smtp_user, smtp_password)
-        server.sendmail(smtp_user, to_email, msg.as_string())
+    user_b64 = base64.b64encode(smtp_user.encode('utf-8')).decode('ascii')
+    pass_b64 = base64.b64encode(smtp_password.encode('utf-8')).decode('ascii')
+
+    server = smtplib.SMTP_SSL(smtp_host, smtp_port)
+    server.ehlo()
+    server.docmd('AUTH', f'LOGIN {user_b64}')
+    server.docmd(pass_b64)
+    server.sendmail(smtp_user, to_email, msg.as_bytes())
+    server.quit()
 
     return {
         'statusCode': 200,
