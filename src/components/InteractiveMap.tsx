@@ -191,9 +191,9 @@ export default function InteractiveMap({
           addPolygons(russia.geometry, {
             fillColor: "#2d7a4f",
             fillOpacity: 0.07,
-            strokeColor: "#2d7a4f",
+            strokeColor: "#000000",
             strokeWidth: 2,
-            strokeOpacity: 0.9,
+            strokeOpacity: 0.8,
             interactivityModel: "default#transparent",
           });
         }
@@ -203,9 +203,9 @@ export default function InteractiveMap({
           addPolygons(ukraine.geometry, {
             fillColor: "#000000",
             fillOpacity: 0,
-            strokeColor: "#c8a84b",
+            strokeColor: "#000000",
             strokeWidth: 2,
-            strokeOpacity: 0.85,
+            strokeOpacity: 0.8,
             interactivityModel: "default#transparent",
           });
         }
@@ -221,8 +221,6 @@ export default function InteractiveMap({
           "Луганська область",
           "Запорізька область",
           "Херсонська область",
-          "Автономна Республіка Крим",
-          "місто Севастополь",
         ];
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data.features.forEach((f: any) => {
