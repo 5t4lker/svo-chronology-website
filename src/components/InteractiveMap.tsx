@@ -168,34 +168,75 @@ export default function InteractiveMap({
     map.options.set("suppressMapOpenBlock", true);
     map.behaviors.disable("scrollZoom");
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const addPolygons = (geom: any, styleOptions: any) => {
+      const polygons: number[][][][] =
+        geom.type === "MultiPolygon" ? geom.coordinates : [geom.coordinates];
+      polygons.forEach((rings) => {
+        const yRings = rings.map((ring: [number, number][]) =>
+          ring.map(([lng, lat]) => [lat, lng])
+        );
+        const polygon = new ymaps.Polygon(yRings, {}, styleOptions);
+        map.geoObjects.add(polygon);
+      });
+    };
+
+    // Контур России
     fetch("https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson")
       .then((res) => res.json())
       .then((data) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const russia = data.features.find((f: any) => f.properties.admin === "Russia");
-        if (!russia) return;
-
-        const styleOptions = {
-          fillColor: "#2d7a4f",
-          fillOpacity: 0.07,
-          strokeColor: "#2d7a4f",
-          strokeWidth: 2,
-          strokeOpacity: 0.9,
-          interactivityModel: "default#transparent",
-        };
-
+        if (russia) {
+          addPolygons(russia.geometry, {
+            fillColor: "#2d7a4f",
+            fillOpacity: 0.07,
+            strokeColor: "#2d7a4f",
+            strokeWidth: 2,
+            strokeOpacity: 0.9,
+            interactivityModel: "default#transparent",
+          });
+        }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const geom = russia.geometry as any;
-        const polygons: number[][][][] =
-          geom.type === "MultiPolygon" ? geom.coordinates : [geom.coordinates];
+        const ukraine = data.features.find((f: any) => f.properties.admin === "Ukraine");
+        if (ukraine) {
+          addPolygons(ukraine.geometry, {
+            fillColor: "#000000",
+            fillOpacity: 0,
+            strokeColor: "#c8a84b",
+            strokeWidth: 2,
+            strokeOpacity: 0.85,
+            interactivityModel: "default#transparent",
+          });
+        }
+      })
+      .catch(() => {});
 
-        polygons.forEach((rings) => {
-          // Яндекс Карты принимает координаты в формате [lat, lng]
-          const yRings = rings.map((ring) =>
-            ring.map(([lng, lat]: [number, number]) => [lat, lng])
-          );
-          const polygon = new ymaps.Polygon(yRings, {}, styleOptions);
-          map.geoObjects.add(polygon);
+    // Регионы Украины — новые территории РФ + Крым
+    fetch("https://raw.githubusercontent.com/slawomirmatuszak/ukrainian_geodata/master/regiony.geojson")
+      .then((res) => res.json())
+      .then((data) => {
+        const rfRegions = [
+          "Донецька область",
+          "Луганська область",
+          "Запорізька область",
+          "Херсонська область",
+          "Автономна Республіка Крим",
+          "місто Севастополь",
+        ];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        data.features.forEach((f: any) => {
+          const name: string = f.properties.region || "";
+          if (rfRegions.some((r) => name.includes(r.split(" ")[0]))) {
+            addPolygons(f.geometry, {
+              fillColor: "#1a3d28",
+              fillOpacity: 0.55,
+              strokeColor: "#2d7a4f",
+              strokeWidth: 1.5,
+              strokeOpacity: 0.9,
+              interactivityModel: "default#transparent",
+            });
+          }
         });
       })
       .catch(() => {});
