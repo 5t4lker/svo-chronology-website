@@ -221,6 +221,8 @@ export default function InteractiveMap({
           "Луганська область",
           "Запорізька область",
           "Херсонська область",
+          "Автономна Республіка Крим",
+          "місто Севастополь",
         ];
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data.features.forEach((f: any) => {
