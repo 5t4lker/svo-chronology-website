@@ -222,7 +222,7 @@ export default function InteractiveMap({
           "Запорізька область",
           "Херсонська область",
           "Автономна Республіка Крим",
-          "місто Севастополь",
+          "Севастополь",
         ];
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data.features.forEach((f: any) => {
