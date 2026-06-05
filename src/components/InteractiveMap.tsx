@@ -171,23 +171,31 @@ export default function InteractiveMap({
     fetch("https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson")
       .then((res) => res.json())
       .then((data) => {
-        const russia = data.features.find(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (f: any) => f.properties.admin === "Russia" || f.properties.NAME === "Russia"
-        );
-        if (!russia) return;
-        const geoObject = ymaps.geoQuery(russia).addToMap(map);
-        geoObject.applyBoundsToMap = false;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        geoObject.each((obj: any) => {
-          obj.options.set({
-            fillColor: "rgba(45, 122, 79, 0.08)",
-            strokeColor: "#2d7a4f",
-            strokeWidth: 2,
-            strokeOpacity: 0.8,
-            fillOpacity: 1,
-            interactivityModel: "default#transparent",
-          });
+        const russia = data.features.find((f: any) => f.properties.admin === "Russia");
+        if (!russia) return;
+
+        const styleOptions = {
+          fillColor: "#2d7a4f",
+          fillOpacity: 0.07,
+          strokeColor: "#2d7a4f",
+          strokeWidth: 2,
+          strokeOpacity: 0.9,
+          interactivityModel: "default#transparent",
+        };
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const geom = russia.geometry as any;
+        const polygons: number[][][][] =
+          geom.type === "MultiPolygon" ? geom.coordinates : [geom.coordinates];
+
+        polygons.forEach((rings) => {
+          // Яндекс Карты принимает координаты в формате [lat, lng]
+          const yRings = rings.map((ring) =>
+            ring.map(([lng, lat]: [number, number]) => [lat, lng])
+          );
+          const polygon = new ymaps.Polygon(yRings, {}, styleOptions);
+          map.geoObjects.add(polygon);
         });
       })
       .catch(() => {});
