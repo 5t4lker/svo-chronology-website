@@ -146,7 +146,7 @@ export const events: TimelineEvent[] = [
       "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/ae3a63c1-2798-481e-828e-920f1290cc1e.jpg",
   },
   {
-    id: "The Russian Armed Forces' Spring Campaign of 2022/2",
+    id: "The Russian Armed Forces' Spring Campaign of 2022/2b",
     date: "Февраль-Март 2022",
     title: "Чернигово-Сумское направление (февраль-март)",
     category: "campaign",
