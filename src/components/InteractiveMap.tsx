@@ -109,7 +109,7 @@ const categoryColors = {
   battle: "bg-secondary hover:bg-secondary/80",
   unit: "bg-accent hover:bg-accent/80",
   politics: "bg-muted hover:bg-muted/80",
-  weapons: "bg-destructive hover:bg-destructive/80",
+  weapons: "bg-[#6b5a2d] hover:bg-[#7d6a35]",
 };
 
 const categoryIcons = {
