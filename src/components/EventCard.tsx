@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
 import { TimelineEvent, categoryConfig } from './TimelineData';
@@ -151,6 +151,12 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
                     </TabsContent>
                   </Tabs>
                 </div>
+                <DialogClose asChild>
+                  <Button variant="outline" className="w-full sm:hidden mt-2">
+                    <Icon name="X" size={16} className="mr-2" />
+                    Закрыть
+                  </Button>
+                </DialogClose>
               </DialogContent>
             </Dialog>
           </div>
