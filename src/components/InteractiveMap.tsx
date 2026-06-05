@@ -176,8 +176,8 @@ export default function InteractiveMap({
           filter: brightness(0.7) saturate(0.8) hue-rotate(-10deg);
         }
         ymaps[class*="places-pane"] text {
-          fill: #ff4444 !important;
-          stroke: #330000 !important;
+          fill: #2d7a4f !important;
+          stroke: #0f2e1c !important;
           stroke-width: 2px;
           paint-order: stroke;
         }
@@ -197,11 +197,11 @@ export default function InteractiveMap({
         const balloonContent = imageUrl
           ? `<div style="padding: 10px; min-width: 250px; max-width: 300px;">
               <img src="${imageUrl}" alt="${marker.title}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 8px;" />
-              <strong style="font-size: 14px; color: #dc2626; display: block; margin-bottom: 4px;">${marker.title}</strong>
+              <strong style="font-size: 14px; color: #2d7a4f; display: block; margin-bottom: 4px;">${marker.title}</strong>
               <span style="color: #666; font-size: 12px;">${marker.date}</span>
             </div>`
           : `<div style="padding: 10px; min-width: 200px;">
-              <strong style="font-size: 14px; color: #dc2626;">${marker.title}</strong>
+              <strong style="font-size: 14px; color: #2d7a4f;">${marker.title}</strong>
               <br><span style="color: #666; font-size: 12px;">${marker.date}</span>
             </div>`;
 
@@ -211,13 +211,13 @@ export default function InteractiveMap({
         if (imageUrl) {
           const ImageIconLayout = ymaps.templateLayoutFactory.createClass(
             `<div style="position: relative; width: 40px; height: 40px;">
-              <div style="position: absolute; top: 0; left: 0; width: 40px; height: 40px; border-radius: 50%; border: 3px solid #dc2626; overflow: hidden; box-shadow: 0 0 10px rgba(220, 38, 38, 0.6), 0 0 20px rgba(220, 38, 38, 0.3); animation: pulse-border 2s ease-in-out infinite;">
+              <div style="position: absolute; top: 0; left: 0; width: 40px; height: 40px; border-radius: 50%; border: 3px solid #2d7a4f; overflow: hidden; box-shadow: 0 0 10px rgba(45, 122, 79, 0.6), 0 0 20px rgba(45, 122, 79, 0.3); animation: pulse-border 2s ease-in-out infinite;">
                 <img src="${imageUrl}" style="width: 100%; height: 100%; object-fit: cover;" />
               </div>
               <style>
                 @keyframes pulse-border {
-                  0%, 100% { box-shadow: 0 0 10px rgba(220, 38, 38, 0.6), 0 0 20px rgba(220, 38, 38, 0.3); }
-                  50% { box-shadow: 0 0 15px rgba(220, 38, 38, 0.8), 0 0 30px rgba(220, 38, 38, 0.5); }
+                  0%, 100% { box-shadow: 0 0 10px rgba(45, 122, 79, 0.6), 0 0 20px rgba(45, 122, 79, 0.3); }
+                  50% { box-shadow: 0 0 15px rgba(45, 122, 79, 0.8), 0 0 30px rgba(45, 122, 79, 0.5); }
                 }
               </style>
             </div>`,
@@ -248,10 +248,10 @@ export default function InteractiveMap({
                     transform-origin: center;
                   }
                 </style>
-                <circle class="pulse-ring" cx="20" cy="20" r="18" fill="none" stroke="#dc2626" stroke-width="2"/>
-                <circle cx="20" cy="20" r="12" fill="#dc2626" stroke="#7f1d1d" stroke-width="2"/>
-                <path d="M16 20 L20 16 L24 20 L20 24 Z" fill="#fef2f2" stroke="#991b1b" stroke-width="1"/>
-                <circle cx="20" cy="20" r="2" fill="#991b1b"/>
+                <circle class="pulse-ring" cx="20" cy="20" r="18" fill="none" stroke="#2d7a4f" stroke-width="2"/>
+                <circle cx="20" cy="20" r="12" fill="#2d7a4f" stroke="#1a4d30" stroke-width="2"/>
+                <path d="M16 20 L20 16 L24 20 L20 24 Z" fill="#e8f5ee" stroke="#1a4d30" stroke-width="1"/>
+                <circle cx="20" cy="20" r="2" fill="#1a4d30"/>
               </svg>
             `),
             iconImageSize: [40, 40],
