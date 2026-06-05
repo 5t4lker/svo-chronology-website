@@ -16,24 +16,24 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
   return (
     <div className={`transition-all ${isHighlighted ? 'ring-4 ring-primary rounded-lg' : ''}`}>
       <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-        <CardHeader className="pb-3">
-          <div className="flex items-start justify-between gap-2">
-            <div className="flex-1">
-              <CardTitle className="text-xl mb-1">{event.title}</CardTitle>
+        <CardHeader className="pb-3 px-4 pt-4">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-start justify-between gap-2">
+              <Badge variant="secondary" className={`${categoryConfig[event.category].color} text-white shrink-0 text-xs`}>
+                <Icon name={categoryConfig[event.category].icon as string} size={12} className="mr-1" />
+                {categoryConfig[event.category].label}
+              </Badge>
               <CardDescription className="text-sm">{event.date}</CardDescription>
-              {event.subcategory && (
-                <CardDescription className="text-xs mt-1 italic">
-                  {event.subcategory}
-                </CardDescription>
-              )}
             </div>
-            <Badge variant="secondary" className={`${categoryConfig[event.category].color} text-white shrink-0`}>
-              <Icon name={categoryConfig[event.category].icon as string} size={14} className="mr-1" />
-              {categoryConfig[event.category].label}
-            </Badge>
+            <CardTitle className="text-lg leading-snug">{event.title}</CardTitle>
+            {event.subcategory && (
+              <CardDescription className="text-xs italic">
+                {event.subcategory}
+              </CardDescription>
+            )}
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-4 pb-4">
           {event.preview && (
             <div className="mb-4 aspect-video">
               <img
@@ -47,30 +47,29 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
               />
             </div>
           )}
-          <p className="text-muted-foreground mb-4">{event.description}</p>
+          <p className="text-muted-foreground mb-4 text-sm leading-relaxed">{event.description}</p>
           <div className="flex gap-2">
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="default" size="sm" className="flex-1">
+                <Button variant="default" size="sm" className="flex-1 h-10 text-sm">
                   <Icon name="Book" size={16} className="mr-2" />
                   Подробнее
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+              <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] overflow-y-auto p-4 sm:p-6">
                 <DialogHeader>
-                  <DialogTitle className="text-2xl">{event.title}</DialogTitle>
-                  <Badge variant="secondary" className={`${categoryConfig[event.category].color} text-white w-fit`}>
-                    {categoryConfig[event.category].label}
-                  </Badge>
+                  <DialogTitle className="text-xl sm:text-2xl leading-snug pr-6">{event.title}</DialogTitle>
+                  <div className="flex flex-wrap items-center gap-2 mt-1">
+                    <Badge variant="secondary" className={`${categoryConfig[event.category].color} text-white w-fit`}>
+                      {categoryConfig[event.category].label}
+                    </Badge>
+                    <span className="text-sm text-muted-foreground">{event.date}</span>
+                  </div>
                 </DialogHeader>
                 <div className="space-y-4">
                   <div>
-                    <h3 className="font-semibold text-lg mb-2">Дата</h3>
-                    <p className="text-muted-foreground">{event.date}</p>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2">Описание</h3>
-                    <div className="text-muted-foreground leading-relaxed space-y-4">
+                    <h3 className="font-semibold text-base sm:text-lg mb-2">Описание</h3>
+                    <div className="text-muted-foreground leading-relaxed space-y-4 text-sm sm:text-base">
                       {(() => {
                         let imgIdx = 0;
                         return event.details.split('\n\n').map((paragraph, pIdx) => {
@@ -79,7 +78,7 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
                           if (img) imgIdx++;
                           return (
                             <div key={pIdx}>
-                              <p className="whitespace-pre-line">{paragraph}</p>
+                              <p className="whitespace-pre-line leading-7">{paragraph}</p>
                               {img && (
                                 <img
                                   src={img}
@@ -107,7 +106,7 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
                     </TabsList>
                     <TabsContent value="images" className="space-y-4 mt-4">
                       {event.images && event.images.length > 0 ? (
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                           {event.images.map((img, idx) => (
                             <div key={idx} className="aspect-video">
                               <img
