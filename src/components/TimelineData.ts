@@ -317,7 +317,7 @@ export const events: TimelineEvent[] = [
     images: [
       "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/f63622a3-9dfb-4510-ab94-bfd567ee2567.png",
       "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/a3fc5388-9b1a-436c-a543-1ba1249f08d2.jpg",
-      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/bb544e21-1b84-4b45-ac8b-4dbaae0a8a91.jpg"
+      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/bb544e21-1b84-4b45-ac8b-4dbaae0a8a91.jpg",
       "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/d68988d7-4837-4e33-809b-5377955f9207.jpg",
       "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/46484cd9-ba06-4676-b251-ecd23f8c1fdb.jpg",
       "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/25e7cbfd-a446-4893-8355-673683bd0c0f.jpg",
