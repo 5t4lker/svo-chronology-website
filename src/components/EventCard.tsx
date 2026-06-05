@@ -71,21 +71,27 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
                   <div>
                     <h3 className="font-semibold text-lg mb-2">Описание</h3>
                     <div className="text-muted-foreground leading-relaxed space-y-4">
-                      {event.details.split('\n\n').map((paragraph, pIdx) => (
-                        <div key={pIdx}>
-                          <p className="whitespace-pre-line">{paragraph}</p>
-                          {event.images && event.images.length > 0 && event.images[pIdx] && (
-                            <img
-                              src={event.images[pIdx]}
-                              alt={`${event.title} - изображение ${pIdx + 1}`}
-                              className="rounded-lg w-full max-w-2xl mx-auto h-auto object-cover mt-4 cursor-pointer hover:opacity-80 transition-opacity"
-                              onClick={() => {
-                                onImageClick(event.images[pIdx], pIdx, event.images);
-                              }}
-                            />
-                          )}
-                        </div>
-                      ))}
+                      {(() => {
+                        let imgIdx = 0;
+                        return event.details.split('\n\n').map((paragraph, pIdx) => {
+                          const img = event.images && event.images[imgIdx];
+                          const currentImgIdx = imgIdx;
+                          if (img) imgIdx++;
+                          return (
+                            <div key={pIdx}>
+                              <p className="whitespace-pre-line">{paragraph}</p>
+                              {img && (
+                                <img
+                                  src={img}
+                                  alt={`${event.title} - изображение ${currentImgIdx + 1}`}
+                                  className="rounded-lg w-full max-w-2xl mx-auto h-auto object-cover mt-4 cursor-pointer hover:opacity-80 transition-opacity"
+                                  onClick={() => onImageClick(img, currentImgIdx, event.images)}
+                                />
+                              )}
+                            </div>
+                          );
+                        });
+                      })()}
                     </div>
                   </div>
                   <Tabs defaultValue="images" className="w-full">
