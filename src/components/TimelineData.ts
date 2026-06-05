@@ -52,10 +52,9 @@ export const events: TimelineEvent[] = [
 Ночью 24 февраля Президент Путин снова обращается к нации, где объявляет, что, в соответствии со ст.51 Устава ООН и во исполнение ране заключённых договоров с Донецкой и Луганской Народными Республиками принято решение о проведение Специальной Военной Операции, главной целью которой было провозглашена защита народа Донбасса, в процессе достижения которой Российское государство будет стремится к «денацификации» и «демилитаризации» Украины, а также - к приданию суду тех, кто совершил многочисленные преступления против мирных жителей.`,
     images: [
       "https://dnr-news.ru/img/20230407/1b9b35dc95a20e0e672a19cd55d376b3.jpg",
-      "https://s3.iimg.su/s/31/gwMKIHNxcOhYodUISKLVzi2afc6orQAFYa30Y4rc.jpg",
-      "https://s3.iimg.su/s/31/gQcRFsaxPWR73PWWgH2DWUBws5g1JOFEwBsFqYe7.jpg",
-      "https://s3.iimg.su/s/31/gv9ZrTBxGyQ3b8M1wa6pVF2EGRUuBTfgynQIz4HR.jpg",
-      "https://avatars.mds.yandex.net/i?id=d65d94580e18d4b83248f52f08f7500d_l-5858922-images-thumbs&n=13",
+      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/878ad2d9-c55e-44d9-8de1-87ee9964ab7b.jpg",
+      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/a9699c0c-2493-46b8-9cfb-239f4202cd80.jpg",
+      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/56841c1f-fc96-48e2-8714-5574b6ee2fab.jpg",
     ],
     preview:
       "https://upload.wikimedia.org/wikipedia/commons/2/23/Vladimir_Putin_%282022-02-24%29.jpg",
