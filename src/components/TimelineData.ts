@@ -114,7 +114,7 @@ export const events: TimelineEvent[] = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/2022_Kyiv_Offensive.png/960px-2022_Kyiv_Offensive.png",
   },
   {
-    id: "The Russian Armed Forces' Spring Campaign of 2022/2",
+    id: "Herson",
     date: "Февраль-Март 2022",
     title: "Херсонское направление (февраль-март)",
     category: "campaign",
