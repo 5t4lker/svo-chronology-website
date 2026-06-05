@@ -456,7 +456,7 @@ https://tvzvezda.ru/news/202232102-NcrOB.html
       ],
     preview:
       "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/46a6f11f-580e-4ea2-85ac-b57396f3e715.jpg",
-    ],
+  },
   {
     id: "Ne VS RF",
     date: "Декабрь 2022",
