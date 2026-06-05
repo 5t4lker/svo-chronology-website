@@ -578,6 +578,6 @@ export const categoryConfig = {
   battle: { label: "Сражение", icon: "Swords", color: "bg-secondary" },
   unit: { label: "Подразделение", icon: "Shield", color: "bg-accent" },
   politics: { label: "Политика", icon: "Landmark", color: "bg-muted" },
-  weapons: { label: "Вооружение", icon: "Crosshair", color: "bg-destructive" },
+  weapons: { label: "Вооружение", icon: "Crosshair", color: "bg-[#6b5a2d]" },
   calendar: { label: "Календарь", icon: "CalendarDays", color: "bg-blue-500" },
 };
