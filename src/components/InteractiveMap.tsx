@@ -274,21 +274,42 @@ export default function InteractiveMap({
 
         const eventDesc = event?.description ? event.description.slice(0, 100) + (event.description.length > 100 ? '…' : '') : '';
 
+        const cardStyle = `
+          background: #0f1f14;
+          border: 1px solid #2d7a4f;
+          border-radius: 10px;
+          padding: 14px;
+          min-width: 260px;
+          max-width: 300px;
+          font-family: sans-serif;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 20px rgba(45,122,79,0.2);
+          animation: balloonFadeIn 0.25s ease-out both;
+        `;
+        const animStyle = `<style>
+          @keyframes balloonFadeIn {
+            from { opacity: 0; transform: translateY(8px) scale(0.97); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+          }
+          .map-goto-btn:hover { background: #3a9e65 !important; transform: translateY(-1px); }
+          .map-goto-btn { transition: background 0.2s, transform 0.15s !important; }
+        </style>`;
+        const btnStyle = `class="map-goto-btn" style="width:100%;padding:9px 12px;background:#2d7a4f;color:#fff;border:none;border-radius:7px;cursor:pointer;font-size:13px;font-weight:700;letter-spacing:0.3px;"`;
+
         const balloonContent = imageUrl
-          ? `<div style="padding: 12px; min-width: 260px; max-width: 300px; font-family: sans-serif;">
-              <img src="${imageUrl}" alt="${marker.title}" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;" />
-              <strong style="font-size: 14px; color: #2d7a4f; display: block; margin-bottom: 4px;">${marker.title}</strong>
-              <span style="color: #888; font-size: 12px; display: block; margin-bottom: 6px;">${marker.date}</span>
-              ${eventDesc ? `<p style="color: #555; font-size: 12px; margin: 0 0 10px; line-height: 1.5;">${eventDesc}</p>` : ''}
-              <button onclick="window.__mapGoToEvent && window.__mapGoToEvent('${marker.eventId}')" style="width: 100%; padding: 8px; background: #2d7a4f; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px;">
+          ? `${animStyle}<div style="${cardStyle}">
+              <img src="${imageUrl}" alt="${marker.title}" style="width:100%;height:140px;object-fit:cover;border-radius:7px;margin-bottom:10px;border:1px solid #1e4d30;" />
+              <strong style="font-size:14px;color:#5dba85;display:block;margin-bottom:3px;">${marker.title}</strong>
+              <span style="color:#6b8f76;font-size:11px;display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">${marker.date}</span>
+              ${eventDesc ? `<p style="color:#a8c4b0;font-size:12px;margin:0 0 12px;line-height:1.6;">${eventDesc}</p>` : ''}
+              <button onclick="window.__mapGoToEvent && window.__mapGoToEvent('${marker.eventId}')" ${btnStyle}>
                 ➜ Перейти к статье
               </button>
             </div>`
-          : `<div style="padding: 12px; min-width: 220px; font-family: sans-serif;">
-              <strong style="font-size: 14px; color: #2d7a4f; display: block; margin-bottom: 4px;">${marker.title}</strong>
-              <span style="color: #888; font-size: 12px; display: block; margin-bottom: 10px;">${marker.date}</span>
-              ${eventDesc ? `<p style="color: #555; font-size: 12px; margin: 0 0 10px; line-height: 1.5;">${eventDesc}</p>` : ''}
-              <button onclick="window.__mapGoToEvent && window.__mapGoToEvent('${marker.eventId}')" style="width: 100%; padding: 8px; background: #2d7a4f; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600;">
+          : `${animStyle}<div style="${cardStyle}">
+              <strong style="font-size:14px;color:#5dba85;display:block;margin-bottom:3px;">${marker.title}</strong>
+              <span style="color:#6b8f76;font-size:11px;display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">${marker.date}</span>
+              ${eventDesc ? `<p style="color:#a8c4b0;font-size:12px;margin:0 0 12px;line-height:1.6;">${eventDesc}</p>` : ''}
+              <button onclick="window.__mapGoToEvent && window.__mapGoToEvent('${marker.eventId}')" ${btnStyle}>
                 ➜ Перейти к статье
               </button>
             </div>`;
@@ -304,44 +325,44 @@ export default function InteractiveMap({
 
         if (imageUrl) {
           const ImageIconLayout = ymaps.templateLayoutFactory.createClass(
-            `<div class="marker-wrap" style="position: relative; width: 40px; height: 40px; ${hoverStyle}">
-              <div style="position: absolute; top: 0; left: 0; width: 40px; height: 40px; border-radius: 50%; border: 3px solid #2d7a4f; overflow: hidden; box-shadow: 0 0 10px rgba(45,122,79,0.6), 0 0 20px rgba(45,122,79,0.3); animation: pulse-border 2s ease-in-out infinite;">
-                <img src="${imageUrl}" style="width: 100%; height: 100%; object-fit: cover;" />
+            `<div class="marker-wrap" style="position:relative;width:56px;height:56px;${hoverStyle}">
+              <div style="position:absolute;top:0;left:0;width:56px;height:56px;border-radius:50%;border:3px solid #2d7a4f;overflow:hidden;box-shadow:0 0 14px rgba(45,122,79,0.7),0 0 28px rgba(45,122,79,0.35);animation:pulse-border 2s ease-in-out infinite;">
+                <img src="${imageUrl}" style="width:100%;height:100%;object-fit:cover;" />
               </div>
               <style>
                 @keyframes pulse-border {
-                  0%, 100% { box-shadow: 0 0 10px rgba(45,122,79,0.6), 0 0 20px rgba(45,122,79,0.3); }
-                  50% { box-shadow: 0 0 15px rgba(45,122,79,0.8), 0 0 30px rgba(45,122,79,0.5); }
+                  0%,100% { box-shadow: 0 0 14px rgba(45,122,79,0.7), 0 0 28px rgba(45,122,79,0.35); }
+                  50%      { box-shadow: 0 0 22px rgba(45,122,79,0.95), 0 0 44px rgba(45,122,79,0.55); }
                 }
-                .marker-wrap:hover { transform: scale(1.4); }
+                .marker-wrap:hover { transform: scale(1.35); }
               </style>
             </div>`,
           );
 
           placemarkOptions = {
             iconLayout: ImageIconLayout,
-            iconShape: { type: "Circle", coordinates: [0, 0], radius: 20 },
+            iconShape: { type: "Circle", coordinates: [0, 0], radius: 36 },
           };
         } else {
           const SvgIconLayout = ymaps.templateLayoutFactory.createClass(
-            `<div class="marker-svg-wrap" style="${hoverStyle} width: 40px; height: 40px;">
-              <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            `<div class="marker-svg-wrap" style="${hoverStyle} width:56px;height:56px;">
+              <svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
                 <style>
-                  @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0; } }
+                  @keyframes pulse { 0%,100% { opacity:0.4;r:26; } 50% { opacity:0;r:30; } }
                   .pulse-ring { animation: pulse 2s ease-in-out infinite; }
-                  .marker-svg-wrap:hover { transform: scale(1.4); }
+                  .marker-svg-wrap:hover { transform: scale(1.35); }
                 </style>
-                <circle class="pulse-ring" cx="20" cy="20" r="18" fill="none" stroke="#2d7a4f" stroke-width="2"/>
-                <circle cx="20" cy="20" r="12" fill="#2d7a4f" stroke="#1a4d30" stroke-width="2"/>
-                <path d="M16 20 L20 16 L24 20 L20 24 Z" fill="#e8f5ee" stroke="#1a4d30" stroke-width="1"/>
-                <circle cx="20" cy="20" r="2" fill="#1a4d30"/>
+                <circle class="pulse-ring" cx="28" cy="28" r="26" fill="none" stroke="#2d7a4f" stroke-width="2"/>
+                <circle cx="28" cy="28" r="17" fill="#0f1f14" stroke="#2d7a4f" stroke-width="2.5"/>
+                <path d="M22 28 L28 22 L34 28 L28 34 Z" fill="#5dba85" stroke="#1a4d30" stroke-width="1"/>
+                <circle cx="28" cy="28" r="3" fill="#1a4d30"/>
               </svg>
             </div>`,
           );
 
           placemarkOptions = {
             iconLayout: SvgIconLayout,
-            iconShape: { type: "Circle", coordinates: [0, 0], radius: 20 },
+            iconShape: { type: "Circle", coordinates: [0, 0], radius: 36 },
           };
         }
 
