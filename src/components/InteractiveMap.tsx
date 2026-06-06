@@ -257,6 +257,20 @@ export default function InteractiveMap({
         ymaps[class*="copyrights-pane"] {
           opacity: 0.5;
         }
+        ymaps[class*="balloon__layout"],
+        ymaps[class*="balloon__content"],
+        ymaps[class*="balloon__tail"],
+        ymaps[class*="balloon__shadow"],
+        ymaps[class*="balloon"] {
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+          padding: 0 !important;
+        }
+        ymaps[class*="balloon__close"],
+        ymaps[class*="balloon__close-button"] {
+          display: none !important;
+        }
       `;
       document.head.appendChild(style);
     }
