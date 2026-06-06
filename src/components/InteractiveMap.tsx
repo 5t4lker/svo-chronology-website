@@ -261,21 +261,36 @@ export default function InteractiveMap({
       document.head.appendChild(style);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).__mapGoToEvent = (eventId: string) => {
+      if (onMarkerClick) onMarkerClick(eventId);
+    };
+
     markers
       .filter((marker) => marker.category === "battle")
       .forEach((marker) => {
         const event = events.find((e) => e.id === marker.eventId);
         const imageUrl = event?.preview || event?.images[0];
 
+        const eventDesc = event?.description ? event.description.slice(0, 100) + (event.description.length > 100 ? '…' : '') : '';
+
         const balloonContent = imageUrl
-          ? `<div style="padding: 10px; min-width: 250px; max-width: 300px;">
-              <img src="${imageUrl}" alt="${marker.title}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 8px;" />
+          ? `<div style="padding: 12px; min-width: 260px; max-width: 300px; font-family: sans-serif;">
+              <img src="${imageUrl}" alt="${marker.title}" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;" />
               <strong style="font-size: 14px; color: #2d7a4f; display: block; margin-bottom: 4px;">${marker.title}</strong>
-              <span style="color: #666; font-size: 12px;">${marker.date}</span>
+              <span style="color: #888; font-size: 12px; display: block; margin-bottom: 6px;">${marker.date}</span>
+              ${eventDesc ? `<p style="color: #555; font-size: 12px; margin: 0 0 10px; line-height: 1.5;">${eventDesc}</p>` : ''}
+              <button onclick="window.__mapGoToEvent && window.__mapGoToEvent('${marker.eventId}')" style="width: 100%; padding: 8px; background: #2d7a4f; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                ➜ Перейти к статье
+              </button>
             </div>`
-          : `<div style="padding: 10px; min-width: 200px;">
-              <strong style="font-size: 14px; color: #2d7a4f;">${marker.title}</strong>
-              <br><span style="color: #666; font-size: 12px;">${marker.date}</span>
+          : `<div style="padding: 12px; min-width: 220px; font-family: sans-serif;">
+              <strong style="font-size: 14px; color: #2d7a4f; display: block; margin-bottom: 4px;">${marker.title}</strong>
+              <span style="color: #888; font-size: 12px; display: block; margin-bottom: 10px;">${marker.date}</span>
+              ${eventDesc ? `<p style="color: #555; font-size: 12px; margin: 0 0 10px; line-height: 1.5;">${eventDesc}</p>` : ''}
+              <button onclick="window.__mapGoToEvent && window.__mapGoToEvent('${marker.eventId}')" style="width: 100%; padding: 8px; background: #2d7a4f; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600;">
+                ➜ Перейти к статье
+              </button>
             </div>`;
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -333,16 +348,19 @@ export default function InteractiveMap({
         const placemark = new ymaps.Placemark(
           marker.coordinates,
           {
-            hintContent: marker.title + " — нажмите для перехода к статье",
+            balloonContent,
+            hintContent: marker.title,
           },
-          { ...placemarkOptions, cursor: "pointer" },
+          {
+            ...placemarkOptions,
+            cursor: "pointer",
+            balloonCloseButton: true,
+            hideIconOnBalloonOpen: false,
+          },
         );
 
-        placemark.events.add("click", (e: unknown) => {
-          (e as { preventDefault: () => void }).preventDefault();
-          if (onMarkerClick) {
-            onMarkerClick(marker.eventId);
-          }
+        placemark.events.add("mouseenter", () => {
+          placemark.balloon.open();
         });
 
         map.geoObjects.add(placemark);
