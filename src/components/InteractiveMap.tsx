@@ -279,6 +279,13 @@ export default function InteractiveMap({
     (window as any).__mapGoToEvent = (eventId: string) => {
       if (onMarkerClick) onMarkerClick(eventId);
     };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).__mapCloseBalloon = (markerId: string) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (window as any).__balloonRefs?.[markerId]?.balloon.close();
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).__balloonRefs = {};
 
     markers
       .filter((marker) => marker.category === "battle")
@@ -306,11 +313,15 @@ export default function InteractiveMap({
           }
           .map-goto-btn:hover { background: #3a9e65 !important; transform: translateY(-1px); }
           .map-goto-btn { transition: background 0.2s, transform 0.15s !important; }
+          .map-close-btn:hover { background: rgba(255,255,255,0.15) !important; }
+          .map-close-btn { transition: background 0.15s !important; }
         </style>`;
         const btnStyle = `class="map-goto-btn" style="width:100%;padding:9px 12px;background:#2d7a4f;color:#fff;border:none;border-radius:7px;cursor:pointer;font-size:13px;font-weight:700;letter-spacing:0.3px;"`;
+        const closeBtn = `<button class="map-close-btn" onclick="window.__mapCloseBalloon && window.__mapCloseBalloon('${marker.id}')" style="position:absolute;top:8px;right:8px;width:24px;height:24px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:50%;color:#a8c4b0;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;">✕</button>`;
 
         const balloonContent = imageUrl
-          ? `${animStyle}<div style="${cardStyle}">
+          ? `${animStyle}<div style="${cardStyle}position:relative;">
+              ${closeBtn}
               <img src="${imageUrl}" alt="${marker.title}" style="width:100%;height:140px;object-fit:cover;border-radius:7px;margin-bottom:10px;border:1px solid #1e4d30;" />
               <strong style="font-size:14px;color:#5dba85;display:block;margin-bottom:3px;">${marker.title}</strong>
               <span style="color:#6b8f76;font-size:11px;display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">${marker.date}</span>
@@ -319,7 +330,8 @@ export default function InteractiveMap({
                 ➜ Перейти к статье
               </button>
             </div>`
-          : `${animStyle}<div style="${cardStyle}">
+          : `${animStyle}<div style="${cardStyle}position:relative;">
+              ${closeBtn}
               <strong style="font-size:14px;color:#5dba85;display:block;margin-bottom:3px;">${marker.title}</strong>
               <span style="color:#6b8f76;font-size:11px;display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">${marker.date}</span>
               ${eventDesc ? `<p style="color:#a8c4b0;font-size:12px;margin:0 0 12px;line-height:1.6;">${eventDesc}</p>` : ''}
@@ -397,6 +409,9 @@ export default function InteractiveMap({
         placemark.events.add("mouseenter", () => {
           placemark.balloon.open();
         });
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (window as any).__balloonRefs[marker.id] = placemark;
 
         map.geoObjects.add(placemark);
       });
