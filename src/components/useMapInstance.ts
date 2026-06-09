@@ -109,11 +109,11 @@ export function useMapInstance(
       const style = document.createElement("style");
       style.textContent = `
         ymaps[class*="ground-pane"] {
-          filter: brightness(0.25) saturate(0.3) hue-rotate(-10deg);
+          filter: brightness(0.7) saturate(0.8) hue-rotate(-10deg);
         }
         ymaps[class*="places-pane"] text {
-          fill: #7ab894 !important;
-          stroke: #0a1a0f !important;
+          fill: #2d7a4f !important;
+          stroke: #0f2e1c !important;
           stroke-width: 2px;
           paint-order: stroke;
         }
