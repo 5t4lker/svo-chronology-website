@@ -14,39 +14,35 @@ interface EventCardProps {
 
 export default function EventCard({ event, isHighlighted, onImageClick }: EventCardProps) {
   return (
-    <div className={`transition-all duration-300 hover:scale-[1.03] hover:z-10 relative ${isHighlighted ? 'ring-4 ring-primary rounded-lg' : ''}`}>
+    <div className={`transition-all duration-300 hover:scale-[1.02] hover:z-10 relative ${isHighlighted ? 'ring-4 ring-primary rounded-lg' : ''}`}>
       <Card className="overflow-hidden transition-all duration-300 hover:shadow-2xl hover:ring-2 hover:ring-primary">
-        <CardHeader className="pb-3 px-4 pt-4">
-          <div className="flex flex-col gap-2">
-            <div className="flex items-start justify-between gap-2">
-              <Badge variant="secondary" className={`${categoryConfig[event.category].color} text-white shrink-0 text-xs`}>
-                <Icon name={categoryConfig[event.category].icon as string} size={12} className="mr-1" />
-                {categoryConfig[event.category].label}
-              </Badge>
-              <CardDescription className="text-sm">{event.date}</CardDescription>
-            </div>
-            <CardTitle className="text-lg leading-snug">{event.title}</CardTitle>
-            {event.subcategory && (
-              <CardDescription className="text-xs italic">
-                {event.subcategory}
-              </CardDescription>
-            )}
+        {event.preview && (
+          <div className="aspect-video">
+            <img
+              src={event.preview}
+              alt={event.title}
+              className="w-full h-full cursor-pointer object-cover"
+              onClick={() => {
+                const previewIndex = event.images.indexOf(event.preview!);
+                onImageClick(event.preview!, previewIndex >= 0 ? previewIndex : 0, event.images);
+              }}
+            />
           </div>
+        )}
+        <CardHeader className="pb-2 px-4 pt-4">
+          <div className="flex items-center gap-2 flex-wrap">
+            <Badge variant="secondary" className={`${categoryConfig[event.category].color} text-white shrink-0 text-xs`}>
+              <Icon name={categoryConfig[event.category].icon as string} size={12} className="mr-1" />
+              {categoryConfig[event.category].label}
+            </Badge>
+            <CardDescription className="text-xs">{event.date}</CardDescription>
+          </div>
+          <CardTitle className="text-xl font-bold leading-snug mt-1">{event.title}</CardTitle>
+          {event.subcategory && (
+            <CardDescription className="text-xs italic">{event.subcategory}</CardDescription>
+          )}
         </CardHeader>
         <CardContent className="px-4 pb-4">
-          {event.preview && (
-            <div className="mb-4 aspect-video">
-              <img
-                src={event.preview}
-                alt={event.title}
-                className="w-full h-full cursor-pointer rounded-lg object-cover"
-                onClick={() => {
-                  const previewIndex = event.images.indexOf(event.preview!);
-                  onImageClick(event.preview!, previewIndex >= 0 ? previewIndex : 0, event.images);
-                }}
-              />
-            </div>
-          )}
           <p className="text-muted-foreground mb-4 text-sm leading-relaxed text-justify">{event.description}</p>
           <div className="flex gap-2">
             <Dialog>
