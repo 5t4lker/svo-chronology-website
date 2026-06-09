@@ -83,17 +83,7 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
                                 <img
                                   src={img}
                                   alt={`${event.title} - изображение ${currentImgIdx + 1}`}
-                                  className="sm:rounded-lg h-auto object-cover mt-4 cursor-pointer hover:opacity-80 transition-opacity block"
-                                  style={{ width: 'calc(100% + 2rem)', marginLeft: '-1rem', marginRight: '-1rem', borderRadius: 0 }}
-                                  onLoad={(e) => {
-                                    const target = e.currentTarget;
-                                    if (window.innerWidth >= 640) {
-                                      target.style.width = '100%';
-                                      target.style.marginLeft = '0';
-                                      target.style.marginRight = '0';
-                                      target.style.borderRadius = '0.5rem';
-                                    }
-                                  }}
+                                  className="rounded-lg w-full mt-4 cursor-pointer hover:opacity-80 transition-opacity block h-40 sm:h-auto object-cover"
                                   onClick={() => onImageClick(img, currentImgIdx, event.images)}
                                 />
                               )}
