@@ -24,7 +24,7 @@ export default function MapToolbar({
   return (
     <Card className="border-border/50">
       <CardContent className="p-4">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center justify-between gap-3 my-0 mx-0 py-[5px]">
           <div className="flex flex-wrap gap-2">
             {activeCategories.map((cat) => (
               <TooltipProvider key={cat}>

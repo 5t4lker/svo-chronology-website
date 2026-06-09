@@ -69,7 +69,7 @@ export default function Index() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto py-0 my-0 px-[50px]">
         <section className="mb-16">
           <div className="flex items-center gap-3 mb-6">
             <Icon name="Map" size={32} className="text-primary" />
