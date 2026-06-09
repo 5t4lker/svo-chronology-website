@@ -13,6 +13,7 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <div className="fog-layer" aria-hidden="true" />
       <Toaster />
       <Sonner />
       <BrowserRouter>
