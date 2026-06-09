@@ -52,7 +52,7 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
                   Подробнее
                 </Button>
               </DialogTrigger>
-              <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] overflow-y-auto p-4 sm:p-6">
+              <DialogContent className="overflow-y-auto sm:max-w-4xl sm:max-h-[90vh]">
                 <DialogHeader>
                   <DialogTitle className="text-xl sm:text-2xl leading-snug pr-10">{event.title}</DialogTitle>
                   <div className="flex flex-wrap items-center gap-2 mt-1">
