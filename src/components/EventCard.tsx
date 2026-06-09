@@ -58,7 +58,7 @@ export default function EventCard({ event, isHighlighted, onImageClick }: EventC
               </DialogTrigger>
               <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] overflow-y-auto p-4 sm:p-6">
                 <DialogHeader>
-                  <DialogTitle className="text-xl sm:text-2xl leading-snug pr-6">{event.title}</DialogTitle>
+                  <DialogTitle className="text-xl sm:text-2xl leading-snug pr-10">{event.title}</DialogTitle>
                   <div className="flex flex-wrap items-center gap-2 mt-1">
                     <Badge variant="secondary" className={`${categoryConfig[event.category].color} text-white w-fit`}>
                       {categoryConfig[event.category].label}
