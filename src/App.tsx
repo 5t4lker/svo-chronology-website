@@ -7,13 +7,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Feedback from "./pages/Feedback";
 import NotFound from "./pages/NotFound";
+import FogBackground from "./components/FogBackground";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <div className="fog-layer" aria-hidden="true" />
+      <FogBackground />
       <Toaster />
       <Sonner />
       <BrowserRouter>
