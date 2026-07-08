@@ -28,14 +28,14 @@ export default function FogBackground() {
     resize();
     window.addEventListener("resize", resize);
 
-    const particles: FogParticle[] = Array.from({ length: 12 }, () => ({
+    const particles: FogParticle[] = Array.from({ length: 16 }, () => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
       radius: 200 + Math.random() * 350,
-      opacity: 0.04 + Math.random() * 0.08,
-      speedX: (Math.random() - 0.5) * 0.3,
-      speedY: (Math.random() - 0.5) * 0.15,
-      opacitySpeed: (Math.random() - 0.5) * 0.0003,
+      opacity: 0.08 + Math.random() * 0.14,
+      speedX: (Math.random() - 0.5) * 1.1,
+      speedY: (Math.random() - 0.5) * 0.6,
+      opacitySpeed: (Math.random() - 0.5) * 0.0014,
     }));
 
     const draw = () => {
@@ -50,12 +50,12 @@ export default function FogBackground() {
         if (p.x > canvas.width + p.radius) p.x = -p.radius;
         if (p.y < -p.radius) p.y = canvas.height + p.radius;
         if (p.y > canvas.height + p.radius) p.y = -p.radius;
-        if (p.opacity < 0.02) p.opacitySpeed = Math.abs(p.opacitySpeed);
-        if (p.opacity > 0.12) p.opacitySpeed = -Math.abs(p.opacitySpeed);
+        if (p.opacity < 0.04) p.opacitySpeed = Math.abs(p.opacitySpeed);
+        if (p.opacity > 0.26) p.opacitySpeed = -Math.abs(p.opacitySpeed);
 
         const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
-        grad.addColorStop(0, `rgba(45, 122, 79, ${p.opacity})`);
-        grad.addColorStop(0.4, `rgba(30, 80, 50, ${p.opacity * 0.6})`);
+        grad.addColorStop(0, `rgba(52, 150, 95, ${p.opacity})`);
+        grad.addColorStop(0.4, `rgba(30, 90, 55, ${p.opacity * 0.7})`);
         grad.addColorStop(1, "rgba(0, 0, 0, 0)");
 
         ctx.beginPath();
