@@ -693,7 +693,7 @@ https://tvzvezda.ru/news/202232102-NcrOB.html
     subcategory: "Вооружение ВСУ",
     description: "Характеристика передового танка НАТО",
     details:
-      "Основной танк НАТО и его история
+      `Основной танк НАТО и его история
 «Леопард-2» по праву считается главным боевым танком стран НАТО, поскольку по совокупности характеристик превосходит своего знаменитого американского конкурента — «Абрамс». Разработка машины велась компанией «Краусс-Маффей» в начале 1970-х годов, а с 1979 года она состоит на вооружении бундесвера. Танк активно поставляется на экспорт и сегодня стоит на вооружении многих европейских армий, а также ряда государств за пределами Евросоюза. Общий выпуск превысил три тысячи единиц; эти машины успели повоевать в Косове (в составе немецкого контингента), в Афганистане (у датчан и канадцев) и в Сирии (у турецких войск).
 
 Модификации и конструктивные различия
@@ -724,14 +724,14 @@ https://tvzvezda.ru/news/202232102-NcrOB.html
 3.https://military.pravda.ru/2104561-luchshie-tanki-v-kurskuju-oblast/
 4.https://ura.news/amp-news/1052762872
 5.https://dzen.ru/a/ZjpzdGiqvjmcJvLH
-6.https://pikabu.ru/story/osnovnoy_boevoy_tank_leopard_2a6_leopard_2a6modernizatsiya_do_leopard_2a7_7709387",
+6.https://pikabu.ru/story/osnovnoy_boevoy_tank_leopard_2a6_leopard_2a6modernizatsiya_do_leopard_2a7_7709387`,
     images: [
-      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/1e360273-54fe-48ed-82e8-2d9c5c34f311.jpg"
-      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/3eb0e2c2-7100-466a-b7db-6ae4251c0211.jpg"
-      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/81c692e8-25b0-4058-96ac-b3be0d12b53c.jpg"
-      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/f2c3e673-62cf-4d48-8393-3a9f918b1782.png"
-      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/bb60f7d7-4663-4926-b420-ecddf39579d0.jpg"
-      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/62d9f57c-23aa-4154-8f16-d6799b969848.jpg"
+      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/1e360273-54fe-48ed-82e8-2d9c5c34f311.jpg",
+      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/3eb0e2c2-7100-466a-b7db-6ae4251c0211.jpg",
+      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/81c692e8-25b0-4058-96ac-b3be0d12b53c.jpg",
+      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/f2c3e673-62cf-4d48-8393-3a9f918b1782.png",
+      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/bb60f7d7-4663-4926-b420-ecddf39579d0.jpg",
+      "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/62d9f57c-23aa-4154-8f16-d6799b969848.jpg",
       "https://cdn.poehali.dev/projects/43268c76-63e5-42b2-a2b6-42db7f46e265/bucket/59d186c1-938f-44d8-a48a-fd5875dd2e26.jpg",
     ],
     preview:
