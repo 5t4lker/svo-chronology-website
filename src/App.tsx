@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Feedback from "./pages/Feedback";
 import NotFound from "./pages/NotFound";
 import FogBackground from "./components/FogBackground";
+import FullscreenButton from "./components/FullscreenButton";
 
 const queryClient = new QueryClient();
 
@@ -15,6 +16,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <FogBackground />
+      <FullscreenButton />
       <Toaster />
       <Sonner />
       <BrowserRouter>
