@@ -562,7 +562,7 @@ https://tvzvezda.ru/news/202232102-NcrOB.html
   },
   {
     id: "7",
-    title: "Т 90М»",
+    title: "Т 90М",
     category: "weapons",
     subcategory: "Вооружение ВС РФ",
     description:
