@@ -32,11 +32,22 @@ def handler(event: dict, context) -> dict:
             'body': json.dumps({'error': 'Сообщение не может быть пустым'})
         }
 
-    smtp_host = os.environ.get('SMTP_HOST', 'smtp.mail.ru')
-    smtp_port = int(os.environ.get('SMTP_PORT', '465'))
-    smtp_user = os.environ.get('SMTP_USER', '')
-    smtp_password = os.environ.get('SMTP_PASSWORD', '')
+    smtp_host = os.environ.get('SMTP_HOST', 'smtp.mail.ru').strip()
+    smtp_port = int(os.environ.get('SMTP_PORT', '465').strip())
+    smtp_user = os.environ.get('SMTP_USER', '').strip()
+    smtp_password = os.environ.get('SMTP_PASSWORD', '').strip()
     to_email = 'ivan.kochnev.2019@list.ru'
+
+    try:
+        smtp_user.encode('ascii')
+    except UnicodeEncodeError:
+        return {
+            'statusCode': 500,
+            'headers': {'Access-Control-Allow-Origin': '*'},
+            'body': json.dumps({
+                'error': 'Некорректный SMTP_USER: адрес должен содержать только латинские символы, например name@mail.ru, без лишних пробелов и текста'
+            })
+        }
 
     msg = MIMEMultipart('alternative')
     msg['Subject'] = f'Новый отзыв от {name}'
