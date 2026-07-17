@@ -127,8 +127,8 @@ export default function CalendarView() {
           entriesByMonth.map((entry, idx) => (
             <Card
               key={entry.id}
-              className="hover:shadow-lg transition-shadow animate-calendar-card-in"
-              style={{ animationDelay: `${Math.min(idx, 10) * 60}ms` }}
+              className="hover:shadow-lg transition-shadow animate-card-float-up"
+              style={{ animationDelay: `${Math.min(idx, 10) * 50}ms` }}
             >
               <CardHeader>
                 <CardTitle className="text-lg">{entry.title}</CardTitle>

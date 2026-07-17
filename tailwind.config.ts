@@ -101,25 +101,20 @@ export default {
 					'0%': { transform: 'translateX(100%)' },
 					'100%': { transform: 'translateX(0)' }
 				},
-				'tab-flicker': {
-					'0%': { opacity: '0' },
-					'8%': { opacity: '0.8' },
-					'16%': { opacity: '0.2' },
-					'24%': { opacity: '0.9' },
-					'32%': { opacity: '0.3' },
-					'44%': { opacity: '0.7' },
-					'60%': { opacity: '0.5' },
-					'80%': { opacity: '1' },
-					'100%': { opacity: '1' }
+				'float-up': {
+					'0%': { opacity: '0', transform: 'translateY(32px) scale(0.94)' },
+					'60%': { opacity: '1' },
+					'100%': { opacity: '1', transform: 'translateY(0) scale(1)' }
+				},
+				'card-float-up': {
+					'0%': { opacity: '0', transform: 'translateY(26px) scale(0.92)' },
+					'55%': { opacity: '1' },
+					'100%': { opacity: '1', transform: 'translateY(0) scale(1)' }
 				},
 				'calendar-glow': {
 					'0%': { opacity: '0', transform: 'scale(0.96)', boxShadow: '0 0 0px hsl(var(--primary) / 0)' },
 					'40%': { opacity: '1' },
 					'100%': { opacity: '1', transform: 'scale(1)', boxShadow: '0 0 30px hsl(var(--primary) / 0.25)' }
-				},
-				'calendar-card-in': {
-					'0%': { opacity: '0', transform: 'translateY(14px) scale(0.94)' },
-					'100%': { opacity: '1', transform: 'translateY(0) scale(1)' }
 				}
 			},
 			animation: {
@@ -128,9 +123,9 @@ export default {
 				'fade-in': 'fade-in 0.3s ease-out',
 				'scale-in': 'scale-in 0.2s ease-out',
 				'slide-in-right': 'slide-in-right 0.3s ease-out',
-				'tab-flicker': 'tab-flicker 0.55s ease-in-out',
-				'calendar-glow': 'calendar-glow 0.7s ease-out',
-				'calendar-card-in': 'calendar-card-in 0.45s ease-out both'
+				'float-up': 'float-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both',
+				'card-float-up': 'card-float-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both',
+				'calendar-glow': 'calendar-glow 0.7s ease-out'
 			}
 		}
 	},

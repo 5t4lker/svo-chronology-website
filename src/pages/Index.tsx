@@ -107,7 +107,7 @@ export default function Index() {
           </div>
 
           {viewMode === 'timeline' ? (
-            <div key="timeline" className="animate-tab-flicker">
+            <div key="timeline" className="animate-float-up">
               <CategoryFilter 
                 selectedCategory={selectedCategory}
                 selectedSubcategory={selectedSubcategory}
@@ -119,10 +119,12 @@ export default function Index() {
               />
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-                {filteredEvents.map((event) => (
+                {filteredEvents.map((event, idx) => (
                   <div
                     key={event.id}
                     ref={(el) => (eventRefs.current[event.id] = el)}
+                    className="animate-card-float-up"
+                    style={{ animationDelay: `${Math.min(idx, 10) * 50}ms` }}
                   >
                     <EventCard
                       event={event}
@@ -136,7 +138,7 @@ export default function Index() {
           ) : (
             <div
               key="calendar"
-              className="animate-tab-flicker animate-calendar-glow rounded-2xl border border-primary/20 bg-gradient-to-b from-primary/5 to-transparent p-4 sm:p-6"
+              className="animate-float-up animate-calendar-glow rounded-2xl border border-primary/20 bg-gradient-to-b from-primary/5 to-transparent p-4 sm:p-6"
             >
               <CalendarView />
             </div>
