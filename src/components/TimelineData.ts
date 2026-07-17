@@ -630,7 +630,6 @@ https://tvzvezda.ru/news/202232102-NcrOB.html
   },
   {
     id: "12",
-    date: "Сентябрь 2022",
     title: "Leopard 2A6",
     category: "weapons",
     subcategory: "Вооружение ВСУ",
