@@ -124,8 +124,12 @@ export default function CalendarView() {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {entriesByMonth.length > 0 ? (
-          entriesByMonth.map((entry) => (
-            <Card key={entry.id} className="hover:shadow-lg transition-shadow">
+          entriesByMonth.map((entry, idx) => (
+            <Card
+              key={entry.id}
+              className="hover:shadow-lg transition-shadow animate-calendar-card-in"
+              style={{ animationDelay: `${Math.min(idx, 10) * 60}ms` }}
+            >
               <CardHeader>
                 <CardTitle className="text-lg">{entry.title}</CardTitle>
                 <CardDescription className="space-y-1">

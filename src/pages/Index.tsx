@@ -107,7 +107,7 @@ export default function Index() {
           </div>
 
           {viewMode === 'timeline' ? (
-            <>
+            <div key="timeline" className="animate-tab-flicker">
               <CategoryFilter 
                 selectedCategory={selectedCategory}
                 selectedSubcategory={selectedSubcategory}
@@ -132,9 +132,14 @@ export default function Index() {
                   </div>
                 ))}
               </div>
-            </>
+            </div>
           ) : (
-            <CalendarView />
+            <div
+              key="calendar"
+              className="animate-tab-flicker animate-calendar-glow rounded-2xl border border-primary/20 bg-gradient-to-b from-primary/5 to-transparent p-4 sm:p-6"
+            >
+              <CalendarView />
+            </div>
           )}
         </section>
       </div>
